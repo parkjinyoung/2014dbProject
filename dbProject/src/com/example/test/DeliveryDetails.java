@@ -49,6 +49,7 @@ public class DeliveryDetails extends Activity {
 		list1.add("comment 2");
 		list1.add("comment 3");
 		list1.add("comment 5");
+		list1.add("comment 4");
 		
 		ArrayAdapter<String> adapter1;
 		adapter1 = new ArrayAdapter<String>(this,
