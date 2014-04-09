@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_snu_res_name"
+        android:text="식당이름"
+        />
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_snu_res_loc"
+        android:text="위치"
+        />
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="오늘의 메뉴"
+	    >
+	    
+	</TextView>
+    <ListView 
+        android:id="@+id/detail_snu_res_todaymenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        ></ListView>
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="전체 메뉴"
+	    >
+	    
+	</TextView>
+        <ListView 
+        android:id="@+id/detail_snu_res_totalmenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        > </ListView>
+
+</LinearLayout>
