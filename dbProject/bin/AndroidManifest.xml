@@ -45,6 +45,9 @@
         <activity
             android:name="com.example.test.SnuRestaurantDetails"
             ></activity>
+        <activity
+            android:name="com.example.test.SnuMenuDetails"
+            ></activity>
         <activity android:name="DeliveryDetails"></activity>
     </application>
 

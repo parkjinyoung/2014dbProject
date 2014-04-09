@@ -1,5 +1,7 @@
 package fragment;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +22,7 @@ import com.example.test.R;
 public class DeliveryMenuFragment extends Fragment {
 
 	Context mContext;
-	String[] deliveryRestaurantarr;
+	ArrayList<String> deliveryRestaurantarr;
 
 	public DeliveryMenuFragment(Context context) {
 		mContext = context;
@@ -42,7 +44,7 @@ public class DeliveryMenuFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
             	
-            	String deliveryName = deliveryRestaurantarr[position];
+            	String deliveryName = deliveryRestaurantarr.get(position);
             	
             	Intent i = new Intent(v.getContext(), DeliveryDetails.class);
             	i.putExtra("deliveryName", deliveryName);
@@ -54,8 +56,9 @@ public class DeliveryMenuFragment extends Fragment {
 	}
 
 	private void createArr() {
-		deliveryRestaurantarr[0] = "pizza heaven";
-		deliveryRestaurantarr[1] = "pizza maru";
-		deliveryRestaurantarr[2] = "pizza school";
+		deliveryRestaurantarr = new ArrayList<String>();
+		deliveryRestaurantarr.add("pizza heaven");
+		deliveryRestaurantarr.add("pizza maru");
+		deliveryRestaurantarr.add("pizza school");
 	}
 }
