@@ -92,11 +92,11 @@ public class SnuMenuFragment extends Fragment {
 		ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
 		SnuResList.add(new SnuRestaurant("restaurant 1", res1));
 		SnuResList.add(new SnuRestaurant("restaurant 2", res2));
-		res1.add(new SnuMenu("박진영", "4.5"));
-		res1.add(new SnuMenu("Soup", "2.0"));
+		res1.add(new SnuMenu("JYP", "4.5"));
+		res1.add(new SnuMenu("yujinee", "2.0"));
 		
-		res2.add(new SnuMenu("Pork cutlet", "4.0"));
-		res2.add(new SnuMenu("Jajangmyeon", "3.5"));
+		res2.add(new SnuMenu("kangdongh", "4.0"));
+		res2.add(new SnuMenu("laputan", "3.5"));
 
 	}
 

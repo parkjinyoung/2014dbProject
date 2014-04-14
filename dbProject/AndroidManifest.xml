@@ -48,6 +48,9 @@
         <activity
             android:name="com.example.test.SnuMenuDetails"
             ></activity>
+        <activity
+            android:name="com.example.test.EvalSnuMenu"
+            ></activity>
         <activity android:name="DeliveryDetails"></activity>
     </application>
 

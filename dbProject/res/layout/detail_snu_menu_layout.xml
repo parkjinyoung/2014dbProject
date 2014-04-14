@@ -34,7 +34,7 @@
         ></ListView>
 
         <Button 
-        android:id="@+id/detail_snu_menu_do_eval"
+        android:id="@+id/detail_snu_menu_do_eval_btn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text = "나도 평가하기"

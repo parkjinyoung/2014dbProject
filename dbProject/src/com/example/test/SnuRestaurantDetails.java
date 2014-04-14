@@ -15,12 +15,12 @@ public class SnuRestaurantDetails extends Activity{
 	    setContentView(R.layout.detail_snu_res_layout);
 	    
 	    ArrayList<String> list1 = new ArrayList<String>();
-        list1.add("�좊쭏�좊냽��");
+        list1.add("today_menu");
         
         ArrayList<String> list2 = new ArrayList<String>();
-        list2.add("�좊쭏�좊냽��");
-        list2.add("�μ닔�섎냽��");
-        list2.add("�띿옣");
+        list2.add("totalmenu");
+        list2.add("total1");
+        list2.add("total");
         
         // �대뙌�곗뿉 �곗씠���ы븿
         ArrayAdapter<String> adapter1;
