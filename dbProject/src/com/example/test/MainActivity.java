@@ -158,9 +158,10 @@ public class MainActivity extends FragmentActivity implements
 				return getString(R.string.title_section4).toUpperCase(l);
 			}
 			return null;
+		
 		}
 	}
-
+//test push
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
