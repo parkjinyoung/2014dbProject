@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+		android:id="@+id/eval_snumenu_menu_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text = "메뉴이름"
+       
+        />
+    
+    <TextView 
+        android:id="@+id/eval_snumenu_res_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text= "식당이름"
+        />
+    
+    <RatingBar
+        android:id="@+id/eval_snumenu_ratingbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText 
+	    android:id="@+id/eval_snumenu_comment"
+	    android:layout_width="match_parent"
+	    android:layout_height="120dp"
+	    android:textSize="10sp"
+	    android:gravity="bottom"
+	    android:hint="코멘트"
+	    />
+    
+    <Button 
+        android:id="@+id/eval_snumenu_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="평가하기"
+        />
+</LinearLayout>
