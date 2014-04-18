@@ -36,6 +36,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TODAY_MENU = "todaymenu";
 	private static final String TODAY_CAFE = "todaycafe";
 	private static final String TODAY_EVAL = "todayeval";
+	private static final String TODAY_PRICE = "todayprice";
+	private static final String TODAY_CLASSIFY = "todayclassify";
 	
 	private static final String USER_ID = "user_id";
 
@@ -45,7 +47,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String CREATE_TABLE_TODAYMENU = "CREATE TABLE "
 			+ TABLE_TODAY_MENU + "(" + TODAY_CAFE + " TEXT,"
 			+ TODAY_MENU + " TEXT,"
-			+ TODAY_EVAL + " TEXT" + ")";
+			+ TODAY_EVAL + " TEXT,"
+			+ TODAY_PRICE + " INTEGER,"
+			+ TODAY_CLASSIFY + " TEXT"
+			+ ")";
 	private static final String CREATE_TABLE_USERINFO = "CREATE TABLE "
 			+ TABLE_USER_INFO + "(" + USER_NAME + " TEXT,"
 			+ USER_ID + " TEXT" + ")";
@@ -108,6 +113,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(TODAY_CAFE, snumenu.getCafe());
 		values.put(TODAY_MENU, snumenu.getMenu());
 		values.put(TODAY_EVAL, snumenu.getEval());
+		values.put(TODAY_PRICE, snumenu.getPrice());
+		values.put(TODAY_CLASSIFY, snumenu.getClassify());
 		long result = db.insert(TABLE_TODAY_MENU, null, values);
 		Log.d("SNUMENU createTM", "cafe : " + snumenu.getCafe() + " menu : " + snumenu.getMenu() + " eval : " + snumenu.getEval());
 		return result;
@@ -128,6 +135,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sm.setCafe(c.getString(c.getColumnIndex(TODAY_CAFE)));
 		sm.setMenu(c.getString(c.getColumnIndex(TODAY_MENU)));
 		sm.setEval(c.getString(c.getColumnIndex(TODAY_EVAL)));
+		sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
+		sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
 		Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 		c.close();
 		return sm;
@@ -158,7 +167,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				sm.setCafe(c.getString(c.getColumnIndex(TODAY_CAFE)));
 				sm.setMenu(c.getString(c.getColumnIndex(TODAY_MENU)));
 				sm.setEval(c.getString(c.getColumnIndex(TODAY_EVAL)));
-				
+				sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
+				sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
 				snumenus.add(sm);
 				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 			}

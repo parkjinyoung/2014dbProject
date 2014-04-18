@@ -32,6 +32,7 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
         Comment e = items.get(position);
         if (e != null) {
             ((TextView)v.findViewById(R.id.snumenu_detail_comment_text)).setText(e.getComment());
+            ((TextView)v.findViewById(R.id.snumenu_detail_comment_nickname)).setText(e.getUser_id());
         }
         return v;
     }
