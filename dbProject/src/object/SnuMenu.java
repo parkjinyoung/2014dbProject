@@ -4,6 +4,8 @@ public class SnuMenu {
 	private String menu;
 	private String eval;
 	private String cafe;
+	private int price;
+	private String classify;
 	public String getCafe() {
 		return cafe;
 	}
@@ -29,6 +31,18 @@ public class SnuMenu {
 	}
 	public void setEval(String eval) {
 		this.eval = eval;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getClassify() {
+		return classify;
+	}
+	public void setClassify(String classify) {
+		this.classify = classify;
 	}
 
 }
