@@ -1,12 +1,40 @@
 package object;
 
+import java.util.Date;
+
 public class Comment {
 	String cafe;
 	String menu;
 	String user_id;
 	String comment;
 	String rating;
+	int recommend;
+	int nonrecommend;
+	public int getNonrecommend() {
+		return nonrecommend;
+	}
+
+	public void setNonrecommend(int nonrecommend) {
+		this.nonrecommend = nonrecommend;
+	}
+	Date date;
 	
+	public int getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(int recommend) {
+		this.recommend = recommend;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public Comment(){
 		
 	}
