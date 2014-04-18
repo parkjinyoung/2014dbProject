@@ -27,11 +27,19 @@ import com.example.test.DatabaseHelper;
 
 @SuppressLint("ValidFragment")
 public class SnuMenuFragment extends Fragment {
-	static String RES1 = "restaurant 1";
-	static String RES2 = "restaurant 2";
-	static String RES3 = "restaurant 3";
-	static String RES4 = "restaurant 4";
-	static String RES5 = "restaurant 5";
+	static String RES1 = "220동";
+	static String RES2 = "301동";
+	static String RES3 = "302동";
+	static String RES4 = "감골식당";
+	static String RES5 = "공깡";
+	static String RES6 = "기숙사(901동)";
+	static String RES7 = "기숙사(919동)";
+	static String RES8 = "동원관";
+	static String RES9 = "상아회관";
+	static String RES10 = "서당골(사범대)";
+	static String RES11 = "자하연";
+	static String RES12 = "전망대(농대)";
+	static String RES13 = "학생회관";
 	
 	ArrayList<SnuMenu> res1 = new ArrayList<SnuMenu>();
 	ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
@@ -125,8 +133,8 @@ public class SnuMenuFragment extends Fragment {
 		ArrayList<SnuMenu> allsnumenu = db.getAllSnuMenus();
 		int i = db.getSnuMenuCount();
 		Log.d("SNUMENU" , "Menu Count : " + Integer.toString(i));
-		SnuMenu test = db.getSnuMenu(RES1, "JYP");
-		Log.d("SNUMENU", test.getCafe() + " " + test.getMenu() + " " + test.getEval());
+//		SnuMenu test = db.getSnuMenu(RES1, "JYP");
+//		Log.d("SNUMENU", test.getCafe() + " " + test.getMenu() + " " + test.getEval());
 		for(SnuMenu snumenu : allsnumenu){
 			Log.d("SNUMENU", "db_test");
 			if(snumenu.getCafe().equals(RES1)){
@@ -145,10 +153,10 @@ public class SnuMenuFragment extends Fragment {
 		}
 		
 		// when not null 
-		SnuResList.add(new SnuRestaurant("restaurant 1", res1));
-		SnuResList.add(new SnuRestaurant("restaurant 2", res2));
-		SnuResList.add(new SnuRestaurant("restaurant 3", res3));
-		SnuResList.add(new SnuRestaurant("restaurant 4", res4));
+		SnuResList.add(new SnuRestaurant(RES1, res1));
+		SnuResList.add(new SnuRestaurant(RES2, res2));
+		SnuResList.add(new SnuRestaurant(RES3, res3));
+		SnuResList.add(new SnuRestaurant(RES4, res4));
 		
 		db.closeDB();
 

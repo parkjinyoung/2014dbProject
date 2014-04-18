@@ -55,6 +55,7 @@ public class SnuMenuDetails extends Activity{
 		ArrayList<Comment> comlist1 = new ArrayList<Comment>();
 
 		Comment com1 = new Comment();
+		com1.setUser_id("박진영");
 		com1.setCafe(resname);
 		com1.setMenu(name);
 		com1.setRating(tmpeval);
@@ -63,6 +64,7 @@ public class SnuMenuDetails extends Activity{
 		comlist1.add(com1);
 		
 		Comment com2 = new Comment();
+		com2.setUser_id("유진선");
 		com2.setCafe(resname);
 		com2.setMenu(name);
 		com2.setRating(tmpeval);
