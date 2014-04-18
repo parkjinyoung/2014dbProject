@@ -22,7 +22,8 @@
     <RatingBar
         android:id="@+id/eval_snumenu_ratingbar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:rating="1.0" />
 
     <EditText 
 	    android:id="@+id/eval_snumenu_comment"
