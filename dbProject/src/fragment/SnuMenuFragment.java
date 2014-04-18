@@ -24,6 +24,7 @@ import com.example.test.R;
 import com.example.test.SnuMenuDetails;
 import com.example.test.SnuRestaurantDetails;
 import com.example.test.DatabaseHelper;
+import comserver.SendServer;
 
 @SuppressLint("ValidFragment")
 public class SnuMenuFragment extends Fragment {
@@ -90,6 +91,11 @@ public class SnuMenuFragment extends Fragment {
 				
 				
 				SnuMenu a = SnuResList.get(groupPosition).getMymenu().get(childPosition);
+				
+				String url = "http://laputan32.cafe24.com/GetEval";
+				SendServer send = new SendServer(a, url);	
+				System.out.println("return : " + send.send());
+				
 				SnuRestaurant b = SnuResList.get(groupPosition);
 				
 				i.putExtra("menu", a.getMenu());
@@ -98,7 +104,7 @@ public class SnuMenuFragment extends Fragment {
 				
 				// TODO : connect server to get data
 				
-				startActivity(i);
+				//startActivity(i);
 				return false;
 			}
 		});

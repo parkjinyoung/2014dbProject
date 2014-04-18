@@ -30,6 +30,8 @@ public class Network extends AsyncTask<String, Void, HttpResponse> {
 
 		String httpHost = param[0];
 		String[] pm = param[1].split("&");
+		
+		System.out.println("param[0] = " + param[0] + " param[1] = " + param[1]);
 
 		List<BasicNameValuePair> postParam = new ArrayList<BasicNameValuePair>();
 
@@ -42,6 +44,7 @@ public class Network extends AsyncTask<String, Void, HttpResponse> {
 
 		for (int i = 0; i < pm.length; i++) {
 			String[] newPm = pm[i].split("=");
+			System.out.println("newpm[0] = " + newPm[0] + " newpm[1] = " + newPm[1]);
 			postParam.add(new BasicNameValuePair(newPm[0], newPm[1]));
 		}
 

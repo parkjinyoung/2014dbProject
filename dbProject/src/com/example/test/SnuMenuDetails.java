@@ -3,6 +3,7 @@ package com.example.test;
 import java.util.ArrayList;
 
 import object.Comment;
+import object.SnuMenu;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -93,6 +94,7 @@ public class SnuMenuDetails extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
 				Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
 				i.putExtra("menu", name);
 				i.putExtra("cafe", resname);
