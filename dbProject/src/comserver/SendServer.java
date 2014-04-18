@@ -98,7 +98,7 @@ public class SendServer {
 		try {
 
 			HttpResponse result = null;
-			String parm = DATA_NAME + "=";
+			String parm = "data" + "=";
 			parm += json;
 			System.out.println("json = " + json);
 			result = new Network().execute(SERVER_URL, parm).get();

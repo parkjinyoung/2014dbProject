@@ -28,7 +28,7 @@ import comserver.SendServer;
 
 @SuppressLint("ValidFragment")
 public class SnuMenuFragment extends Fragment {
-	static String RES1 = "220동";
+	static String RES1 = "학생회관";
 	static String RES2 = "301동";
 	static String RES3 = "302동";
 	static String RES4 = "감골식당";

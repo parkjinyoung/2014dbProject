@@ -36,7 +36,7 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 	DatabaseHelper db;
-	static String RES1 = "220동";
+	static String RES1 = "학생회관";
 	static String RES2 = "301동";
 	static String RES3 = "302동";
 	static String RES4 = "감골식당";
@@ -182,10 +182,12 @@ public class MainActivity extends FragmentActivity implements
 		
 		db.deleteSnuMenuAll();
 		
-		db.createTodayMenu(new SnuMenu(RES1 , "JYP", "4.5"));
+		db.createTodayMenu(new SnuMenu(RES1 , "사골우거지국", "4.5"));
 		db.createTodayMenu(new SnuMenu(RES2 , "JYP1", "2"));
 		db.createTodayMenu(new SnuMenu(RES2 , "JYP2", "3"));
 		db.createTodayMenu(new SnuMenu(RES3 , "JYP3", "1"));
+		
+		db.closeDB();
 	}
 //test push
 	/**
