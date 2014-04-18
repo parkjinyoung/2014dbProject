@@ -23,11 +23,23 @@ import com.example.test.ExpandableAdapter;
 import com.example.test.R;
 import com.example.test.SnuMenuDetails;
 import com.example.test.SnuRestaurantDetails;
+import com.example.test.DatabaseHelper;
 
 @SuppressLint("ValidFragment")
 public class SnuMenuFragment extends Fragment {
-	int DETAIL_SNU_MENU_REQUEST=1;
+	static String RES1 = "restaurant 1";
+	static String RES2 = "restaurant 2";
+	static String RES3 = "restaurant 3";
+	static String RES4 = "restaurant 4";
+	static String RES5 = "restaurant 5";
 	
+	ArrayList<SnuMenu> res1 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res3 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res4 = new ArrayList<SnuMenu>();
+	
+	int DETAIL_SNU_MENU_REQUEST=1;
+	DatabaseHelper db;
 	Context mContext;
 	ArrayList<SnuRestaurant> SnuResList;
 	
@@ -54,7 +66,7 @@ public class SnuMenuFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Log.d("DBDBDBDB","Btn Click Click");
-				Toast.makeText(getActivity(), "Button Click", Toast.LENGTH_SHORT);
+				Toast.makeText(getActivity(), "Button Click", Toast.LENGTH_SHORT).show();
 				Intent i = new Intent(v.getContext(), SnuRestaurantDetails.class);
 				startActivity(i);
 			}
@@ -76,8 +88,9 @@ public class SnuMenuFragment extends Fragment {
 				i.putExtra("eval", a.getEval());
 				i.putExtra("resname", b.getName());
 				
+				// TODO : connect server to get data
+				
 				startActivity(i);
-				// TODO Auto-generated method stub
 				return false;
 			}
 		});
@@ -87,7 +100,17 @@ public class SnuMenuFragment extends Fragment {
 		return view;
 	}
 	protected void onCreateData() {
-		
+		db = new DatabaseHelper(getActivity());
+		res1.clear();
+		res2.clear();
+		res3.clear();
+		res4.clear();
+//		
+//		long a1 = db.createTodayMenu(new SnuMenu(RES1 , "JYP", "4.5"));
+//		long a2 = db.createTodayMenu(new SnuMenu(RES2 , "JYP1", "2"));
+//		long a3 = db.createTodayMenu(new SnuMenu(RES2 , "JYP2", "3"));
+//		long a4 = db.createTodayMenu(new SnuMenu(RES3 , "JYP3", "1"));
+	/*	
 		ArrayList<SnuMenu> res1 = new ArrayList<SnuMenu>();
 		ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
 		SnuResList.add(new SnuRestaurant("restaurant 1", res1));
@@ -97,6 +120,37 @@ public class SnuMenuFragment extends Fragment {
 		
 		res2.add(new SnuMenu("restaurant 2", "kangdongh", "4.0"));
 		res2.add(new SnuMenu("restaurant 2", "laputan", "3.5"));
+		*/
+
+		ArrayList<SnuMenu> allsnumenu = db.getAllSnuMenus();
+		int i = db.getSnuMenuCount();
+		Log.d("SNUMENU" , "Menu Count : " + Integer.toString(i));
+		SnuMenu test = db.getSnuMenu(RES1, "JYP");
+		Log.d("SNUMENU", test.getCafe() + " " + test.getMenu() + " " + test.getEval());
+		for(SnuMenu snumenu : allsnumenu){
+			Log.d("SNUMENU", "db_test");
+			if(snumenu.getCafe().equals(RES1)){
+				res1.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES2)){
+				res2.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES3)){
+				res3.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES4)){
+				res4.add(snumenu);
+			}
+			
+		}
+		
+		// when not null 
+		SnuResList.add(new SnuRestaurant("restaurant 1", res1));
+		SnuResList.add(new SnuRestaurant("restaurant 2", res2));
+		SnuResList.add(new SnuRestaurant("restaurant 3", res3));
+		SnuResList.add(new SnuRestaurant("restaurant 4", res4));
+		
+		db.closeDB();
 
 	}
 

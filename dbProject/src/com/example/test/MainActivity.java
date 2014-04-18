@@ -2,6 +2,7 @@ package com.example.test;
 
 import java.util.Locale;
 
+import object.SnuMenu;
 import fragment.ConfigFragment;
 import fragment.DeliveryMenuFragment;
 import fragment.RecommandMenuFragment;
@@ -34,12 +35,18 @@ public class MainActivity extends FragmentActivity implements
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-
+	DatabaseHelper db;
+	static String RES1 = "restaurant 1";
+	static String RES2 = "restaurant 2";
+	static String RES3 = "restaurant 3";
+	static String RES4 = "restaurant 4";
+	static String RES5 = "restaurant 5";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		onCreateData();
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -160,6 +167,17 @@ public class MainActivity extends FragmentActivity implements
 			return null;
 		
 		}
+	}
+	
+	protected void onCreateData() {
+		db = new DatabaseHelper(getApplicationContext());
+		
+		db.deleteSnuMenuAll();
+		
+		db.createTodayMenu(new SnuMenu(RES1 , "JYP", "4.5"));
+		db.createTodayMenu(new SnuMenu(RES2 , "JYP1", "2"));
+		db.createTodayMenu(new SnuMenu(RES2 , "JYP2", "3"));
+		db.createTodayMenu(new SnuMenu(RES3 , "JYP3", "1"));
 	}
 //test push
 	/**
