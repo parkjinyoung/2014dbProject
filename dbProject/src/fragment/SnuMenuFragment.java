@@ -2,6 +2,7 @@ package fragment;
 
 import java.util.ArrayList;
 
+import object.Comment;
 import object.SnuMenu;
 import object.SnuRestaurant;
 import android.annotation.SuppressLint;
@@ -19,11 +20,13 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
+import com.example.test.DatabaseHelper;
 import com.example.test.ExpandableAdapter;
 import com.example.test.R;
 import com.example.test.SnuMenuDetails;
 import com.example.test.SnuRestaurantDetails;
-import com.example.test.DatabaseHelper;
+import com.google.gson.Gson;
+
 import comserver.SendServer;
 
 @SuppressLint("ValidFragment")
@@ -94,7 +97,17 @@ public class SnuMenuFragment extends Fragment {
 				
 				String url = "http://laputan32.cafe24.com/GetEval";
 				SendServer send = new SendServer(a, url);	
-				System.out.println("return : " + send.send());
+				String sendresult = send.send();
+				System.out.println("return : " + sendresult);
+				
+				if (sendresult != null && !sendresult.equals("")) {
+					
+					//json array parsing
+					Comment[] com_arr = new Gson().fromJson(sendresult, Comment[].class);
+					for(int ii=0; ii<com_arr.length; ii++){
+						System.out.println("comment arr [" + Integer.toString(ii) + "] : " + com_arr[ii].getComment());
+					}
+				}
 				
 				SnuRestaurant b = SnuResList.get(groupPosition);
 				
@@ -119,22 +132,6 @@ public class SnuMenuFragment extends Fragment {
 		res2.clear();
 		res3.clear();
 		res4.clear();
-//		
-//		long a1 = db.createTodayMenu(new SnuMenu(RES1 , "JYP", "4.5"));
-//		long a2 = db.createTodayMenu(new SnuMenu(RES2 , "JYP1", "2"));
-//		long a3 = db.createTodayMenu(new SnuMenu(RES2 , "JYP2", "3"));
-//		long a4 = db.createTodayMenu(new SnuMenu(RES3 , "JYP3", "1"));
-	/*	
-		ArrayList<SnuMenu> res1 = new ArrayList<SnuMenu>();
-		ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
-		SnuResList.add(new SnuRestaurant("restaurant 1", res1));
-		SnuResList.add(new SnuRestaurant("restaurant 2", res2));
-		res1.add(new SnuMenu("restaurant 1", "JYP", "4.5"));
-		res1.add(new SnuMenu("restaurant 1", "yujinee", "2.0"));
-		
-		res2.add(new SnuMenu("restaurant 2", "kangdongh", "4.0"));
-		res2.add(new SnuMenu("restaurant 2", "laputan", "3.5"));
-		*/
 
 		ArrayList<SnuMenu> allsnumenu = db.getAllSnuMenus();
 		int i = db.getSnuMenuCount();

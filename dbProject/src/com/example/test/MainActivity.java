@@ -3,10 +3,6 @@ package com.example.test;
 import java.util.Locale;
 
 import object.SnuMenu;
-import fragment.ConfigFragment;
-import fragment.DeliveryMenuFragment;
-import fragment.RecommandMenuFragment;
-import fragment.SnuMenuFragment;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -17,6 +13,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import comserver.SendServer;
+import fragment.ConfigFragment;
+import fragment.DeliveryMenuFragment;
+import fragment.RecommandMenuFragment;
+import fragment.SnuMenuFragment;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -181,6 +182,11 @@ public class MainActivity extends FragmentActivity implements
 		db = new DatabaseHelper(getApplicationContext());
 		
 		db.deleteSnuMenuAll();
+		
+		String url = "http://laputan32.cafe24.com/GetToday";
+		SendServer send = new SendServer(url);
+		String result = send.send();
+		System.out.println("result = " + result);
 		
 		db.createTodayMenu(new SnuMenu(RES1 , "사골우거지국", "4.5"));
 		db.createTodayMenu(new SnuMenu(RES2 , "JYP1", "2"));

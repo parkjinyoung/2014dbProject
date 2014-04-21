@@ -32,8 +32,14 @@ public class SendServer {
 	private final String MENU_SEND_NAME = "menupage";
 	private final String INSERT_COMMENT_SEND_NAME = "insertcomment";
 	private final String RECOM_COMMENT_SEND_NAME = "recomcomment";
+	private final String TODAYMENU_SEND_NAME = "todaymenu";
 	private String DATA_NAME = null;
 
+	public SendServer(String url){
+		this.SERVER_URL = url;
+		this.DATA_NAME = TODAYMENU_SEND_NAME;
+	}
+	
 	public SendServer(UserInfo userinfo, String url) {
 		this.userinfo = userinfo;
 		this.SERVER_URL = url;
@@ -89,6 +95,10 @@ public class SendServer {
 				return "";
 						
 			json = new Gson().toJson(comment);
+		}
+		
+		else if (DATA_NAME.equals(TODAYMENU_SEND_NAME)){
+			json = "get today menu";
 		}
 		
 		else {
