@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(TODAY_PRICE, snumenu.getPrice());
 		values.put(TODAY_CLASSIFY, snumenu.getClassify());
 		long result = db.insert(TABLE_TODAY_MENU, null, values);
-		Log.d("SNUMENU createTM", "cafe : " + snumenu.getCafe() + " menu : " + snumenu.getMenu() + " eval : " + snumenu.getEval());
+//		Log.d("SNUMENU createTM", "cafe : " + snumenu.getCafe() + " menu : " + snumenu.getMenu() + " eval : " + snumenu.getEval());
 		return result;
 	}
 	
@@ -137,7 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sm.setEval(c.getString(c.getColumnIndex(TODAY_EVAL)));
 		sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
 		sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
-		Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
+//		Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 		c.close();
 		return sm;
 	}
@@ -170,7 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
 				sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
 				snumenus.add(sm);
-				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
+//				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 			}
 			while(c.moveToNext());
 		}

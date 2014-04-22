@@ -9,17 +9,24 @@ public class SnuMenu {
 	public String getCafe() {
 		return cafe;
 	}
-	public void setCafe(String cafe) {
-		this.cafe = cafe;
-	}
 	public String getMenu() {
 		return menu;
 	}
 	public void setMenu(String menu) {
 		this.menu = menu;
 	}
+	public void setCafe(String cafe) {
+		this.cafe = cafe;
+	}
 	public SnuMenu(){
 		
+	}
+	public SnuMenu(String menu, String cafe, String eval, int price, String classify){
+		this.menu=menu;
+		this.cafe=cafe;
+		this.eval=eval;
+		this.price=price;
+		this.classify=classify;
 	}
 	public SnuMenu(String cafe, String menu, String eval){
 		this.cafe = cafe;

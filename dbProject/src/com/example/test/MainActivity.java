@@ -2,6 +2,9 @@ package com.example.test;
 
 import java.util.Locale;
 
+import com.google.gson.Gson;
+
+import object.Comment;
 import object.SnuMenu;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -187,6 +190,18 @@ public class MainActivity extends FragmentActivity implements
 		SendServer send = new SendServer(url);
 		String result = send.send();
 		System.out.println("result = " + result);
+		
+		SnuMenu[] todaymenu_arr = new Gson().fromJson(result, SnuMenu[].class);
+		for(int i=0; i<todaymenu_arr.length; i++){
+	/*		System.out.println("comment arr [" + Integer.toString(i) + "] : " + " menu : " + todaymenu_arr[i].getName()
+					+ " cafe : " + todaymenu_arr[i].getCafe()
+					+ " eval : " + todaymenu_arr[i].getEval()
+					+ " price : " + todaymenu_arr[i].getPrice()
+					+ " classify : " + todaymenu_arr[i].getClassify());
+	*/		
+			db.createTodayMenu(todaymenu_arr[i]);
+		}
+		
 		
 		db.createTodayMenu(new SnuMenu(RES1 , "사골우거지국", "4.5"));
 		db.createTodayMenu(new SnuMenu(RES2 , "JYP1", "2"));

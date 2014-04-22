@@ -49,6 +49,15 @@ public class SnuMenuFragment extends Fragment {
 	ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
 	ArrayList<SnuMenu> res3 = new ArrayList<SnuMenu>();
 	ArrayList<SnuMenu> res4 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res5 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res6 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res7 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res8 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res9 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res10 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res11 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res12 = new ArrayList<SnuMenu>();
+	ArrayList<SnuMenu> res13 = new ArrayList<SnuMenu>();
 	
 	int DETAIL_SNU_MENU_REQUEST=1;
 	DatabaseHelper db;
@@ -96,7 +105,7 @@ public class SnuMenuFragment extends Fragment {
 				SnuMenu a = SnuResList.get(groupPosition).getMymenu().get(childPosition);
 				
 				String url = "http://laputan32.cafe24.com/GetEval";
-				SendServer send = new SendServer(a, url);	
+				SendServer send = new SendServer(a, url);
 				String sendresult = send.send();
 				System.out.println("return : " + sendresult);
 				
@@ -107,7 +116,12 @@ public class SnuMenuFragment extends Fragment {
 					for(int ii=0; ii<com_arr.length; ii++){
 						System.out.println("comment arr [" + Integer.toString(ii) + "] : " + com_arr[ii].getComment());
 					}
+					
+					System.out.println("comment arr [ Id : " + com_arr[0].getId() + " cafe : " + com_arr[0].getCafe() + " menu : " + com_arr[0].getMenu()
+							+ " Date : " + com_arr[0].getDate() + " Rating : " + com_arr[0].getRating() + " recommend : " + com_arr[0].getRecommend());
 				}
+				
+				
 				
 				SnuRestaurant b = SnuResList.get(groupPosition);
 				
@@ -132,6 +146,15 @@ public class SnuMenuFragment extends Fragment {
 		res2.clear();
 		res3.clear();
 		res4.clear();
+		res5.clear();
+		res6.clear();
+		res7.clear();
+		res8.clear();
+		res9.clear();
+		res10.clear();
+		res11.clear();
+		res12.clear();
+		res13.clear();
 
 		ArrayList<SnuMenu> allsnumenu = db.getAllSnuMenus();
 		int i = db.getSnuMenuCount();
@@ -152,6 +175,36 @@ public class SnuMenuFragment extends Fragment {
 			else if(snumenu.getCafe().equals(RES4)){
 				res4.add(snumenu);
 			}
+			else if(snumenu.getCafe().equals(RES5)){
+				res5.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES6)){
+				res6.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES7)){
+				res7.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES8)){
+				res8.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES9)){
+				res9.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES10)){
+				res10.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES11)){
+				res11.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES12)){
+				res12.add(snumenu);
+			}
+			else if(snumenu.getCafe().equals(RES13)){
+				res13.add(snumenu);
+			}
+			else{
+				System.out.println("ERROR in gettoday_snf");
+			}
 			
 		}
 		
@@ -160,6 +213,15 @@ public class SnuMenuFragment extends Fragment {
 		SnuResList.add(new SnuRestaurant(RES2, res2));
 		SnuResList.add(new SnuRestaurant(RES3, res3));
 		SnuResList.add(new SnuRestaurant(RES4, res4));
+		SnuResList.add(new SnuRestaurant(RES5, res5));
+		SnuResList.add(new SnuRestaurant(RES6, res6));
+		SnuResList.add(new SnuRestaurant(RES7, res7));
+		SnuResList.add(new SnuRestaurant(RES8, res8));
+		SnuResList.add(new SnuRestaurant(RES9, res9));
+		SnuResList.add(new SnuRestaurant(RES10, res10));
+		SnuResList.add(new SnuRestaurant(RES11, res11));
+		SnuResList.add(new SnuRestaurant(RES12, res12));
+		SnuResList.add(new SnuRestaurant(RES13, res13));
 		
 		db.closeDB();
 
