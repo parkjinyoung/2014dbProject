@@ -127,11 +127,13 @@ public class SnuMenuFragment extends Fragment {
 				
 				i.putExtra("menu", a.getMenu());
 				i.putExtra("eval", a.getEval());
-				i.putExtra("resname", b.getName());
+				i.putExtra("cafe", a.getCafe());
+				i.putExtra("price", a.getPrice());
+				i.putExtra("classify", a.getClassify());
 				
 				// TODO : connect server to get data
 				
-				//startActivity(i);
+				startActivity(i);
 				return false;
 			}
 		});

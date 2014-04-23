@@ -53,12 +53,14 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 			 v = inflater.inflate(R.layout.snu_menu_list_row, parent, false);
 			 	viewHolder.title = (TextView) v.findViewById(R.id.row_title);
 			 	viewHolder.image = (ImageView) v.findViewById(R.id.eval_stars);
+			 	viewHolder.price = (TextView) v.findViewById(R.id.snu_todaymenu_price);
 	            v.setTag(viewHolder);
 	        }else{
 	            viewHolder = (ViewHolder)v.getTag();
 	        }
 		
 			viewHolder.title.setText(getChild(groupPosition, childPosition).getMenu());
+			viewHolder.price.setText(getChild(groupPosition, childPosition).getPrice());
 	         
 	        return v;
 	    }
@@ -139,6 +141,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 	
     class ViewHolder {
         public TextView title;
+        public TextView price;
         public ImageView image;
     }
  
