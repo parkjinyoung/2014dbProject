@@ -2,7 +2,7 @@ package object;
 
 public class SnuMenu {
 	private String menu;
-	private String eval;
+	private String rating;
 	private String cafe;
 	private int price;
 	private String classify;
@@ -21,23 +21,25 @@ public class SnuMenu {
 	public SnuMenu(){
 		
 	}
-	public SnuMenu(String menu, String cafe, String eval, int price, String classify){
+	public SnuMenu(String menu, String cafe, String rating, int price, String classify){
 		this.menu=menu;
 		this.cafe=cafe;
-		this.eval=eval;
+		this.rating=rating;
 		this.price=price;
 		this.classify=classify;
 	}
-	public SnuMenu(String cafe, String menu, String eval){
+	public SnuMenu(String cafe, String menu, String rating){
 		this.cafe = cafe;
 		this.menu = menu;
-		this.eval = eval;
+		this.rating = rating;
+		this.price = 0;
+		this.classify = null;
 	}
-	public String getEval() {
-		return eval;
+	public String getRating() {
+		return rating;
 	}
-	public void setEval(String eval) {
-		this.eval = eval;
+	public void setRating(String rating) {
+		this.rating = rating;
 	}
 	public int getPrice() {
 		return price;

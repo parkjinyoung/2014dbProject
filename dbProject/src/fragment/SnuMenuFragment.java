@@ -103,30 +103,30 @@ public class SnuMenuFragment extends Fragment {
 				
 				
 				SnuMenu a = SnuResList.get(groupPosition).getMymenu().get(childPosition);
-				
-				String url = "http://laputan32.cafe24.com/GetEval";
-				SendServer send = new SendServer(a, url);
-				String sendresult = send.send();
-				System.out.println("return : " + sendresult);
-				
-				if (sendresult != null && !sendresult.equals("")) {
-					
-					//json array parsing
-					Comment[] com_arr = new Gson().fromJson(sendresult, Comment[].class);
-					for(int ii=0; ii<com_arr.length; ii++){
-						System.out.println("comment arr [" + Integer.toString(ii) + "] : " + com_arr[ii].getComment());
-					}
-					
-					System.out.println("comment arr [ Id : " + com_arr[0].getId() + " cafe : " + com_arr[0].getCafe() + " menu : " + com_arr[0].getMenu()
-							+ " Date : " + com_arr[0].getDate() + " Rating : " + com_arr[0].getRating() + " recommend : " + com_arr[0].getRecommend());
-				}
-				
+//				
+//				String url = "http://laputan32.cafe24.com/GetEval";
+//				SendServer send = new SendServer(a, url);
+//				String sendresult = send.send();
+//				System.out.println("return : " + sendresult);
+//				
+//				if (sendresult != null && !sendresult.equals("")) {
+//					
+//					//json array parsing
+//					Comment[] com_arr = new Gson().fromJson(sendresult, Comment[].class);
+//					for(int ii=0; ii<com_arr.length; ii++){
+//						System.out.println("comment arr [" + Integer.toString(ii) + "] : " + com_arr[ii].getComment());
+//					}
+//					
+//					System.out.println("comment arr [ Id : " + com_arr[0].getId() + " cafe : " + com_arr[0].getCafe() + " menu : " + com_arr[0].getMenu()
+//							+ " Date : " + com_arr[0].getDate() + " Rating : " + com_arr[0].getRating() + " recommend : " + com_arr[0].getRecommend());
+//				}
+//				
 				
 				
 				SnuRestaurant b = SnuResList.get(groupPosition);
 				
 				i.putExtra("menu", a.getMenu());
-				i.putExtra("eval", a.getEval());
+				i.putExtra("eval", a.getRating());
 				i.putExtra("cafe", a.getCafe());
 				i.putExtra("price", a.getPrice());
 				i.putExtra("classify", a.getClassify());

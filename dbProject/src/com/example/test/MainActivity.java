@@ -193,20 +193,16 @@ public class MainActivity extends FragmentActivity implements
 		
 		SnuMenu[] todaymenu_arr = new Gson().fromJson(result, SnuMenu[].class);
 		for(int i=0; i<todaymenu_arr.length; i++){
-	/*		System.out.println("comment arr [" + Integer.toString(i) + "] : " + " menu : " + todaymenu_arr[i].getName()
+			System.out.println("comment arr [" + Integer.toString(i) + "] : " + " menu : " + todaymenu_arr[i].getMenu()
 					+ " cafe : " + todaymenu_arr[i].getCafe()
-					+ " eval : " + todaymenu_arr[i].getEval()
+					+ " eval : " + todaymenu_arr[i].getRating()
 					+ " price : " + todaymenu_arr[i].getPrice()
 					+ " classify : " + todaymenu_arr[i].getClassify());
-	*/		
+			
 			db.createTodayMenu(todaymenu_arr[i]);
 		}
 		
-		
-		db.createTodayMenu(new SnuMenu(RES1 , "사골우거지국", "4.5"));
-		db.createTodayMenu(new SnuMenu(RES2 , "JYP1", "2"));
-		db.createTodayMenu(new SnuMenu(RES2 , "JYP2", "3"));
-		db.createTodayMenu(new SnuMenu(RES3 , "JYP3", "1"));
+		db.createTodayMenu(new SnuMenu(RES1, "사골우거지국" , "4.5"));
 		
 		db.closeDB();
 	}

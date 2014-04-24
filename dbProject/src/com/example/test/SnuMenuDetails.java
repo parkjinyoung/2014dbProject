@@ -1,7 +1,11 @@
 package com.example.test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import com.google.gson.Gson;
+
+import comserver.SendServer;
 import object.Comment;
 import object.SnuMenu;
 import android.app.Activity;
@@ -16,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SnuMenuDetails extends Activity{
 	@Override
@@ -30,22 +35,68 @@ public class SnuMenuDetails extends Activity{
 		ImageView image_eval = (ImageView) findViewById(R.id.detail_snu_menu_eval_img);
 		TextView float_eval = (TextView) findViewById(R.id.detail_snu_menu_eval_float);
 
-		final String name = getIntent().getStringExtra("menu");
+		final String menu = getIntent().getStringExtra("menu");
 		String tmpeval = getIntent().getStringExtra("eval");
-		final String resname = getIntent().getStringExtra("resname");
-		float eval = Float.parseFloat(tmpeval);
-		text_cafe.setText(resname);
+		final String cafe = getIntent().getStringExtra("cafe");
+		int price = getIntent().getIntExtra("price", 0);
+		String classify = getIntent().getStringExtra("classify");
+
 		
-		float_eval.setText(tmpeval);
-		text_name.setText(name);
-		if(eval > 2.5){
-			image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
+		
+		if(tmpeval!=null){
+			float eval = Float.parseFloat(tmpeval);
+			if(eval > 2.5){
+				image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
+			}
+			else{
+				image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star2));
+			}
+
 		}
 		else{
-			image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star2));
+			image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
+//			No Comment Image
 		}
+		Toast.makeText(getApplicationContext(), "eval = " + tmpeval, Toast.LENGTH_SHORT).show();
+		
+		text_cafe.setText(cafe);
+		
+//		int eval = Integer.parseInt(tmpeval);
+		
+		
+		float_eval.setText(tmpeval);
+		text_name.setText(menu);
 
 
+		String url = "http://laputan32.cafe24.com/GetEval";
+		SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
+		
+		SendServer send = new SendServer(a, url);
+		String sendresult = send.send();
+		System.out.println("return : " + sendresult);
+		
+		if (sendresult != null && !sendresult.equals("")) {
+			
+			//json array parsing
+			Comment[] com_arr = new Gson().fromJson(sendresult, Comment[].class);
+			for(int ii=0; ii<com_arr.length; ii++){
+				System.out.println("comment arr [" + Integer.toString(ii) + "] : " + com_arr[ii].getComment());
+			}
+			
+			if(com_arr.length!=0){
+				ArrayAdapter<Comment> madapter1;
+				ArrayList<Comment> comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
+				
+				madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comarrlist);
+				ListView listView1 = (ListView)findViewById(R.id.detail_snu_menu_comment_listview);
+				listView1.setAdapter(madapter1);
+			
+			}
+			
+//			System.out.println("comment arr [ Id : " + com_arr[0].getId() + " cafe : " + com_arr[0].getCafe() + " menu : " + com_arr[0].getMenu()
+//					+ " Date : " + com_arr[0].getDate() + " Rating : " + com_arr[0].getRating() + " recommend : " + com_arr[0].getRecommend());
+		}
+		
 
 		ArrayList<String> list1 = new ArrayList<String>();
 		list1.add("comment1");
@@ -57,8 +108,8 @@ public class SnuMenuDetails extends Activity{
 
 		Comment com1 = new Comment();
 		com1.setId("박진영");
-		com1.setCafe(resname);
-		com1.setMenu(name);
+		com1.setCafe(cafe);
+		com1.setMenu(menu);
 		com1.setRating(tmpeval);
 		com1.setComment("GOOD");
 		com1.setId("1234");
@@ -66,19 +117,20 @@ public class SnuMenuDetails extends Activity{
 		
 		Comment com2 = new Comment();
 		com2.setId("유진선");
-		com2.setCafe(resname);
-		com2.setMenu(name);
+		com2.setCafe(cafe);
+		com2.setMenu(menu);
 		com2.setRating(tmpeval);
 		com2.setComment("BAD");
 		com2.setId("1234");
 		comlist1.add(com2);
 		
 		
-		ArrayAdapter<Comment> madapter1;
-		madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comlist1);
-		ListView listView1 = (ListView)findViewById(R.id.detail_snu_menu_comment_listview);
-		listView1.setAdapter(madapter1);
-		
+//		ArrayAdapter<Comment> madapter1;
+//		
+//		madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comlist1);
+//		ListView listView1 = (ListView)findViewById(R.id.detail_snu_menu_comment_listview);
+//		listView1.setAdapter(madapter1);
+//		
 		////////////////////////////
 		
 //		ArrayAdapter<String> adapter1;
@@ -96,8 +148,8 @@ public class SnuMenuDetails extends Activity{
 				// TODO Auto-generated method stub
 				
 				Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
-				i.putExtra("menu", name);
-				i.putExtra("cafe", resname);
+				i.putExtra("menu", menu);
+				i.putExtra("cafe", cafe);
 				
 				startActivity(i);
 				

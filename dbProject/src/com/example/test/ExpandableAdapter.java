@@ -60,7 +60,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 	        }
 		
 			viewHolder.title.setText(getChild(groupPosition, childPosition).getMenu());
-			viewHolder.price.setText(getChild(groupPosition, childPosition).getPrice());
+			viewHolder.price.setText(Integer.toString(getChild(groupPosition, childPosition).getPrice()));
 	         
 	        return v;
 	    }

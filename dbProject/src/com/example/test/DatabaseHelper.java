@@ -112,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(TODAY_CAFE, snumenu.getCafe());
 		values.put(TODAY_MENU, snumenu.getMenu());
-		values.put(TODAY_EVAL, snumenu.getEval());
+		values.put(TODAY_EVAL, snumenu.getRating());
 		values.put(TODAY_PRICE, snumenu.getPrice());
 		values.put(TODAY_CLASSIFY, snumenu.getClassify());
 		long result = db.insert(TABLE_TODAY_MENU, null, values);
@@ -134,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SnuMenu sm = new SnuMenu();
 		sm.setCafe(c.getString(c.getColumnIndex(TODAY_CAFE)));
 		sm.setMenu(c.getString(c.getColumnIndex(TODAY_MENU)));
-		sm.setEval(c.getString(c.getColumnIndex(TODAY_EVAL)));
+		sm.setRating(c.getString(c.getColumnIndex(TODAY_EVAL)));
 		sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
 		sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
 //		Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
@@ -166,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				SnuMenu sm = new SnuMenu();
 				sm.setCafe(c.getString(c.getColumnIndex(TODAY_CAFE)));
 				sm.setMenu(c.getString(c.getColumnIndex(TODAY_MENU)));
-				sm.setEval(c.getString(c.getColumnIndex(TODAY_EVAL)));
+				sm.setRating(c.getString(c.getColumnIndex(TODAY_EVAL)));
 				sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
 				sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
 				snumenus.add(sm);
