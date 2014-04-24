@@ -115,9 +115,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 
 				Intent i = new Intent(v.getContext(), SnuRestaurantDetails.class);
 				
-				i.putExtra("name", a.getName());
-//				i.putExtra("mymemu", a.getMymenu());
-//				i.putExtra("date", );
+				i.putExtra("cafe", a.getName());
 				
 				v.getContext().startActivity(i);
 				

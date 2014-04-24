@@ -142,6 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return sm;
 	}
 	
+
 	public int getSnuMenuCount() {
 		String countQuery = "SELECT  * FROM " + TABLE_TODAY_MENU;
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -152,6 +153,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		// return count
 		return count;
+	}
+	public ArrayList<SnuMenu> getCafeMenus(String cafe){
+		ArrayList<SnuMenu> snumenus = new ArrayList<SnuMenu>();
+		String selectQuery = "SELECT  * FROM " + TABLE_TODAY_MENU + " WHERE " 
+				+ TODAY_CAFE + " = '" + cafe;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+		
+		if(c.moveToFirst()){
+			do{
+				SnuMenu sm = new SnuMenu();
+				sm.setCafe(c.getString(c.getColumnIndex(TODAY_CAFE)));
+				sm.setMenu(c.getString(c.getColumnIndex(TODAY_MENU)));
+				sm.setRating(c.getString(c.getColumnIndex(TODAY_EVAL)));
+				sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
+				sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
+				snumenus.add(sm);
+//				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
+			}
+			while(c.moveToNext());
+		}
+		c.close();
+		return snumenus;
 	}
 	
 	public ArrayList<SnuMenu> getAllSnuMenus(){
