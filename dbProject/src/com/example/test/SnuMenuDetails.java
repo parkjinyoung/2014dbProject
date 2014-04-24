@@ -32,7 +32,14 @@ public class SnuMenuDetails extends Activity{
 
 		TextView text_name = (TextView) findViewById(R.id.detail_snu_menu_name);
 		TextView text_cafe = (TextView) findViewById(R.id.detail_snu_menu_cafe);
-		ImageView image_eval = (ImageView) findViewById(R.id.detail_snu_menu_eval_img);
+		
+		ImageView[] image_eval = new ImageView[5];
+		image_eval[0] = (ImageView) findViewById(R.id.detail_snu_menu_eval_img1);
+		image_eval[1] = (ImageView) findViewById(R.id.detail_snu_menu_eval_img2);
+		image_eval[2] = (ImageView) findViewById(R.id.detail_snu_menu_eval_img3);
+		image_eval[3] = (ImageView) findViewById(R.id.detail_snu_menu_eval_img4);
+		image_eval[4] = (ImageView) findViewById(R.id.detail_snu_menu_eval_img5);
+		
 		TextView float_eval = (TextView) findViewById(R.id.detail_snu_menu_eval_float);
 
 		final String menu = getIntent().getStringExtra("menu");
@@ -45,18 +52,30 @@ public class SnuMenuDetails extends Activity{
 		
 		if(tmpeval!=null){
 			float eval = Float.parseFloat(tmpeval);
+			
+			for(int j=0; j<5; j++){
+				if(eval >= 1) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.star25));
+				else if (eval == 0.5) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.halfstar25));
+				else if (eval <= 0) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
+				eval -= 1;
+			}
+/*			
 			if(eval > 2.5){
 				image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
 			}
 			else{
 				image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star2));
 			}
-
+*/
 		}
 		else{
-			image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
+			//image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
 //			No Comment Image
+			for(int j=0; j<5; j++){
+				image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
+			}
 		}
+		
 		Toast.makeText(getApplicationContext(), "eval = " + tmpeval, Toast.LENGTH_SHORT).show();
 		
 		text_cafe.setText(cafe);
