@@ -157,7 +157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public ArrayList<SnuMenu> getCafeMenus(String cafe){
 		ArrayList<SnuMenu> snumenus = new ArrayList<SnuMenu>();
 		String selectQuery = "SELECT  * FROM " + TABLE_TODAY_MENU + " WHERE " 
-				+ TODAY_CAFE + " = '" + cafe;
+				+ TODAY_CAFE + " = '" + cafe + "'";
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
 		
