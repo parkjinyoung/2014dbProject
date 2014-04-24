@@ -9,7 +9,7 @@ public class Comment {
 	String rating;
 	String date;
 	int recommend;
-	int nonrecommend;
+	int unrecommend;
 	public String getCafe() {
 		return cafe;
 	}
@@ -52,11 +52,11 @@ public class Comment {
 	public void setRecommend(int recommend) {
 		this.recommend = recommend;
 	}
-	public int getNonrecommend() {
-		return nonrecommend;
+	public int getUnrecommend() {
+		return unrecommend;
 	}
-	public void setNonrecommend(int nonrecommend) {
-		this.nonrecommend = nonrecommend;
+	public void setUnrecommend(int nonrecommend) {
+		this.unrecommend = nonrecommend;
 	}
 
 	

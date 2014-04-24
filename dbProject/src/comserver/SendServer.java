@@ -51,7 +51,7 @@ public class SendServer {
 		this.SERVER_URL = url;
 		this.comment = comment;
 		
-		if(comment.getRecommend() == 0 && comment.getNonrecommend() == 0)
+		if(comment.getRecommend() == 0 && comment.getUnrecommend() == 0)
 			this.DATA_NAME = INSERT_COMMENT_SEND_NAME;
 		else
 			this.DATA_NAME = RECOM_COMMENT_SEND_NAME;
