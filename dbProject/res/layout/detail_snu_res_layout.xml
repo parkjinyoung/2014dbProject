@@ -20,24 +20,37 @@
 	<TextView
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="오늘의 메뉴"
+	    android:text="아침"
 	    >
 	    
 	</TextView>
     <ListView 
-        android:id="@+id/detail_snu_res_todaymenu"
+        android:id="@+id/detail_snu_res_morningmenu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         ></ListView>
 	<TextView
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="전체 메뉴"
+	    android:text="점심"
 	    >
 	    
 	</TextView>
         <ListView 
-        android:id="@+id/detail_snu_res_totalmenu"
+        android:id="@+id/detail_snu_res_lunchmenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        > 
+        </ListView>
+        	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="저녁"
+	    >
+	    
+	</TextView>
+        <ListView 
+        android:id="@+id/detail_snu_res_dinnermenu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         > </ListView>
