@@ -52,7 +52,34 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 			viewHolder = new ViewHolder();
 			 v = inflater.inflate(R.layout.snu_menu_list_row, parent, false);
 			 	viewHolder.title = (TextView) v.findViewById(R.id.row_title);
-			 	viewHolder.image = (ImageView) v.findViewById(R.id.eval_stars);
+			 	//viewHolder.image = (ImageView) v.findViewById(R.id.eval_stars);
+			 	
+			 	ImageView[] image_eval = new ImageView[5];
+				image_eval[0] = (ImageView) v.findViewById(R.id.eval_stars1);
+				image_eval[1] = (ImageView) v.findViewById(R.id.eval_stars2);
+				image_eval[2] = (ImageView) v.findViewById(R.id.eval_stars3);
+				image_eval[3] = (ImageView) v.findViewById(R.id.eval_stars4);
+				image_eval[4] = (ImageView) v.findViewById(R.id.eval_stars5);
+				
+				String tmpeval = getChild(groupPosition, childPosition).getRating();
+		        
+				if(tmpeval!=null){
+					float eval = Float.parseFloat(tmpeval);
+					
+					for(int j=0; j<5; j++){
+						if(eval >= 1) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.star25));
+						else if (eval == 0.5) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.halfstar25));
+						else if (eval <= 0) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.emptystar25));
+						eval -= 1;
+					}
+				}
+				else{
+//					No Comment Image
+					for(int j=0; j<5; j++){
+						image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.emptystar25));
+					}
+				}
+			 	
 			 	viewHolder.price = (TextView) v.findViewById(R.id.snu_todaymenu_price);
 	            v.setTag(viewHolder);
 	        }else{
@@ -61,8 +88,9 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 		
 			viewHolder.title.setText(getChild(groupPosition, childPosition).getMenu());
 			viewHolder.price.setText(Integer.toString(getChild(groupPosition, childPosition).getPrice()));
-	         
-	        return v;
+			
+			
+			return v;
 	    }
 
 	@Override

@@ -26,13 +26,40 @@
            android:text="가격"
             />
         <ImageView
-            android:id="@+id/eval_stars"
+            android:id="@+id/eval_stars1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:maxHeight="16dp"
-            android:maxWidth="80dp"
-            android:src="@drawable/star25" />
+            android:maxWidth="80dp"/>
+        <ImageView
+            android:id="@+id/eval_stars2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:maxHeight="16dp"
+            android:maxWidth="80dp"/>
+        <ImageView
+            android:id="@+id/eval_stars3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:maxHeight="16dp"
+            android:maxWidth="80dp"/>
+        <ImageView
+            android:id="@+id/eval_stars4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:maxHeight="16dp"
+            android:maxWidth="80dp"/>
+        <ImageView
+            android:id="@+id/eval_stars5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:maxHeight="16dp"
+            android:maxWidth="80dp"/>
     </LinearLayout>
 
 </LinearLayout>

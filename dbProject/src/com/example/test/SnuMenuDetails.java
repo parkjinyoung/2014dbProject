@@ -59,17 +59,8 @@ public class SnuMenuDetails extends Activity{
 				else if (eval <= 0) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
 				eval -= 1;
 			}
-/*			
-			if(eval > 2.5){
-				image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
-			}
-			else{
-				image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star2));
-			}
-*/
 		}
 		else{
-			//image_eval.setImageDrawable(getResources().getDrawable(R.drawable.star1));
 //			No Comment Image
 			for(int j=0; j<5; j++){
 				image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
