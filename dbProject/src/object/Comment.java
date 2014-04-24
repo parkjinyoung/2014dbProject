@@ -10,6 +10,20 @@ public class Comment {
 	String date;
 	int recommend;
 	int unrecommend;
+	public Comment(){
+		
+	}
+	
+	public Comment(String cafe, String menu, String id, String comment,
+			String rating, String date, int recommend, int unrecommend){
+		this.cafe = cafe;
+		this.menu = menu;
+		this.id = id;
+		this.comment = comment;
+		this.rating = rating;
+		this.date = date;
+	}
+	
 	public String getCafe() {
 		return cafe;
 	}

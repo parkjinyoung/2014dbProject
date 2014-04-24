@@ -55,8 +55,8 @@ public class SnuMenuDetails extends Activity{
 			
 			for(int j=0; j<5; j++){
 				if(eval >= 1) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.star25));
-				else if (eval == 0.5) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.halfstar25));
-				else if (eval <= 0) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
+				else if (eval >= 0.5) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.halfstar25));
+				else image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
 				eval -= 1;
 			}
 		}
@@ -114,41 +114,6 @@ public class SnuMenuDetails extends Activity{
 		list1.add("comment3");
 		
 		//////////////////////
-		ArrayList<Comment> comlist1 = new ArrayList<Comment>();
-
-		Comment com1 = new Comment();
-		com1.setId("박진영");
-		com1.setCafe(cafe);
-		com1.setMenu(menu);
-		com1.setRating(tmpeval);
-		com1.setComment("GOOD");
-		com1.setId("1234");
-		comlist1.add(com1);
-		
-		Comment com2 = new Comment();
-		com2.setId("유진선");
-		com2.setCafe(cafe);
-		com2.setMenu(menu);
-		com2.setRating(tmpeval);
-		com2.setComment("BAD");
-		com2.setId("1234");
-		comlist1.add(com2);
-		
-		
-//		ArrayAdapter<Comment> madapter1;
-//		
-//		madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comlist1);
-//		ListView listView1 = (ListView)findViewById(R.id.detail_snu_menu_comment_listview);
-//		listView1.setAdapter(madapter1);
-//		
-		////////////////////////////
-		
-//		ArrayAdapter<String> adapter1;
-//		adapter1 = new ArrayAdapter<String>(this, R.layout.comment_list_item, list1);
-//		ListView listView1 = (ListView)findViewById(R.id.detail_snu_menu_comment);
-//		listView1.setAdapter(adapter1);
-		
-		
 		
 		Button evalbtn = (Button) findViewById(R.id.detail_snu_menu_do_eval_btn);
 		evalbtn.setOnClickListener(new OnClickListener() {

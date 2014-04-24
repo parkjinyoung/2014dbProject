@@ -202,8 +202,6 @@ public class MainActivity extends FragmentActivity implements
 			db.createTodayMenu(todaymenu_arr[i]);
 		}
 		
-		db.createTodayMenu(new SnuMenu(RES1, "사골우거지국" , "4.5"));
-		
 		db.closeDB();
 	}
 //test push
