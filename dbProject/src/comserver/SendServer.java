@@ -46,8 +46,7 @@ public class SendServer {
 		this.DATA_NAME = USER_SEND_NAME;
 	}
 	
-	public SendServer(UserInfo userinfo, Comment comment, String url){
-		this.userinfo = userinfo;
+	public SendServer(Comment comment, String url){
 		this.SERVER_URL = url;
 		this.comment = comment;
 		

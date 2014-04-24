@@ -4,7 +4,25 @@ public class RecComment {
 	String rec_id;
 	String eval_id;
 	boolean recommend;
+	String menu;
+	String cafe;
 	
+	public String getMenu() {
+		return menu;
+	}
+
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
+
+	public String getCafe() {
+		return cafe;
+	}
+
+	public void setCafe(String cafe) {
+		this.cafe = cafe;
+	}
+
 	public RecComment(){
 		/*
 		 * rec_id는 유저(추천하는사람) id,  

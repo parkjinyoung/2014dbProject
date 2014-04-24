@@ -1,9 +1,10 @@
 package com.example.test;
 
 import java.util.Date;
-
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import comserver.SendServer;
 
 import object.Comment;
 import android.app.Activity;
@@ -66,6 +67,10 @@ public class EvalSnuMenu extends Activity{
 				// (in server) using eval as float instead of string 
 				
 				//send com to SetEval
+				String url = "http://laputan32.cafe24.com/SetEval";
+				SendServer send = new SendServer(com, url);
+				String sendresult = send.send();
+				System.out.println("comment insert = " + sendresult);
 				
 				Toast.makeText(EvalSnuMenu.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
 			}

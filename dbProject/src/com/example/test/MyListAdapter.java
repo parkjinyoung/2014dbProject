@@ -32,35 +32,36 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
             LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(rsrc, null);
         } 
-        Comment e = items.get(position);
+        final Comment e = items.get(position);
         if (e != null) {
             ((TextView)v.findViewById(R.id.snumenu_detail_comment_text)).setText(e.getComment());
             ((TextView)v.findViewById(R.id.snumenu_detail_comment_nickname)).setText(e.getId());
+    		Button recommendbtn = (Button) v.findViewById(R.id.comment_up_btn);
+    		recommendbtn.setFocusable(true);
+    		recommendbtn.setClickable(true);
+    		recommendbtn.setOnClickListener(new OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				// TODO Auto-generated method stub
+    				Toast.makeText(getContext(), "추천 " + e.getId(), Toast.LENGTH_SHORT).show();
+    			}
+    		});
+    		
+    		Button unrecommendbtn = (Button) v.findViewById(R.id.comment_down_btn);
+    		unrecommendbtn.setFocusable(true);
+    		unrecommendbtn.setClickable(true);
+    		unrecommendbtn.setOnClickListener(new OnClickListener() {
+    			
+    			@Override
+    			public void onClick(View v) {
+    				// TODO Auto-generated method stub
+    				Toast.makeText(getContext(), "안추천", Toast.LENGTH_SHORT).show();
+    			}
+    		});
         }
         
-		Button recommendbtn = (Button) v.findViewById(R.id.comment_up_btn);
-		recommendbtn.setFocusable(true);
-		recommendbtn.setClickable(true);
-		recommendbtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getContext(), "추천", Toast.LENGTH_SHORT).show();
-			}
-		});
-		
-		Button unrecommendbtn = (Button) v.findViewById(R.id.comment_down_btn);
-		unrecommendbtn.setFocusable(true);
-		unrecommendbtn.setClickable(true);
-		unrecommendbtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getContext(), "안추천", Toast.LENGTH_SHORT).show();
-			}
-		});
+
         
         return v;
     }
