@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SnuMenuDetails extends Activity{
+	DatabaseHelper db;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,12 +46,18 @@ public class SnuMenuDetails extends Activity{
 		TextView float_eval = (TextView) findViewById(R.id.detail_snu_menu_eval_float);
 
 		final String menu = getIntent().getStringExtra("menu");
-		final String tmpeval = getIntent().getStringExtra("eval");
+//		final String tmpeval = getIntent().getStringExtra("eval");
 		final String cafe = getIntent().getStringExtra("cafe");
-		final int price = getIntent().getIntExtra("price", 0);
-		final String classify = getIntent().getStringExtra("classify");
+//		final int price = getIntent().getIntExtra("price", 0);
+//		final String classify = getIntent().getStringExtra("classify");
 
+		db = new DatabaseHelper(getApplicationContext());
+		SnuMenu snumenu = db.getSnuMenu(cafe, menu);
+		db.closeDB();
 		
+		final String tmpeval = snumenu.getRating();
+		final int price = snumenu.getPrice();
+		final String classify = snumenu.getClassify();
 		
 		if(tmpeval!=null){
 			float eval = Float.parseFloat(tmpeval);

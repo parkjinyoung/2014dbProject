@@ -89,7 +89,7 @@ public class SnuRestaurantDetails extends Activity{
 				i.putExtra("menu", snumenu.getMenu());
 				i.putExtra("price", snumenu.getPrice());
 				i.putExtra("classify", snumenu.getClassify());
-				i.putExtra("rating", snumenu.getRating());
+				i.putExtra("eval", snumenu.getRating());
 				
 				startActivity(i);
 			}
@@ -110,7 +110,7 @@ public class SnuRestaurantDetails extends Activity{
 				i.putExtra("menu", snumenu.getMenu());
 				i.putExtra("price", snumenu.getPrice());
 				i.putExtra("classify", snumenu.getClassify());
-				i.putExtra("rating", snumenu.getRating());
+				i.putExtra("eval", snumenu.getRating());
 				
 				startActivity(i);
 			}

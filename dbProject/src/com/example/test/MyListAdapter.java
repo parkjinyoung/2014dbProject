@@ -185,14 +185,13 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
 					Intent i = new Intent(v.getContext(),SnuMenuDetails.class);
 					
 					db = new DatabaseHelper(v.getContext());
-					SnuMenu snumenu = db.getSnuMenu(e.getCafe(), e.getMenu());
+					
+					//db.updateSnuMenu(e.getCafe(), e.getMenu(), newrating); // 수정된 eval 넣어줌
+					
 					db.closeDB();
 					
-					i.putExtra("menu", snumenu.getMenu());
-					i.putExtra("cafe", snumenu.getCafe());
-					i.putExtra("price", snumenu.getPrice());
-					i.putExtra("Classify", snumenu.getClassify());
-					i.putExtra("eval", "0.5"); // 수정된 eval 넣어줌
+					i.putExtra("menu", e.getMenu());
+					i.putExtra("cafe", e.getCafe());
 					
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					v.getContext().startActivity(i);
