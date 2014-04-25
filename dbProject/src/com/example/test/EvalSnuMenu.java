@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EvalSnuMenu extends Activity{
+	DatabaseHelper db;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,13 +40,19 @@ public class EvalSnuMenu extends Activity{
 		final int price = getIntent().getIntExtra("price", 0);
 		final String classify = getIntent().getStringExtra("classify");
 		
+		final String rating = getIntent().getStringExtra("rating");
+		final String comment = getIntent().getStringExtra("comment");
+		
 		TextView menuname = (TextView) findViewById(R.id.eval_snumenu_menu_name);
 		TextView cafename = (TextView) findViewById(R.id.eval_snumenu_res_name);
 		Button evalbtn = (Button) findViewById(R.id.eval_snumenu_btn);
 		final EditText commenttext = (EditText) findViewById(R.id.eval_snumenu_comment);
 		final RatingBar ratingbar = (RatingBar) findViewById(R.id.eval_snumenu_ratingbar);
 		
-
+		if(comment !=null && rating != null){
+			commenttext.setText(comment);
+			ratingbar.setRating(Float.parseFloat(rating));
+		}
 
 		menuname.setText(menu);
 		cafename.setText(cafe);
@@ -59,7 +66,7 @@ public class EvalSnuMenu extends Activity{
 				String eval = String.valueOf(ratingbar.getRating());
 				float rating = ratingbar.getRating();
 				
-				String user_id = "tong"; // get from db
+				String user_id = "yujinee"; // get from db
 				
 				SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
 				Date currentTime = new Date ();
@@ -84,6 +91,11 @@ public class EvalSnuMenu extends Activity{
 					geteval = (String) jo.get("rating");
 				}
 				
+				if(!geteval.equals("0")){
+					db = new DatabaseHelper(getApplicationContext());
+					db.updateSnuMenu(cafe, menu, geteval);
+					db.closeDB();
+				}
 				Toast.makeText(EvalSnuMenu.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
 				
 				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);

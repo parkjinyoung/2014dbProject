@@ -9,6 +9,7 @@ import comserver.SendServer;
 import object.Comment;
 import object.SnuMenu;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +27,8 @@ public class SnuMenuDetails extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+	    am.restartPackage(getPackageName()); 
 		
 		setContentView(R.layout.detail_snu_menu_layout);
 
@@ -52,6 +54,7 @@ public class SnuMenuDetails extends Activity{
 		
 		if(tmpeval!=null){
 			float eval = Float.parseFloat(tmpeval);
+
 			
 			for(int j=0; j<5; j++){
 				if(eval >= 1) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.star25));
@@ -66,15 +69,15 @@ public class SnuMenuDetails extends Activity{
 				image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
 			}
 		}
-		
-		Toast.makeText(getApplicationContext(), "eval = " + tmpeval, Toast.LENGTH_SHORT).show();
-		
+		if(cafe != null); //
 		text_cafe.setText(cafe);
 		
-//		int eval = Integer.parseInt(tmpeval);
-		
-		
-		float_eval.setText(tmpeval);
+		float teval = 0 ,eval = 0;
+		if(tmpeval != null){
+		teval = Float.parseFloat(tmpeval);
+		eval = (float) Math.floor(teval * 10f) / 10f;
+		}
+		float_eval.setText(Float.toString(eval));
 		text_name.setText(menu);
 
 
@@ -131,4 +134,12 @@ public class SnuMenuDetails extends Activity{
 		});
 		
 	}
+	
+//	@Override
+//	protected void onNewIntent(Intent intent){
+//		super.onNewIntent(intent);
+//
+//	}
+	
+	
 }

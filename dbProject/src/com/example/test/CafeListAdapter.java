@@ -55,8 +55,8 @@ public class CafeListAdapter extends ArrayAdapter<SnuMenu>{
     			float eval = Float.parseFloat(tmpeval);
     			for(int j=0; j<5; j++){
     				if(eval >= 1) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.star25));
-    				else if (eval == 0.5) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.halfstar25));
-    				else if (eval <= 0) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.emptystar25));
+    				else if (eval >= 0.5) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.halfstar25));
+    				else image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.emptystar25));
     				eval -= 1;
     			}
     		}
