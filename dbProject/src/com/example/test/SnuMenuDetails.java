@@ -81,7 +81,7 @@ public class SnuMenuDetails extends Activity{
 		String url = "http://laputan32.cafe24.com/Eval";
 		SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
 		
-		SendServer send = new SendServer(a, url, "2");
+		SendServer send = new SendServer(a, url);
 		String sendresult = send.send();
 		System.out.println("snumenudetails sendserver return : " + sendresult);
 		

@@ -1,26 +1,35 @@
 package object;
 
 public class RecComment {
-	String rec_nickname;
-	String eval_nickname;
-	boolean recommend;
+	String rec_nick;
+	String eval_nick;
+	String recommend;
 	String menu;
 	String cafe;
 	
-	public String getRec_nickname() {
-		return rec_nickname;
+	public RecComment(String rec_nickname, String eval_nickname,
+			String recommend, String menu, String cafe) {
+		this.rec_nick = rec_nickname;
+		this.eval_nick = eval_nickname;
+		this.recommend = recommend;
+		this.menu = menu;
+		this.cafe = cafe;
 	}
 
-	public void setRec_nickname(String rec_nickname) {
-		this.rec_nickname = rec_nickname;
+	public String getRec_nick() {
+		return rec_nick;
 	}
 
-	public String getEval_nickname() {
-		return eval_nickname;
+	public void setRec_nick(String rec_nickname) {
+		this.rec_nick = rec_nickname;
 	}
 
-	public void setEval_nickname(String eval_nickname) {
-		this.eval_nickname = eval_nickname;
+	public String getEval_nick() {
+		return eval_nick;
+	}
+
+	public void setEval_nick(String eval_nickname) {
+		this.eval_nick = eval_nickname;
 	}
 
 	public String getMenu() {
@@ -43,15 +52,15 @@ public class RecComment {
 		/*
 		 * rec_id는 유저(추천하는사람) id,  
 		 * eval_id는 평가를 작성한 사람 id,
-		 *  recommend는 boolean값 추천이면 true 비추면 false
+		 *  recommend는 String값 추천이면 true 비추면 false
 		 *  return 값 : SetRec은 메시지 보내줌
 		 */
 	}
 	
-	public boolean isRecommend() {
+	public String isRecommend() {
 		return recommend;
 	}
-	public void setRecommend(boolean recommend) {
+	public void setRecommend(String recommend) {
 		this.recommend = recommend;
 	}
 }
