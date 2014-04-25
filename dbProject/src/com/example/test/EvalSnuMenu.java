@@ -1,8 +1,15 @@
 package com.example.test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import com.google.gson.Gson;
 
 import comserver.SendServer;
 import object.Comment;
@@ -12,8 +19,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +59,7 @@ public class EvalSnuMenu extends Activity{
 				String eval = String.valueOf(ratingbar.getRating());
 				float rating = ratingbar.getRating();
 				
-				String user_id = "yujinee"; // get from db
+				String user_id = "tong"; // get from db
 				
 				SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
 				Date currentTime = new Date ();
@@ -68,6 +77,13 @@ public class EvalSnuMenu extends Activity{
 				String sendresult = send.send();
 				System.out.println("comment insert = " + sendresult);
 				
+				String geteval = "0";
+				
+				if (sendresult != null && !sendresult.equals("")) {
+					JSONObject jo = (JSONObject) JSONValue.parse(sendresult);
+					geteval = (String) jo.get("rating");
+				}
+				
 				Toast.makeText(EvalSnuMenu.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
 				
 				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
@@ -76,7 +92,7 @@ public class EvalSnuMenu extends Activity{
 				i.putExtra("menu", menu);
 				i.putExtra("price", price);
 				i.putExtra("classify", classify);
-				i.putExtra("eval", tmpeval);
+				i.putExtra("eval", geteval);
 				
 				startActivity(i);
 			}

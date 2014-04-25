@@ -83,7 +83,7 @@ public class SnuMenuDetails extends Activity{
 		
 		SendServer send = new SendServer(a, url, "2");
 		String sendresult = send.send();
-		System.out.println("return : " + sendresult);
+		System.out.println("snumenudetails sendserver return : " + sendresult);
 		
 		if (sendresult != null && !sendresult.equals("")) {
 			
