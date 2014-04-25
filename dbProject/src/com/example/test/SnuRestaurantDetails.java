@@ -1,9 +1,14 @@
 package com.example.test;
 
 import java.util.ArrayList;
+
 import object.SnuMenu;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -67,5 +72,71 @@ public class SnuRestaurantDetails extends Activity{
         
         ListView listView3 = (ListView)findViewById(R.id.detail_snu_res_dinnermenu);
         listView3.setAdapter(madapter3);
+
+        
+        listView1.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> list, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				SnuMenu snumenu = (SnuMenu) list.getAdapter().getItem(position);
+				Toast.makeText(getApplicationContext(), snumenu.getMenu(), Toast.LENGTH_SHORT).show();
+				
+				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
+				
+				i.putExtra("cafe", snumenu.getCafe());
+				i.putExtra("menu", snumenu.getMenu());
+				i.putExtra("price", snumenu.getPrice());
+				i.putExtra("classify", snumenu.getClassify());
+				i.putExtra("rating", snumenu.getRating());
+				
+				startActivity(i);
+			}
+        	
+		});
+        listView2.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> list, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				SnuMenu snumenu = (SnuMenu) list.getAdapter().getItem(position);
+				Toast.makeText(getApplicationContext(), snumenu.getMenu(), Toast.LENGTH_SHORT).show();
+				
+				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
+				
+				i.putExtra("cafe", snumenu.getCafe());
+				i.putExtra("menu", snumenu.getMenu());
+				i.putExtra("price", snumenu.getPrice());
+				i.putExtra("classify", snumenu.getClassify());
+				i.putExtra("rating", snumenu.getRating());
+				
+				startActivity(i);
+			}
+        	
+		});
+        listView3.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> list, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				SnuMenu snumenu = (SnuMenu) list.getAdapter().getItem(position);
+				Toast.makeText(getApplicationContext(), snumenu.getMenu(), Toast.LENGTH_SHORT).show();
+				
+				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
+				
+				i.putExtra("cafe", snumenu.getCafe());
+				i.putExtra("menu", snumenu.getMenu());
+				i.putExtra("price", snumenu.getPrice());
+				i.putExtra("classify", snumenu.getClassify());
+				i.putExtra("eval", snumenu.getRating());
+				
+				startActivity(i);
+			}
+        	
+		});
+        
 	}
 }
