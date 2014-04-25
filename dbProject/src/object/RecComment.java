@@ -1,12 +1,28 @@
 package object;
 
 public class RecComment {
-	String rec_id;
-	String eval_id;
+	String rec_nickname;
+	String eval_nickname;
 	boolean recommend;
 	String menu;
 	String cafe;
 	
+	public String getRec_nickname() {
+		return rec_nickname;
+	}
+
+	public void setRec_nickname(String rec_nickname) {
+		this.rec_nickname = rec_nickname;
+	}
+
+	public String getEval_nickname() {
+		return eval_nickname;
+	}
+
+	public void setEval_nickname(String eval_nickname) {
+		this.eval_nickname = eval_nickname;
+	}
+
 	public String getMenu() {
 		return menu;
 	}
@@ -32,18 +48,6 @@ public class RecComment {
 		 */
 	}
 	
-	public String getRec_id() {
-		return rec_id;
-	}
-	public void setRec_id(String rec_id) {
-		this.rec_id = rec_id;
-	}
-	public String getEval_id() {
-		return eval_id;
-	}
-	public void setEval_id(String eval_id) {
-		this.eval_id = eval_id;
-	}
 	public boolean isRecommend() {
 		return recommend;
 	}

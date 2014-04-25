@@ -34,6 +34,8 @@ public class SendServer {
 	private final String RECOM_COMMENT_SEND_NAME = "recomcomment";
 	private final String TODAYMENU_SEND_NAME = "todaymenu";
 	private String DATA_NAME = null;
+	//평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 
+	private String identifier = null;
 
 	public SendServer(String url){
 		this.SERVER_URL = url;
@@ -46,26 +48,32 @@ public class SendServer {
 		this.DATA_NAME = USER_SEND_NAME;
 	}
 	
-	public SendServer(Comment comment, String url){
+	public SendServer(Comment comment, String url, String identifier){
 		this.SERVER_URL = url;
 		this.comment = comment;
+		this.identifier = identifier;
 		
-		if(comment.getRecommend() == 0 && comment.getUnrecommend() == 0)
+		if(identifier.equals("1")){
 			this.DATA_NAME = INSERT_COMMENT_SEND_NAME;
-		else
+		}
+		else if (identifier.equals("4")){
 			this.DATA_NAME = RECOM_COMMENT_SEND_NAME;
+		}
 	}
 	
-	public SendServer(SnuMenu snumenu, String url){
+	public SendServer(SnuMenu snumenu, String url, String identifier){
 		this.snumenu = snumenu;
 		this.SERVER_URL = url;
 		this.DATA_NAME = MENU_SEND_NAME;
+		this.identifier = identifier;
 	}
 
 	
 	public String send() {
 		StrictMode.enableDefaults();
 		String json = "";
+		String parm = "";
+		if(identifier != null) parm += "identifier=" + identifier + "&";
 		
 		if (DATA_NAME.equals(USER_SEND_NAME)) {
 			if (userinfo == null)
@@ -107,9 +115,8 @@ public class SendServer {
 		try {
 
 			HttpResponse result = null;
-			String parm = "data" + "=";
-			parm += json;
-			System.out.println("json = " + json);
+			parm += "data=" + json;
+			System.out.println("parm = " + parm);
 			result = new Network().execute(SERVER_URL, parm).get();
 			return isSend(result);
 

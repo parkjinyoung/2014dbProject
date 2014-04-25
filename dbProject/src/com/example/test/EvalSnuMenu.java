@@ -38,14 +38,6 @@ public class EvalSnuMenu extends Activity{
 		menuname.setText(menu);
 		cafename.setText(cafe);
 	 
-//		ratingbar.setOnRatingBarChangeListener(new 
-//	             OnRatingBarChangeListener() {
-//	             public void onRatingChanged(RatingBar ratingBar, 
-//	                   float rating, boolean fromUser) {
-//	     
-//	             }
-//	       });
-		
 		evalbtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -67,8 +59,9 @@ public class EvalSnuMenu extends Activity{
 				// (in server) using eval as float instead of string 
 				
 				//send com to SetEval
-				String url = "http://laputan32.cafe24.com/SetEval";
-				SendServer send = new SendServer(com, url);
+				//평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 
+				String url = "http://laputan32.cafe24.com/Eval";
+				SendServer send = new SendServer(com, url, "1");
 				String sendresult = send.send();
 				System.out.println("comment insert = " + sendresult);
 				

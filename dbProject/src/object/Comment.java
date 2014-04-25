@@ -4,7 +4,7 @@ package object;
 public class Comment {
 	String cafe;
 	String menu;
-	String id;
+	String nickname;
 	String comment;
 	String rating;
 	String date;
@@ -14,11 +14,11 @@ public class Comment {
 		
 	}
 	
-	public Comment(String cafe, String menu, String id, String comment,
+	public Comment(String cafe, String menu, String nickname, String comment,
 			String rating, String date, int recommend, int unrecommend){
 		this.cafe = cafe;
 		this.menu = menu;
-		this.id = id;
+		this.nickname = nickname;
 		this.comment = comment;
 		this.rating = rating;
 		this.date = date;
@@ -36,11 +36,11 @@ public class Comment {
 	public void setMenu(String menu) {
 		this.menu = menu;
 	}
-	public String getId() {
-		return id;
+	public String getnickname() {
+		return nickname;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setnickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getComment() {
 		return comment;

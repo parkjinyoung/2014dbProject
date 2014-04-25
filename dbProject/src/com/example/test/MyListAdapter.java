@@ -35,7 +35,7 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
         final Comment e = items.get(position);
         if (e != null) {
             ((TextView)v.findViewById(R.id.snumenu_detail_comment_text)).setText(e.getComment());
-            ((TextView)v.findViewById(R.id.snumenu_detail_comment_nickname)).setText(e.getId());
+            ((TextView)v.findViewById(R.id.snumenu_detail_comment_nickname)).setText(e.getnickname());
     		Button recommendbtn = (Button) v.findViewById(R.id.comment_up_btn);
     		recommendbtn.setFocusable(true);
     		recommendbtn.setClickable(true);
@@ -44,7 +44,7 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			@Override
     			public void onClick(View v) {
     				// TODO Auto-generated method stub
-    				Toast.makeText(getContext(), "추천 " + e.getId(), Toast.LENGTH_SHORT).show();
+    				Toast.makeText(getContext(), "추천 " + e.getnickname(), Toast.LENGTH_SHORT).show();
     			}
     		});
     		
