@@ -52,7 +52,6 @@
             ></activity>
         <activity
             android:name="com.example.test.EvalSnuMenu"
-            android:launchMode="singleInstance"
             ></activity>
         <activity android:name="DeliveryDetails"></activity>
     </application>
