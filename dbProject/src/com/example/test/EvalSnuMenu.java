@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import comserver.SendServer;
-
 import object.Comment;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +25,10 @@ public class EvalSnuMenu extends Activity{
 		setContentView(R.layout.evalsnumenu_layout);
 		
 		final String menu = getIntent().getStringExtra("menu");
+		final String tmpeval = getIntent().getStringExtra("eval");
 		final String cafe = getIntent().getStringExtra("cafe");
+		final int price = getIntent().getIntExtra("price", 0);
+		final String classify = getIntent().getStringExtra("classify");
 		
 		TextView menuname = (TextView) findViewById(R.id.eval_snumenu_menu_name);
 		TextView cafename = (TextView) findViewById(R.id.eval_snumenu_res_name);
@@ -66,6 +69,16 @@ public class EvalSnuMenu extends Activity{
 				System.out.println("comment insert = " + sendresult);
 				
 				Toast.makeText(EvalSnuMenu.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
+				
+				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
+				
+				i.putExtra("cafe", cafe);
+				i.putExtra("menu", menu);
+				i.putExtra("price", price);
+				i.putExtra("classify", classify);
+				i.putExtra("eval", tmpeval);
+				
+				startActivity(i);
 			}
 		});
 	}

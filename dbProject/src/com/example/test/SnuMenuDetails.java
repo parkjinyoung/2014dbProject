@@ -43,10 +43,10 @@ public class SnuMenuDetails extends Activity{
 		TextView float_eval = (TextView) findViewById(R.id.detail_snu_menu_eval_float);
 
 		final String menu = getIntent().getStringExtra("menu");
-		String tmpeval = getIntent().getStringExtra("eval");
+		final String tmpeval = getIntent().getStringExtra("eval");
 		final String cafe = getIntent().getStringExtra("cafe");
-		int price = getIntent().getIntExtra("price", 0);
-		String classify = getIntent().getStringExtra("classify");
+		final int price = getIntent().getIntExtra("price", 0);
+		final String classify = getIntent().getStringExtra("classify");
 
 		
 		
@@ -108,11 +108,6 @@ public class SnuMenuDetails extends Activity{
 		}
 		
 
-		ArrayList<String> list1 = new ArrayList<String>();
-		list1.add("comment1");
-		list1.add("comment2");
-		list1.add("comment3");
-		
 		//////////////////////
 		
 		Button evalbtn = (Button) findViewById(R.id.detail_snu_menu_do_eval_btn);
@@ -123,8 +118,12 @@ public class SnuMenuDetails extends Activity{
 				// TODO Auto-generated method stub
 				
 				Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
-				i.putExtra("menu", menu);
+				
 				i.putExtra("cafe", cafe);
+				i.putExtra("menu", menu);
+				i.putExtra("price", price);
+				i.putExtra("classify", classify);
+				i.putExtra("eval", tmpeval);
 				
 				startActivity(i);
 				
