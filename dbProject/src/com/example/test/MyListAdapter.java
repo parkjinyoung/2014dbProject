@@ -193,7 +193,8 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
 					i.putExtra("price", snumenu.getPrice());
 					i.putExtra("Classify", snumenu.getClassify());
 					i.putExtra("eval", "0.5"); // 수정된 eval 넣어줌
-//					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					v.getContext().startActivity(i);
 				}
 			});

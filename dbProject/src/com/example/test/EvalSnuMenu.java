@@ -99,6 +99,7 @@ public class EvalSnuMenu extends Activity{
 				Toast.makeText(EvalSnuMenu.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
 				
 				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				
 				i.putExtra("cafe", cafe);
 				i.putExtra("menu", menu);
