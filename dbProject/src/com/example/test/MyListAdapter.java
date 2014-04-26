@@ -111,7 +111,7 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			
     			@Override
     			public void onClick(View v) {
-    				String user_id = "tong";
+    				String user_id = "yujinee";
     				RecComment reccom = new RecComment(user_id, e.getnickname(), "true", e.getMenu(), e.getCafe());
     				String url = "http://laputan32.cafe24.com/Eval";
     				SendServer send = new SendServer(reccom, url);
@@ -177,7 +177,10 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
 					// TODO Auto-generated method stub
 					Toast.makeText(getContext(), "삭제", Toast.LENGTH_SHORT).show();
 					
-					
+					String url = "http://laputan32.cafe24.com/Eval";
+					SendServer send = new SendServer(e, url, "3");
+					String sendresult = send.send();
+					System.out.println("delete send = " + sendresult);
 					// Comment e;
 					// 서버로 날려서 삭제 요청
 					// 삭제후 새로운 rating 받아옴

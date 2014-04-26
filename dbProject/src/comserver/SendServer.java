@@ -50,10 +50,10 @@ public class SendServer {
 		this.DATA_NAME = USER_SEND_NAME;
 	}
 
-	public SendServer(Comment comment, String url) {
+	public SendServer(Comment comment, String url, String identifier) {
 		this.SERVER_URL = url;
 		this.comment = comment;
-		this.identifier = "1";
+		this.identifier = identifier;
 
 		this.DATA_NAME = INSERT_COMMENT_SEND_NAME;
 	}
