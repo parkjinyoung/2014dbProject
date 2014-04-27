@@ -28,7 +28,6 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     private ArrayList<Comment> items;
     private int rsrc;
     DatabaseHelper db;
-    
 	public MyListAdapter(Context context, int resource, int textViewResourceId,
 			ArrayList<Comment> objects) {
 		super(context, resource, textViewResourceId, objects);
@@ -85,7 +84,7 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			}
     		}
     		
-    		String user_id = "yujinee";
+    		final String user_id = "koo";
     		
     		mycommentlayout.setVisibility(View.GONE);
     		modifybtn.setVisibility(View.GONE);
@@ -111,7 +110,6 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			
     			@Override
     			public void onClick(View v) {
-    				String user_id = "yujinee";
     				RecComment reccom = new RecComment(user_id, e.getnickname(), "true", e.getMenu(), e.getCafe());
     				String url = "http://laputan32.cafe24.com/Eval";
     				SendServer send = new SendServer(reccom, url);
@@ -135,7 +133,6 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			
     			@Override
     			public void onClick(View v) {
-    				String user_id = "tong";
     				RecComment reccom = new RecComment(user_id, e.getnickname(), "false", e.getMenu(), e.getCafe());
     				String url = "http://laputan32.cafe24.com/Eval";
     				SendServer send = new SendServer(reccom, url);

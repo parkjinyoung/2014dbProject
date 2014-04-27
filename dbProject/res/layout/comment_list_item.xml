@@ -112,7 +112,7 @@
                     android:id="@+id/comment_up_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="추천"
+                    android:text="공감"
                     android:textSize="12sp" />
 
                 <TextView
@@ -125,7 +125,7 @@
                     android:id="@+id/comment_down_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="안추천"
+                    android:text="비공감"
                     android:textSize="12sp" />
 
                 <TextView
