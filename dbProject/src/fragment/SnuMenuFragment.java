@@ -31,37 +31,9 @@ import comserver.SendServer;
 
 @SuppressLint("ValidFragment")
 public class SnuMenuFragment extends Fragment {
-	static String RES1 = "220동";
-	static String RES2 = "301동";
-	static String RES3 = "302동";
-	static String RES4 = "감골식당";
-	static String RES5 = "공깡";
-	static String RES6 = "기숙사(901동)";
-	static String RES7 = "기숙사(919동)";
-	static String RES8 = "동원관";
-	static String RES9 = "상아회관";
-	static String RES10 = "서당골(사범대)";
-	static String RES11 = "자하연";
-	static String RES12 = "전망대(농대)";
-	static String RES13 = "학생회관";
 	
-	/*ArrayList<SnuMenu> res[] = new ArrayList()[13];
-	for(int j=0; j<13; j++){
-		res[j] = new ArrayList<SnuMenu>();
-	}*/
-	ArrayList<SnuMenu> res1 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res3 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res4 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res5 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res6 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res7 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res8 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res9 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res10 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res11 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res12 = new ArrayList<SnuMenu>();
-	ArrayList<SnuMenu> res13 = new ArrayList<SnuMenu>();
+	ArrayList<String> RES = new ArrayList<String>();
+	ArrayList<ArrayList<SnuMenu>> res = new ArrayList<ArrayList<SnuMenu>>();
 	
 	int DETAIL_SNU_MENU_REQUEST=1;
 	DatabaseHelper db;
@@ -147,87 +119,44 @@ public class SnuMenuFragment extends Fragment {
 		return view;
 	}
 	protected void onCreateData() {
+		
+		/*
+		RES.add(0, "220동");
+		RES.add(1, "301동");
+		RES.add(2, "302동");
+		RES.add(3, "감골식당");
+		RES.add(4, "공깡");
+		RES.add(5, "기숙사(901동)");
+		RES.add(6, "기숙사(919동)");
+		RES.add(7, "동원관");
+		RES.add(8, "상아회관");
+		RES.add(9, "서당골(사범대)");
+		RES.add(10, "자하연");
+		RES.add(11, "전망대(농대)");
+		RES.add(12, "학생회관");
+		*/
+		
 		db = new DatabaseHelper(getActivity());
-		res1.clear();
-		res2.clear();
-		res3.clear();
-		res4.clear();
-		res5.clear();
-		res6.clear();
-		res7.clear();
-		res8.clear();
-		res9.clear();
-		res10.clear();
-		res11.clear();
-		res12.clear();
-		res13.clear();
+		RES = db.getVisibleResAll();
+		
+		for(int j=0; j<RES.size(); j++) {
+			res.add(j, new ArrayList<SnuMenu>());
+		}
 
 		ArrayList<SnuMenu> allsnumenu = db.getAllSnuMenus();
 		int i = db.getSnuMenuCount();
 		Log.d("SNUMENU" , "Menu Count : " + Integer.toString(i));
-//		SnuMenu test = db.getSnuMenu(RES1, "JYP");
-//		Log.d("SNUMENU", test.getCafe() + " " + test.getMenu() + " " + test.getEval());
 		for(SnuMenu snumenu : allsnumenu){
 			Log.d("SNUMENU", "db_test");
-			if(snumenu.getCafe().equals(RES1)){
-				res1.add(snumenu);
+			for(int j=0; j<RES.size(); j++){
+				if(snumenu.getCafe().equals(RES.get(j))){
+					res.get(j).add(snumenu);
+				}
 			}
-			else if(snumenu.getCafe().equals(RES2)){
-				res2.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES3)){
-				res3.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES4)){
-				res4.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES5)){
-				res5.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES6)){
-				res6.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES7)){
-				res7.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES8)){
-				res8.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES9)){
-				res9.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES10)){
-				res10.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES11)){
-				res11.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES12)){
-				res12.add(snumenu);
-			}
-			else if(snumenu.getCafe().equals(RES13)){
-				res13.add(snumenu);
-			}
-			else{
-				System.out.println("ERROR in gettoday_snf");
-			}
-			
-		}
-		
+		}		
 		// when not null 
-		SnuResList.add(new SnuRestaurant(RES1, res1));
-		SnuResList.add(new SnuRestaurant(RES2, res2));
-		SnuResList.add(new SnuRestaurant(RES3, res3));
-		SnuResList.add(new SnuRestaurant(RES4, res4));
-		SnuResList.add(new SnuRestaurant(RES5, res5));
-		SnuResList.add(new SnuRestaurant(RES6, res6));
-		SnuResList.add(new SnuRestaurant(RES7, res7));
-		SnuResList.add(new SnuRestaurant(RES8, res8));
-		SnuResList.add(new SnuRestaurant(RES9, res9));
-		SnuResList.add(new SnuRestaurant(RES10, res10));
-		SnuResList.add(new SnuRestaurant(RES11, res11));
-		SnuResList.add(new SnuRestaurant(RES12, res12));
-		SnuResList.add(new SnuRestaurant(RES13, res13));
+		for(int j=0; j<RES.size(); j++)
+			SnuResList.add(new SnuRestaurant(RES.get(j), res.get(j)));
 		
 		db.closeDB();
 

@@ -53,6 +53,9 @@
         <activity
             android:name="com.example.test.EvalSnuMenu"
             ></activity>
+        <activity
+            android:name="com.example.test.Config_SnuResOnOff"
+            ></activity>
         <activity android:name="DeliveryDetails"></activity>
     </application>
 
