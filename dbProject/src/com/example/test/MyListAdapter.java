@@ -49,7 +49,7 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
         final TextView rectext = (TextView) v.findViewById(R.id.comment_up_count);  
         final TextView unrectext = (TextView) v.findViewById(R.id.comment_down_count);  
         
-        ImageView[] image_eval = new ImageView[5];
+        final ImageView[] image_eval = new ImageView[5];
 		image_eval[0] = (ImageView) v.findViewById(R.id.comment_eval_stars1);
 		image_eval[1] = (ImageView) v.findViewById(R.id.comment_eval_stars2);
 		image_eval[2] = (ImageView) v.findViewById(R.id.comment_eval_stars3);
@@ -179,15 +179,18 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
 					SendServer send = new SendServer(e, SendServerURL.commentURL, "3");
 					String sendresult = send.send();
 					System.out.println("delete send = " + sendresult);
-					// Comment e;
-					// 서버로 날려서 삭제 요청
-					// 삭제후 새로운 rating 받아옴
+					
+					String tmpeval = null;
+					if (sendresult != null && !sendresult.equals("")) {
+						JSONObject jo = (JSONObject) JSONValue.parse(sendresult);
+						tmpeval = (String) jo.get("rating");
+					}
 					
 					Intent i = new Intent(v.getContext(),SnuMenuDetails.class);
 					
 					db = new DatabaseHelper(v.getContext());
 					
-					//db.updateSnuMenu(e.getCafe(), e.getMenu(), newrating); // 수정된 eval 넣어줌
+					db.updateSnuMenu(e.getCafe(), e.getMenu(), tmpeval); // 수정된 eval 넣어줌
 					
 					db.closeDB();
 					
