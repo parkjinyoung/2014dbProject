@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="title_activity_register">Register</string>
+
+    <!-- Strings related to login -->
+    <string name="action2_register"><b>Register and get a key on your e-mail</b></string>
+    <string name="prompt2_email">mySNU Email</string>
+    <string name="prompt2_id">ID</string>
+    <string name="prompt2_password">Password</string>
+    <string name="prompt2_repeat">Repeat your Password</string>
+    <string name="prompt2_key">key in your e-mail</string>
+    <string name="error2_invalid_email">This email address is invalid</string>
+    <string name="error2_incorrect_password">This password is incorrect</string>
+    <string name="error2_field_required">This field is required</string>
+
+</resources>

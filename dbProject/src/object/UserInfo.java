@@ -1,21 +1,34 @@
 package object;
 
 public class UserInfo {
-	String snuMail;
+	String id;
 	String nickname;
 	String password;
-	
-	public UserInfo(String snuMail, String nickname, String password){
+	String key;
+	public UserInfo()
+	{
+		id="";
+		nickname="";
+		password="";
+		key="";
+	}
+	public UserInfo(String id, String nickname, String password, String key){
 		this.nickname = nickname;
 		this.password = password;
-		this.snuMail = snuMail;
+		this.id = id;
+		this.key= key;
 	}
-	
-	public String getSnuMail() {
-		return snuMail;
+	public UserInfo(String id, String password){
+		this.nickname="";
+		this.password = password;
+		this.id = id;
+		this.key="";
 	}
-	public void setSnuMail(String snuMail) {
-		this.snuMail = snuMail;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getNickname() {
 		return nickname;
@@ -29,5 +42,12 @@ public class UserInfo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public void setKey(String key)
+	{
+		this.key= key;
+	}
+	public String getKey()
+	{
+		return key;
+	}
 }

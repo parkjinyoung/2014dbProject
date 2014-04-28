@@ -49,6 +49,14 @@ public class SendServer {
 		this.SERVER_URL = url;
 		this.DATA_NAME = USER_SEND_NAME;
 	}
+	
+	public SendServer(UserInfo userinfo, String url, String identifier) {
+		this.userinfo = userinfo;
+		this.SERVER_URL = url;
+		this.DATA_NAME = USER_SEND_NAME;
+		this.identifier = identifier;
+	}
+	
 
 	public SendServer(Comment comment, String url, String identifier) {
 		this.SERVER_URL = url;
