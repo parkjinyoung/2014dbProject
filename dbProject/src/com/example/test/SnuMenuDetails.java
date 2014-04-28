@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import comserver.SendServer;
 import object.Comment;
+import object.SendServerURL;
 import object.SnuMenu;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -94,10 +95,10 @@ public class SnuMenuDetails extends Activity{
 		Button sortrecbtn = (Button) findViewById(R.id.comment_sortbyrec);
 		
 
-		String url = "http://laputan32.cafe24.com/Eval";
+		//String url = "http://laputan32.cafe24.com/Eval";
 		SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
 
-		SendServer send = new SendServer(a, url);
+		SendServer send = new SendServer(a, SendServerURL.commentURL);
 		String sendresult = send.send();
 		System.out.println("snumenudetails sendserver return : " + sendresult);
 
@@ -136,10 +137,10 @@ public class SnuMenuDetails extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				String url = "http://laputan32.cafe24.com/Eval";
+				//String url = "http://laputan32.cafe24.com/Eval";
 				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
 
-				SendServer send = new SendServer(a, url);
+				SendServer send = new SendServer(a, SendServerURL.commentURL);
 				String sendresult = send.send();
 				System.out.println("snumenudetails sendserver return in date : " + sendresult);
 
@@ -174,10 +175,10 @@ public class SnuMenuDetails extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				String url = "http://laputan32.cafe24.com/Eval";
+				//String url = "http://laputan32.cafe24.com/Eval";
 				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
 
-				SendServer send = new SendServer(a, url);
+				SendServer send = new SendServer(a, SendServerURL.commentURL);
 				String sendresult = send.send();
 				System.out.println("snumenudetails sendserver return in rec : " + sendresult);
 

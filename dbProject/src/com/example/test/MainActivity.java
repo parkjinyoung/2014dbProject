@@ -5,6 +5,7 @@ import java.util.Locale;
 import com.google.gson.Gson;
 
 import object.Comment;
+import object.SendServerURL;
 import object.SnuMenu;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -186,8 +187,8 @@ public class MainActivity extends FragmentActivity implements
 		
 		db.deleteSnuMenuAll();
 		
-		String url = "http://laputan32.cafe24.com/GetToday";
-		SendServer send = new SendServer(url);
+		//String url = "http://laputan32.cafe24.com/GetToday";
+		SendServer send = new SendServer(SendServerURL.getTodayMenuURL);
 		String result = send.send();
 		System.out.println("result = " + result);
 		

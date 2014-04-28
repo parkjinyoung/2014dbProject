@@ -7,6 +7,7 @@ import org.json.simple.JSONValue;
 
 import object.Comment;
 import object.RecComment;
+import object.SendServerURL;
 import object.SnuMenu;
 import android.content.Context;
 import android.content.Intent;
@@ -84,7 +85,7 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			}
     		}
     		
-    		final String user_id = "koo";
+    		final String user_id = "hi";
     		
     		mycommentlayout.setVisibility(View.GONE);
     		modifybtn.setVisibility(View.GONE);
@@ -111,8 +112,8 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			@Override
     			public void onClick(View v) {
     				RecComment reccom = new RecComment(user_id, e.getnickname(), "true", e.getMenu(), e.getCafe());
-    				String url = "http://laputan32.cafe24.com/Eval";
-    				SendServer send = new SendServer(reccom, url);
+    				//String url = "http://laputan32.cafe24.com/Eval";
+    				SendServer send = new SendServer(reccom, SendServerURL.commentURL);
     				String sendresult = send.send();
     				
     				if (sendresult != null && !sendresult.equals("")) {
@@ -134,8 +135,8 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			@Override
     			public void onClick(View v) {
     				RecComment reccom = new RecComment(user_id, e.getnickname(), "false", e.getMenu(), e.getCafe());
-    				String url = "http://laputan32.cafe24.com/Eval";
-    				SendServer send = new SendServer(reccom, url);
+    				//String url = "http://laputan32.cafe24.com/Eval";
+    				SendServer send = new SendServer(reccom, SendServerURL.commentURL);
     				String sendresult = send.send();
     				
     				if (sendresult != null && !sendresult.equals("")) {
@@ -174,8 +175,8 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
 					// TODO Auto-generated method stub
 					Toast.makeText(getContext(), "ªË¡¶", Toast.LENGTH_SHORT).show();
 					
-					String url = "http://laputan32.cafe24.com/Eval";
-					SendServer send = new SendServer(e, url, "3");
+					//String url = "http://laputan32.cafe24.com/Eval";
+					SendServer send = new SendServer(e, SendServerURL.commentURL, "3");
 					String sendresult = send.send();
 					System.out.println("delete send = " + sendresult);
 					// Comment e;

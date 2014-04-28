@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 
 import comserver.SendServer;
 import object.Comment;
+import object.SendServerURL;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -79,8 +80,8 @@ public class EvalSnuMenu extends Activity{
 				
 				//send com to SetEval
 				//평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 
-				String url = "http://laputan32.cafe24.com/Eval";
-				SendServer send = new SendServer(com, url, "1");
+				//String url = "http://laputan32.cafe24.com/Eval";
+				SendServer send = new SendServer(com, SendServerURL.commentURL, "1");
 				String sendresult = send.send();
 				System.out.println("comment insert = " + sendresult);
 				
