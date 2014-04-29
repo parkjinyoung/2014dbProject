@@ -1,8 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.test.AuthkeyActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:context="com.example.test.AuthkeyActivity" >
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/authkey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="input auth key"
+            android:inputType="number"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/key_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="sendKey"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="enter" />
+    </LinearLayout>
+</merge>

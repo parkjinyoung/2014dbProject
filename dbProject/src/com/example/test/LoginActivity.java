@@ -6,7 +6,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import comserver.SendServer;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -24,10 +23,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 public class LoginActivity extends Activity {
-	
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
@@ -43,10 +42,11 @@ public class LoginActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
-
+	private CheckBox mAutoLogin;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 
 		setContentView(R.layout.activity_login);
 		setupActionBar();
@@ -57,21 +57,22 @@ public class LoginActivity extends Activity {
 
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView
-				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-					@Override
-					public boolean onEditorAction(TextView textView, int id,
-							KeyEvent keyEvent) {
-						if (id == R.id.login || id == EditorInfo.IME_NULL) {
-							attemptLogin();
-							return true;
-						}
-						return false;
-					}
-				});
+		.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView textView, int id,
+					KeyEvent keyEvent) {
+				if (id == R.id.login || id == EditorInfo.IME_NULL) {
+					attemptLogin();
+					return true;
+				}
+				return false;
+			}
+		});
 
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+		mAutoLogin = (CheckBox) findViewById(R.id.auto_login);
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -169,25 +170,25 @@ public class LoginActivity extends Activity {
 
 			mLoginStatusView.setVisibility(View.VISIBLE);
 			mLoginStatusView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 1 : 0)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							mLoginStatusView.setVisibility(show ? View.VISIBLE
-									: View.GONE);
-						}
-					});
+			.alpha(show ? 1 : 0)
+			.setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					mLoginStatusView.setVisibility(show ? View.VISIBLE
+							: View.GONE);
+				}
+			});
 
 			mLoginFormView.setVisibility(View.VISIBLE);
 			mLoginFormView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 0 : 1)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							mLoginFormView.setVisibility(show ? View.GONE
-									: View.VISIBLE);
-						}
-					});
+			.alpha(show ? 0 : 1)
+			.setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					mLoginFormView.setVisibility(show ? View.GONE
+							: View.VISIBLE);
+				}
+			});
 		} else {
 			// The ViewPropertyAnimator APIs are not available, so simply show
 			// and hide the relevant UI components.
@@ -202,7 +203,9 @@ public class LoginActivity extends Activity {
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-		private boolean flag;
+		boolean flag;
+		boolean auth;
+		String nickName;
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
@@ -215,6 +218,8 @@ public class LoginActivity extends Activity {
 				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
 				String result = (String) job.get("message");
 				if(result.equals("success")){
+					nickName = (String) job.get("nickname");
+					auth = Boolean.parseBoolean((String)job.get("authenticated"));
 					return true;
 				}
 				else if(result.equals("wrong password"))
@@ -235,7 +240,17 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-				
+				MyApplication myApp = (MyApplication)getApplicationContext();
+				myApp.setLoginStatus(true);
+				myApp.setAuth(auth);
+				myApp.setNickName(nickName);
+				myApp.setId(mId);
+				if(mAutoLogin.isChecked()){
+					myPreference pref = new myPreference(getApplicationContext());
+					pref.put(myPreference.AUTO_LOGIN, true);
+					pref.put(myPreference.USER_ID, mId);
+					pref.put(myPreference.USER_PWD, mPassword);
+				}
 				new AlertDialog.Builder(LoginActivity.this)
 				.setTitle("Success!")
 				.setMessage("Succeed to Login.")
@@ -244,6 +259,7 @@ public class LoginActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
+
 						finish();
 					}
 				}).show();
@@ -253,9 +269,9 @@ public class LoginActivity extends Activity {
 					mIdView.requestFocus();
 				}
 				else{
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+					mPasswordView
+					.setError(getString(R.string.error_incorrect_password));
+					mPasswordView.requestFocus();
 				}
 			}
 		}

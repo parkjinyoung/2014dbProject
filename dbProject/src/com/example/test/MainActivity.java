@@ -2,14 +2,20 @@ package com.example.test;
 
 import java.util.Locale;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import com.google.gson.Gson;
 
 import object.Comment;
 import object.SendServerURL;
 import object.SnuMenu;
+import object.UserInfo;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -54,12 +60,12 @@ public class MainActivity extends FragmentActivity implements
 	static String RES11 = "자하연";
 	static String RES12 = "전망대(농대)";
 	static String RES13 = "학생회관";
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		onCreateData();
+		onCreateLogin();
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -94,6 +100,55 @@ public class MainActivity extends FragmentActivity implements
 			actionBar.addTab(actionBar.newTab()
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
+		}
+	}
+
+	private void onCreateLogin() {
+		MyApplication myApp = new MyApplication();
+		myPreference m = new myPreference(getApplicationContext());
+		if(m.getValue(myPreference.AUTO_LOGIN, false)){
+			try {
+				String url = "http://laputan32.cafe24.com/User";
+				String mId = m.getValue(myPreference.USER_ID,"");
+				UserInfo a = new UserInfo(mId,m.getValue(myPreference.USER_PWD, ""));
+				SendServer send = new SendServer(a,url,"1");
+				String sendresult = send.send();
+				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
+				String result = (String) job.get("message");
+				if(result.equals("success")){
+					myApp.setNickName((String) job.get("nickname"));
+					myApp.setAuth(Boolean.parseBoolean((String)job.get("authenticated")));
+					myApp.setId(mId);
+					myApp.setLoginStatus(true);
+					new AlertDialog.Builder(this)
+					.setTitle("로그인  성공")
+					.setMessage("Close")
+					.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					}).show();
+				}
+				else{
+					new AlertDialog.Builder(this)
+					.setTitle("로그인 실패")
+					.setMessage("Close")
+					.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					}).show();
+				}
+			} catch (Exception e) {
+				new AlertDialog.Builder(this)
+				.setTitle("로그인 실패")
+				.setMessage("로그인이 실패하였습니다.")
+				.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				}).show();
+			}
 		}
 	}
 
@@ -183,6 +238,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 	
 	protected void onCreateData() {
+		
 		db = new DatabaseHelper(getApplicationContext());
 		
 		db.deleteSnuMenuAll();

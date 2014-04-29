@@ -6,7 +6,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import comserver.SendServer;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
@@ -385,20 +384,32 @@ public class RegisterActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-
+				MyApplication myApp = (MyApplication)getApplicationContext();
+				myApp.setLoginStatus(true);
+				myApp.setAuth(false);
+				myApp.setNickName(mNickname);
+				myApp.setId(mId);
 				new AlertDialog.Builder(RegisterActivity.this)
 				.setTitle("Success!")
 				.setMessage("Succeed to register. please authorize key in your e-mail to key tab")
-				.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+				.setPositiveButton("Finish", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						finish();
+					}
+				})
+				.setNegativeButton("Authenticate", new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(RegisterActivity.this,AuthkeyActivity.class);
 						startActivity(intent);
-
+						finish();
 					}
-				}).show();
+				})
+				.show();
 			} else {
 				new AlertDialog.Builder(RegisterActivity.this)
 				.setTitle(errorTitle)
