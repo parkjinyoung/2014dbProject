@@ -45,6 +45,10 @@ public class SnuMenuFragment extends Fragment {
 	static String RES12 = "전망대(농대)";
 	static String RES13 = "학생회관";
 	
+	/*ArrayList<SnuMenu> res[] = new ArrayList()[13];
+	for(int j=0; j<13; j++){
+		res[j] = new ArrayList<SnuMenu>();
+	}*/
 	ArrayList<SnuMenu> res1 = new ArrayList<SnuMenu>();
 	ArrayList<SnuMenu> res2 = new ArrayList<SnuMenu>();
 	ArrayList<SnuMenu> res3 = new ArrayList<SnuMenu>();

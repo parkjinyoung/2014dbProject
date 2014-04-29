@@ -201,6 +201,8 @@ public class LoginActivity extends Activity {
 	 * the user.
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+
+		private boolean flag;
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
@@ -215,6 +217,11 @@ public class LoginActivity extends Activity {
 				if(result.equals("success")){
 					return true;
 				}
+				else if(result.equals("wrong password"))
+				{
+					flag = false;
+				}
+				else flag = true;
 				return false;
 			} catch (Exception e) {
 				return false;
@@ -228,6 +235,7 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
+				
 				new AlertDialog.Builder(LoginActivity.this)
 				.setTitle("Success!")
 				.setMessage("Succeed to Login.")
@@ -240,9 +248,15 @@ public class LoginActivity extends Activity {
 					}
 				}).show();
 			} else {
+				if(flag){
+					mIdView.setError("Wrong ID");
+					mIdView.requestFocus();
+				}
+				else{
 				mPasswordView
 						.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
+				}
 			}
 		}
 
