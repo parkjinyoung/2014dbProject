@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 import object.Comment;
 import object.RecComment;
+import object.Search;
 import object.SnuMenu;
 import object.UserInfo;
 
@@ -27,9 +28,11 @@ public class SendServer {
 	private Comment comment;
 	private SnuMenu snumenu;
 	private RecComment reccomment;
+	private Search keyword;
 
 	private final String SEND_ERROR = "0";
 
+	private final String SEARCH_MENU_SEND_NAME = "searchmenu";
 	private final String USER_SEND_NAME = "signup";
 	private final String MENU_SEND_NAME = "menupage";
 	private final String INSERT_COMMENT_SEND_NAME = "insertcomment";
@@ -42,8 +45,14 @@ public class SendServer {
 	public SendServer(String url) {
 		this.SERVER_URL = url;
 		this.DATA_NAME = TODAYMENU_SEND_NAME;
+		this.identifier = "1";
 	}
-
+	public SendServer(String url, String keyword) {
+		this.SERVER_URL = url;
+		this.DATA_NAME = SEARCH_MENU_SEND_NAME;
+		this.identifier = "2";
+		this.keyword = new Search(keyword);
+	}
 	public SendServer(UserInfo userinfo, String url) {
 		this.userinfo = userinfo;
 		this.SERVER_URL = url;
@@ -119,6 +128,11 @@ public class SendServer {
 
 		else if (DATA_NAME.equals(TODAYMENU_SEND_NAME)) {
 			json = "get today menu";
+		}
+		else if (DATA_NAME.equals(SEARCH_MENU_SEND_NAME)) {
+			json = new Gson().toJson(keyword);
+			
+			
 		}
 
 		else {

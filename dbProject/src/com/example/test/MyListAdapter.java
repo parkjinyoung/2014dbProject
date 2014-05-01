@@ -85,7 +85,9 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
     			}
     		}
     		
-    		final String user_id = "hi";
+    		MyApplication myApp = (MyApplication) v.getContext().getApplicationContext();
+    		
+    		final String user_id = myApp.nickName;
     		
     		mycommentlayout.setVisibility(View.GONE);
     		modifybtn.setVisibility(View.GONE);

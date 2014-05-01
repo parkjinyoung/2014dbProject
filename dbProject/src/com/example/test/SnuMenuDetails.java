@@ -6,18 +6,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-import com.google.gson.Gson;
-
-import comserver.SendServer;
 import object.Comment;
 import object.SendServerURL;
 import object.SnuMenu;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -25,10 +23,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import comserver.SendServer;
 
 public class SnuMenuDetails extends Activity{
 	DatabaseHelper db;
+	private AlertDialog mDialog = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -220,6 +221,13 @@ public class SnuMenuDetails extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
+				MyApplication myApp=(MyApplication) getApplicationContext();
+				System.out.println(myApp.nickName);
+				System.out.println(myApp.loginStatus);
+				System.out.println(myApp.authenticated);
+				System.out.println(myApp.id);
+				if(myApp.loginStatus){
+				
 				Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
 
 				i.putExtra("cafe", cafe);
@@ -229,12 +237,17 @@ public class SnuMenuDetails extends Activity{
 				i.putExtra("eval", tmpeval);
 
 				startActivity(i);
-
+				}
+				else{
+					mDialog = createDialog();
+					mDialog.show();
+				}
 			}
 		});
 
 	}
 
+	
 	//	@Override
 	//	protected void onNewIntent(Intent intent){
 	//		super.onNewIntent(intent);
@@ -273,5 +286,34 @@ public class SnuMenuDetails extends Activity{
 
 		}
 	};
-
+	
+    private AlertDialog createDialog() {
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("알림");
+        ab.setMessage("로그인하신 후 코멘트를 작성하실 수 있습니다.");
+        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+          
+        ab.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                setDismiss(mDialog);
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                
+            }
+        });
+          
+        ab.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                setDismiss(mDialog);
+            }
+        });
+          
+        return ab.create();
+    }
+    private void setDismiss(Dialog dialog){
+        if(dialog != null && dialog.isShowing())
+            dialog.dismiss();
+    }
 }

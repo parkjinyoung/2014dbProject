@@ -67,7 +67,7 @@ public class EvalSnuMenu extends Activity{
 				String eval = String.valueOf(ratingbar.getRating());
 				float rating = ratingbar.getRating();
 				
-				MyApplication myApp = new MyApplication();
+				MyApplication myApp = (MyApplication)getApplicationContext();
 				String user_id = myApp.getNickName(); // get from db
 				
 				SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
