@@ -13,6 +13,7 @@ import object.SnuMenu;
 import object.UserInfo;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -104,7 +105,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	private void onCreateLogin() {
-		MyApplication myApp = new MyApplication();
+		MyApplication myApp = (MyApplication)this.getApplicationContext();;
 		myPreference m = new myPreference(getApplicationContext());
 		if(m.getValue(myPreference.AUTO_LOGIN, false)){
 			try {
@@ -122,7 +123,7 @@ public class MainActivity extends FragmentActivity implements
 					myApp.setLoginStatus(true);
 					new AlertDialog.Builder(this)
 					.setTitle("로그인  성공")
-					.setMessage("Close")
+					.setMessage("환영합니다, "+myApp.getNickName()+"님.")
 					.setNeutralButton("Close", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {

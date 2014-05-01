@@ -38,7 +38,6 @@ import com.example.test.R;
 @SuppressLint("ValidFragment")
 public class ConfigFragment extends Fragment {
 
-	boolean loginFlag;
 	Context mContext;
 	MyApplication myApp;
 	ArrayList<String> configarr;
@@ -52,14 +51,12 @@ public class ConfigFragment extends Fragment {
 	public void onResume()
 	{
 		super.onResume();
-		loginFlag = myApp.getLoginStauts();
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.activity_config, null);
 		myApp = (MyApplication)getActivity().getApplicationContext();
-		loginFlag = myApp.getLoginStauts();
 
 		createArr();
 
@@ -74,9 +71,8 @@ public class ConfigFragment extends Fragment {
 				switch(position){
 				//로그아웃
 				case 0:
-					if(loginFlag){
+					if(myApp.getLoginStauts()){
 						myApp.setLoginStatus(false);
-						loginFlag = false;
 						myApp.setId("");
 						myApp.setAuth(false);
 						myApp.setNickName("User");
@@ -99,7 +95,7 @@ public class ConfigFragment extends Fragment {
 					break;
 					//인증/로그인
 				case 1:
-					if(loginFlag)
+					if(myApp.getLoginStauts())
 					{
 						Intent intent = new Intent(v.getContext(), AuthkeyActivity.class);
 						startActivity(intent);

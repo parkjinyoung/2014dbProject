@@ -252,8 +252,8 @@ public class LoginActivity extends Activity {
 					pref.put(myPreference.USER_PWD, mPassword);
 				}
 				new AlertDialog.Builder(LoginActivity.this)
-				.setTitle("Success!")
-				.setMessage("Succeed to Login.")
+				.setTitle("성공!")
+				.setMessage("환영합니다, "+nickName+"님.")
 				.setNeutralButton("Close", new DialogInterface.OnClickListener() {
 
 					@Override
