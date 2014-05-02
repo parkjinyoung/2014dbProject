@@ -20,6 +20,7 @@ import android.widget.TextView;
 public class ExpandableAdapterforSearch extends BaseExpandableListAdapter{
 
 	Context mContext;
+	DatabaseHelper db;
 	ArrayList<SnuRestaurant> mSnuResList;
 	private LayoutInflater inflater = null;
 	private ViewHolder viewHolder = null;
@@ -66,10 +67,17 @@ public class ExpandableAdapterforSearch extends BaseExpandableListAdapter{
 			viewHolder = (ViewHolder)v.getTag();
 		}
 		
+		db = new DatabaseHelper(v.getContext());
+		String menu = getChild(groupPosition, childPosition).getMenu();
+		String cafe = getChild(groupPosition, childPosition).getCafe();
+		SnuMenu smenu = new SnuMenu();
+		smenu = db.getSearchSnuMenu(cafe, menu);
+		
 		viewHolder.title.setText(getChild(groupPosition, childPosition).getMenu());
 		viewHolder.price.setText(Integer.toString(getChild(groupPosition, childPosition).getPrice()));
 
-		String tmpeval = getChild(groupPosition, childPosition).getRating();
+		String tmpeval = smenu.getRating();
+		db.closeDB();
 		if(tmpeval!=null){
 			float eval = Float.parseFloat(tmpeval);
 

@@ -149,7 +149,6 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 
 			@Override
 			public void onClick(View v) {
-				Log.d("DBDBDBDB","Btn Click");
 				SnuRestaurant a = mSnuResList.get(grppos);
 
 				Intent i = new Intent(v.getContext(), SnuRestaurantDetails.class);

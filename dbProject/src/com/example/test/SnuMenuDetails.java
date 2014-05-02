@@ -33,7 +33,7 @@ public class SnuMenuDetails extends Activity{
 	String tmpeval = "";
 	int price = 0;
 	String classify = "";
-	String search = "";
+	String search = "false";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,11 @@ public class SnuMenuDetails extends Activity{
 
 //		else{
 			db = new DatabaseHelper(getApplicationContext());
-			SnuMenu snumenu = db.getSnuMenu(cafe, menu);
+			SnuMenu snumenu = new SnuMenu();
+			if(search.equals("true")) 
+				snumenu = db.getSearchSnuMenu(cafe, menu);
+			else
+				snumenu = db.getSnuMenu(cafe, menu);
 			db.closeDB();
 
 			tmpeval = snumenu.getRating();
@@ -80,7 +84,6 @@ public class SnuMenuDetails extends Activity{
 //		}
 		if(tmpeval!=null){
 			float eval = Float.parseFloat(tmpeval);
-
 
 			for(int j=0; j<5; j++){
 				if(eval >= 1) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.star25));
@@ -236,10 +239,10 @@ public class SnuMenuDetails extends Activity{
 				// TODO Auto-generated method stub
 
 				MyApplication myApp=(MyApplication) getApplicationContext();
-				System.out.println(myApp.nickName);
+				/*System.out.println(myApp.nickName);
 				System.out.println(myApp.loginStatus);
 				System.out.println(myApp.authenticated);
-				System.out.println(myApp.id);
+				System.out.println(myApp.id);*/
 				if(myApp.loginStatus){
 
 					Intent i = new Intent(v.getContext(), EvalSnuMenu.class);

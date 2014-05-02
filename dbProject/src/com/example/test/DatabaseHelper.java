@@ -28,8 +28,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Table Names
 	private static final String TABLE_USER_INFO = "userinfos";	
 	private static final String TABLE_TODAY_MENU = "todaymenutable";
+	private static final String TABLE_SEARCH_MENU = "searchmenutable";
 	private static final String TABLE_VISIBLE_RES = "visibleres";
-
+	
 	// user
 	private static final String USER_NAME = "user_name";
 	private static final String USER_ID = "user_id";
@@ -40,6 +41,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TODAY_EVAL = "todayeval";
 	private static final String TODAY_PRICE = "todayprice";
 	private static final String TODAY_CLASSIFY = "todayclassify";
+	
+	private static final String MENU = "menu";
+	private static final String CAFE = "cafe";
+	private static final String EVAL = "eval";
+	private static final String PRICE = "price";
+	private static final String CLASSIFY = "classify";
 
 	//res
 	private static final String RES_NAME = "resname";
@@ -54,6 +61,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ TODAY_EVAL + " TEXT,"
 			+ TODAY_PRICE + " INTEGER,"
 			+ TODAY_CLASSIFY + " TEXT"
+			+ ")";
+	private static final String CREATE_TABLE_SEARCHMENU = "CREATE TABLE "
+			+ TABLE_SEARCH_MENU + "(" + CAFE + " TEXT,"
+			+ MENU + " TEXT,"
+			+ EVAL + " TEXT,"
+			+ PRICE + " INTEGER,"
+			+ CLASSIFY + " TEXT"
 			+ ")";
 	private static final String CREATE_TABLE_USERINFO = "CREATE TABLE "
 			+ TABLE_USER_INFO + "(" + USER_NAME + " TEXT,"
@@ -70,6 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// creating required tables
 		db.execSQL(CREATE_TABLE_TODAYMENU);
+		db.execSQL(CREATE_TABLE_SEARCHMENU);
 		db.execSQL(CREATE_TABLE_USERINFO);
 		db.execSQL(CREATE_TABLE_VISIBLERES);
 
@@ -80,6 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// on upgrade drop older tables
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TODAY_MENU);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SEARCH_MENU);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_INFO);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_VISIBLE_RES);
 		// create new tables
@@ -193,6 +209,121 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String[] params=new String[] {res_name};
 		db.delete(TABLE_VISIBLE_RES, RES_NAME + " = ?", params);
+	}
+///////////////////////////////////////////////////////////////////////////	
+	//search
+	public long createSearchMenu(SnuMenu snumenu){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(CAFE, snumenu.getCafe());
+		values.put(MENU, snumenu.getMenu());
+		values.put(EVAL, snumenu.getRating());
+		values.put(PRICE, snumenu.getPrice());
+		values.put(CLASSIFY, snumenu.getClassify());
+		long result = db.insert(TABLE_SEARCH_MENU, null, values);
+//		Log.d("SNUMENU createTM", "cafe : " + snumenu.getCafe() + " menu : " + snumenu.getMenu() + " eval : " + snumenu.getEval());
+		return result;
+	}
+
+	public SnuMenu getSearchSnuMenu(String cafe, String menu){
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		String selectQuery = "SELECT * FROM " + TABLE_SEARCH_MENU + " WHERE " 
+				+ CAFE + " = '" + cafe + "' AND " + MENU + " = '" + menu + "'";
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if(c != null)
+			c.moveToFirst();
+
+		SnuMenu sm = new SnuMenu();
+		sm.setCafe(c.getString(c.getColumnIndex(CAFE)));
+		sm.setMenu(c.getString(c.getColumnIndex(MENU)));
+		sm.setRating(c.getString(c.getColumnIndex(EVAL)));
+		sm.setPrice(c.getInt(c.getColumnIndex(PRICE)));
+		sm.setClassify(c.getString(c.getColumnIndex(CLASSIFY)));
+		c.close();
+		return sm;
+	}
+
+
+	public int getSearchSnuMenuCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_SEARCH_MENU;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+
+		int count = cursor.getCount();
+		cursor.close();
+
+		// return count
+		return count;
+	}
+	public ArrayList<SnuMenu> getSearchCafeMenus(String cafe){
+		ArrayList<SnuMenu> snumenus = new ArrayList<SnuMenu>();
+		String selectQuery = "SELECT  * FROM " + TABLE_SEARCH_MENU + " WHERE " 
+				+ CAFE + " = '" + cafe + "'";
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if(c.moveToFirst()){
+			do{
+				SnuMenu sm = new SnuMenu();
+				sm.setCafe(c.getString(c.getColumnIndex(CAFE)));
+				sm.setMenu(c.getString(c.getColumnIndex(MENU)));
+				sm.setRating(c.getString(c.getColumnIndex(EVAL)));
+				sm.setPrice(c.getInt(c.getColumnIndex(PRICE)));
+				sm.setClassify(c.getString(c.getColumnIndex(CLASSIFY)));
+				snumenus.add(sm);
+//				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
+			}
+			while(c.moveToNext());
+		}
+		c.close();
+		return snumenus;
+	}
+
+	public ArrayList<SnuMenu> getAllSearchSnuMenus(){
+		ArrayList<SnuMenu> snumenus = new ArrayList<SnuMenu>();
+		String selectQuery = "SELECT  * FROM " + TABLE_SEARCH_MENU;
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if(c.moveToFirst()){
+			do{
+				SnuMenu sm = new SnuMenu();
+				sm.setCafe(c.getString(c.getColumnIndex(CAFE)));
+				sm.setMenu(c.getString(c.getColumnIndex(MENU)));
+				sm.setRating(c.getString(c.getColumnIndex(EVAL)));
+				sm.setPrice(c.getInt(c.getColumnIndex(PRICE)));
+				sm.setClassify(c.getString(c.getColumnIndex(CLASSIFY)));
+				snumenus.add(sm);
+//				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
+			}
+			while(c.moveToNext());
+		}
+		c.close();
+		return snumenus;
+	}
+
+	public int updateSearchSnuMenu(String cafe, String menu, String eval){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		String[] params=new String[] {cafe, menu};
+		values.put(EVAL, eval);
+		return db.update(TABLE_SEARCH_MENU, values,
+				CAFE + " = ? AND " + MENU + " = ?", params);
+	}
+
+	public void deleteSearchSnuMenuAll() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_SEARCH_MENU, "", null);
+	}
+
+	public void deleteSearchSnuMenu(String cafe, String menu){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String[] params=new String[] {cafe, menu};
+		db.delete(TABLE_SEARCH_MENU, CAFE + " = ? AND " + MENU + " = ?", params);
 	}
 ///////////////////////////////////////////////////////////////////////////
 	public long createTodayMenu(SnuMenu snumenu){
@@ -310,54 +441,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.delete(TABLE_TODAY_MENU, TODAY_CAFE + " = ? AND " + TODAY_MENU + " = ?", params);
 	}
 
-	/*
-	public int updateIdTodo(Todo todo, long pky) {
-		SQLiteDatabase db = this.getWritableDatabase();
-
-		ContentValues values = new ContentValues();
-		values.put(KEY_ID, todo.getId());
-
-		System.out.println("updatetodo : " + todo.getPky() + " pky = " + pky
-				+ " id = " + todo.getId());
-
-		// updating row
-		return db.update(TABLE_TODO, values, PKY + " = ?",
-				new String[] { String.valueOf(pky) });
-	}
-
-	public int updateToDo(Todo todo, long pky) {
-		SQLiteDatabase db = this.getWritableDatabase();
-
-		ContentValues values = new ContentValues();
-		// values.put(KEY_ID, todo.getId());
-		values.put(KEY_DATE, todo.getDate());
-		values.put(KEY_TITLE, todo.getTitle());
-		values.put(KEY_CONTENT, todo.getContent());
-		values.put(GROUP_ID_LIST, todo.getGroup_id_list());
-		values.put(GROUP_NAME_LIST, todo.getGroup_name_list());
-		values.put(GROUP_NAME, todo.getGroup_name());
-
-		// updating row
-		return db.update(TABLE_TODO, values, KEY_ID + " = ?",
-				new String[] { String.valueOf(pky) });
-	}
-
-	public void deleteToDo(long todo_id) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		System.out.println("todo id : " + todo_id);
-		ArrayList<Todo> a = getAllToDos();
-		for (int i = 0; i < a.size(); i++) {
-			System.out.println("pky : " + a.get(i).getId());
-		}
-		db.delete(TABLE_TODO, KEY_ID + " = ?",
-				new String[] { String.valueOf(todo_id) });
-	}
-
-	public void deleteToDoAll() {
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_TODO, "", null);
-	}
-*/
+	
 
 	// //////////////////////////////////////////
 	// closing database

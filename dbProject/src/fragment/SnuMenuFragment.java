@@ -64,9 +64,6 @@ public class SnuMenuFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				Log.d("DBDBDBDB", "Btn Click Click");
-				Toast.makeText(getActivity(), "Button Click",
-						Toast.LENGTH_SHORT).show();
 				Intent i = new Intent(v.getContext(),
 						SnuRestaurantDetails.class);
 				startActivity(i);
@@ -110,7 +107,6 @@ public class SnuMenuFragment extends Fragment {
 		}
 
 		ArrayList<SnuMenu> allsnumenu = db.getAllSnuMenus();
-		int i = db.getSnuMenuCount();
 		for (SnuMenu snumenu : allsnumenu) {
 			for (int j = 0; j < RES.size(); j++) {
 				if (snumenu.getCafe().equals(RES.get(j))) {
