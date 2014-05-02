@@ -103,7 +103,7 @@ public class SnuMenuFragment extends Fragment {
 
 		db = new DatabaseHelper(getActivity());
 		RES = db.getVisibleResAll();
-
+		
 		for (int j = 0; j < RES.size(); j++) {
 			res.add(j, new ArrayList<SnuMenu>());
 		}
