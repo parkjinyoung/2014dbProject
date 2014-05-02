@@ -90,7 +90,8 @@ public class SnuMenuFragment extends Fragment {
 				i.putExtra("cafe", a.getCafe());
 				i.putExtra("price", a.getPrice());
 				i.putExtra("classify", a.getClassify());
-
+//				i.putExtra("search", "");
+				
 				startActivity(i);
 				return false;
 			}

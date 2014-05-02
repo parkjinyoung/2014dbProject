@@ -7,6 +7,7 @@ import org.json.simple.JSONValue;
 
 import object.Comment;
 import object.RecComment;
+import object.Search;
 import object.SendServerURL;
 import object.SnuMenu;
 import android.content.Context;
@@ -191,9 +192,8 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
 					Intent i = new Intent(v.getContext(),SnuMenuDetails.class);
 					
 					db = new DatabaseHelper(v.getContext());
-					
+					if(db.getSnuMenu(e.getCafe(),  e.getMenu())!=null){
 					db.updateSnuMenu(e.getCafe(), e.getMenu(), tmpeval); // 수정된 eval 넣어줌
-					
 					db.closeDB();
 					
 					i.putExtra("menu", e.getMenu());
@@ -201,6 +201,13 @@ public class MyListAdapter extends ArrayAdapter<Comment>{
 					
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					v.getContext().startActivity(i);
+					}
+					else{
+						i.putExtra("menu", e.getMenu());
+						i.putExtra("cafe", e.getCafe());
+						i.putExtra("rating", tmpeval);
+						
+					}
 				}
 			});
         }
