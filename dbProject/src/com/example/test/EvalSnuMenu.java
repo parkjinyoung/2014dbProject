@@ -41,7 +41,8 @@ public class EvalSnuMenu extends Activity{
 		final int price = getIntent().getIntExtra("price", 0);
 		final String classify = getIntent().getStringExtra("classify");
 		final String search = getIntent().getStringExtra("search");
-		
+		System.out.println("eval search = " + search);
+
 		final String rating = getIntent().getStringExtra("rating");
 		final String comment = getIntent().getStringExtra("comment");
 		
@@ -95,7 +96,8 @@ public class EvalSnuMenu extends Activity{
 				}
 				
 					db = new DatabaseHelper(getApplicationContext());
-					db.updateSnuMenu(cafe, menu, geteval);
+					if(search!=null&&search.equals("true")) db.updateSearchSnuMenu(cafe, menu, geteval);
+					else db.updateSnuMenu(cafe, menu, geteval);
 					db.closeDB();
 				Toast.makeText(EvalSnuMenu.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
 				
@@ -107,6 +109,7 @@ public class EvalSnuMenu extends Activity{
 				i.putExtra("price", price);
 				i.putExtra("classify", classify);
 				i.putExtra("eval", geteval);
+				i.putExtra("search", search);
 				
 				startActivity(i);
 			}

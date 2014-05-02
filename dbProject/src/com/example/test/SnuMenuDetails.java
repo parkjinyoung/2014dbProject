@@ -61,6 +61,7 @@ public class SnuMenuDetails extends Activity{
 		//		final int price = getIntent().getIntExtra("price", 0);
 		//		final String classify = getIntent().getStringExtra("classify");
 		search = getIntent().getStringExtra("search");
+		System.out.println("search = " + search);
 
 
 //		if(search.equals("search")){
@@ -72,7 +73,7 @@ public class SnuMenuDetails extends Activity{
 //		else{
 			db = new DatabaseHelper(getApplicationContext());
 			SnuMenu snumenu = new SnuMenu();
-			if(search.equals("true")) 
+			if(search!=null && search.equals("true")) 
 				snumenu = db.getSearchSnuMenu(cafe, menu);
 			else
 				snumenu = db.getSnuMenu(cafe, menu);
@@ -137,7 +138,7 @@ public class SnuMenuDetails extends Activity{
 
 				comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 
-				madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comarrlist);
+				madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comarrlist, search);
 				System.out.println("comment not sort");
 				listView1.setAdapter(madapter1);
 
@@ -178,7 +179,7 @@ public class SnuMenuDetails extends Activity{
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , dateComparator);
-						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comarrlist);
+						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comarrlist, search);
 						System.out.println("comment sort by date");
 						listView1.setAdapter(madapter2);
 
@@ -216,7 +217,7 @@ public class SnuMenuDetails extends Activity{
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , recComparator);
-						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comarrlist);
+						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comarrlist, search);
 						System.out.println("comment sort by rec");
 						listView1.setAdapter(madapter2);
 
