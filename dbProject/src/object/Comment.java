@@ -2,14 +2,16 @@ package object;
 
 
 public class Comment {
+	String mno;
 	String cafe;
 	String menu;
-	String nickname;
+	String uno;
 	String comment;
 	String rating;
 	String date;
 	int recommend;
 	int unrecommend;
+	String eno;
 	public Comment(){
 		
 	}
@@ -18,10 +20,11 @@ public class Comment {
 			String rating, String date, int recommend, int unrecommend){
 		this.cafe = cafe;
 		this.menu = menu;
-		this.nickname = nickname;
+		this.uno = nickname;
 		this.comment = comment;
 		this.rating = rating;
 		this.date = date;
+		this.eno="0";
 	}
 	
 	public String getCafe() {
@@ -36,11 +39,11 @@ public class Comment {
 	public void setMenu(String menu) {
 		this.menu = menu;
 	}
-	public String getnickname() {
-		return nickname;
+	public String getNickname() {
+		return uno;
 	}
-	public void setnickname(String nickname) {
-		this.nickname = nickname;
+	public void setNickname(String nickname) {
+		this.uno = nickname;
 	}
 	public String getComment() {
 		return comment;
@@ -71,6 +74,14 @@ public class Comment {
 	}
 	public void setUnrecommend(int nonrecommend) {
 		this.unrecommend = nonrecommend;
+	}
+
+	public String getEno() {
+		return eno;
+	}
+
+	public void setEno(String eno) {
+		this.eno = eno;
 	}
 
 	

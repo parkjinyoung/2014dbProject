@@ -1,6 +1,7 @@
 package object;
 
 public class SnuMenu {
+	private String mno;
 	private String menu;
 	private String rating;
 	private String cafe;
@@ -52,6 +53,12 @@ public class SnuMenu {
 	}
 	public void setClassify(String classify) {
 		this.classify = classify;
+	}
+	public String getMno() {
+		return mno;
+	}
+	public void setMno(String mno) {
+		this.mno = mno;
 	}
 
 }

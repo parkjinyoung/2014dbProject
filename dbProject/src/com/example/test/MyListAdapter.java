@@ -74,7 +74,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			((TextView) v.findViewById(R.id.snumenu_detail_comment_text))
 					.setText(e.getComment());
 			((TextView) v.findViewById(R.id.snumenu_detail_comment_nickname))
-					.setText(e.getnickname());
+					.setText(e.getNickname());
 
 			String tmpeval = e.getRating();
 
@@ -110,11 +110,11 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			modifybtn.setVisibility(View.GONE);
 			deletebtn.setVisibility(View.GONE);
 
-			if (e.getnickname().equals(user_id)) {
+			if (e.getNickname().equals(user_id)) {
 				modifybtn.setVisibility(View.VISIBLE);
 				deletebtn.setVisibility(View.VISIBLE);
 				mycommentlayout.setVisibility(View.VISIBLE);
-				System.out.println("NICKNAME : " + e.getnickname());
+				System.out.println("NICKNAME : " + e.getNickname());
 			}
 
 			rectext.setText(Integer.toString(e.getRecommend()));
@@ -129,7 +129,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 				@Override
 				public void onClick(View v) {
 					RecComment reccom = new RecComment(user_id,
-							e.getnickname(), "true", e.getMenu(), e.getCafe());
+							e.getNickname(), "true", e.getMenu(), e.getCafe());
 					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);
@@ -144,7 +144,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 					}
 
 					System.out.println("recommend true : " + sendresult);
-					Toast.makeText(getContext(), "추천 " + e.getnickname(),
+					Toast.makeText(getContext(), "추천 " + e.getNickname(),
 							Toast.LENGTH_SHORT).show();
 				}
 			});
@@ -158,7 +158,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 				@Override
 				public void onClick(View v) {
 					RecComment reccom = new RecComment(user_id,
-							e.getnickname(), "false", e.getMenu(), e.getCafe());
+							e.getNickname(), "false", e.getMenu(), e.getCafe());
 					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);

@@ -41,12 +41,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TODAY_EVAL = "todayeval";
 	private static final String TODAY_PRICE = "todayprice";
 	private static final String TODAY_CLASSIFY = "todayclassify";
+	private static final String TODAY_MNO = "todaymno";
 	
 	private static final String MENU = "menu";
 	private static final String CAFE = "cafe";
 	private static final String EVAL = "eval";
 	private static final String PRICE = "price";
 	private static final String CLASSIFY = "classify";
+	private static final String MNO = "mno";
 
 	//res
 	private static final String RES_NAME = "resname";
@@ -60,14 +62,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ TODAY_MENU + " TEXT,"
 			+ TODAY_EVAL + " TEXT,"
 			+ TODAY_PRICE + " INTEGER,"
-			+ TODAY_CLASSIFY + " TEXT"
+			+ TODAY_CLASSIFY + " TEXT,"
+			+ TODAY_MNO + " TEXT"
 			+ ")";
 	private static final String CREATE_TABLE_SEARCHMENU = "CREATE TABLE "
 			+ TABLE_SEARCH_MENU + "(" + CAFE + " TEXT,"
 			+ MENU + " TEXT,"
 			+ EVAL + " TEXT,"
 			+ PRICE + " INTEGER,"
-			+ CLASSIFY + " TEXT"
+			+ CLASSIFY + " TEXT,"
+			+ MNO + " TEXT"
 			+ ")";
 	private static final String CREATE_TABLE_USERINFO = "CREATE TABLE "
 			+ TABLE_USER_INFO + "(" + USER_NAME + " TEXT,"
@@ -220,6 +224,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(EVAL, snumenu.getRating());
 		values.put(PRICE, snumenu.getPrice());
 		values.put(CLASSIFY, snumenu.getClassify());
+		values.put(MNO, snumenu.getMno());
 		long result = db.insert(TABLE_SEARCH_MENU, null, values);
 //		Log.d("SNUMENU createTM", "cafe : " + snumenu.getCafe() + " menu : " + snumenu.getMenu() + " eval : " + snumenu.getEval());
 		return result;
@@ -242,6 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sm.setRating(c.getString(c.getColumnIndex(EVAL)));
 		sm.setPrice(c.getInt(c.getColumnIndex(PRICE)));
 		sm.setClassify(c.getString(c.getColumnIndex(CLASSIFY)));
+		sm.setMno(c.getString(c.getColumnIndex(MNO)));
 		c.close();
 		return sm;
 	}
@@ -273,6 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				sm.setRating(c.getString(c.getColumnIndex(EVAL)));
 				sm.setPrice(c.getInt(c.getColumnIndex(PRICE)));
 				sm.setClassify(c.getString(c.getColumnIndex(CLASSIFY)));
+				sm.setMno(c.getString(c.getColumnIndex(MNO)));
 				snumenus.add(sm);
 //				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 			}
@@ -297,6 +304,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				sm.setRating(c.getString(c.getColumnIndex(EVAL)));
 				sm.setPrice(c.getInt(c.getColumnIndex(PRICE)));
 				sm.setClassify(c.getString(c.getColumnIndex(CLASSIFY)));
+				sm.setMno(c.getString(c.getColumnIndex(MNO)));
 				snumenus.add(sm);
 //				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 			}
@@ -334,6 +342,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(TODAY_EVAL, snumenu.getRating());
 		values.put(TODAY_PRICE, snumenu.getPrice());
 		values.put(TODAY_CLASSIFY, snumenu.getClassify());
+		values.put(TODAY_MNO, snumenu.getMno());
 		long result = db.insert(TABLE_TODAY_MENU, null, values);
 //		Log.d("SNUMENU createTM", "cafe : " + snumenu.getCafe() + " menu : " + snumenu.getMenu() + " eval : " + snumenu.getEval());
 		return result;
@@ -356,6 +365,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		sm.setRating(c.getString(c.getColumnIndex(TODAY_EVAL)));
 		sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
 		sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
+		sm.setMno(c.getString(c.getColumnIndex(TODAY_MNO)));
 //		Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 		c.close();
 		return sm;
@@ -388,6 +398,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				sm.setRating(c.getString(c.getColumnIndex(TODAY_EVAL)));
 				sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
 				sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
+				sm.setMno(c.getString(c.getColumnIndex(TODAY_MNO)));
 				snumenus.add(sm);
 //				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 			}
@@ -412,6 +423,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				sm.setRating(c.getString(c.getColumnIndex(TODAY_EVAL)));
 				sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
 				sm.setClassify(c.getString(c.getColumnIndex(TODAY_CLASSIFY)));
+				sm.setMno(c.getString(c.getColumnIndex(TODAY_MNO)));
 				snumenus.add(sm);
 //				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 			}

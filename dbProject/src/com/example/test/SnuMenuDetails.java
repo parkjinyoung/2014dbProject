@@ -34,6 +34,7 @@ public class SnuMenuDetails extends Activity{
 	int price = 0;
 	String classify = "";
 	String search = "false";
+	String mno="";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class SnuMenuDetails extends Activity{
 			tmpeval = snumenu.getRating();
 			price = snumenu.getPrice();
 			classify = snumenu.getClassify();
+			mno = snumenu.getMno();
 //		}
 		if(tmpeval!=null){
 			float eval = Float.parseFloat(tmpeval);
@@ -116,7 +118,8 @@ public class SnuMenuDetails extends Activity{
 
 		//String url = "http://laputan32.cafe24.com/Eval";
 		SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
-
+		a.setMno(mno);
+		
 		SendServer send = new SendServer(a, SendServerURL.commentURL);
 		String sendresult = send.send();
 		System.out.println("snumenudetails sendserver return : " + sendresult);
