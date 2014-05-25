@@ -73,6 +73,7 @@
             android:name="com.example.test.AuthkeyActivity"
             android:label="Authenticate" >
         </activity>
+        <activity android:name="EvalDelivery"></activity>
     </application>
 
 </manifest>

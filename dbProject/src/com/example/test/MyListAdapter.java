@@ -71,9 +71,9 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 		final Comment e = items.get(position);
 		if (e != null) {
-			((TextView) v.findViewById(R.id.snumenu_detail_comment_text))
+			((TextView) v.findViewById(R.id.detail_comment_text))
 					.setText(e.getComment());
-			((TextView) v.findViewById(R.id.snumenu_detail_comment_nickname))
+			((TextView) v.findViewById(R.id.detail_comment_nickname))
 					.setText(e.getNickname());
 
 			String tmpeval = e.getRating();

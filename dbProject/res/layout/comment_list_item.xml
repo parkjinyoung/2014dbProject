@@ -5,13 +5,13 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/snumenu_detail_comment_nickname"
+        android:id="@+id/detail_comment_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/snumenu_detail_comment_text"
+        android:id="@+id/detail_comment_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp" />
