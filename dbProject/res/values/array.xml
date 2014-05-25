@@ -1,0 +1,11 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<resources>
+ <string-array name="selected">
+        <item>전체</item>
+        <item>피자</item>
+        <item>치킨</item>
+        <item>도시락</item>
+        <item>돈까스</item>
+        <item>분식</item>
+    </string-array>
+</resources>

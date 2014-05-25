@@ -86,7 +86,7 @@ public class SnuMenuFragment extends Fragment {
 				i.putExtra("eval", a.getRating());
 				i.putExtra("cafe", a.getCafe());
 				i.putExtra("price", a.getPrice());
-				i.putExtra("classify", a.getClassify());
+				i.putExtra("time", a.getTime());
 //				i.putExtra("search", "");
 				
 				startActivity(i);

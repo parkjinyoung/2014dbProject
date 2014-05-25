@@ -32,7 +32,7 @@ public class SnuMenuDetails extends Activity{
 	private AlertDialog mDialog = null;
 	String tmpeval = "";
 	int price = 0;
-	String classify = "";
+	String time = "";
 	String search = "false";
 	String mno="";
 	
@@ -82,7 +82,7 @@ public class SnuMenuDetails extends Activity{
 
 			tmpeval = snumenu.getRating();
 			price = snumenu.getPrice();
-			classify = snumenu.getClassify();
+			time = snumenu.getTime();
 			mno = snumenu.getMno();
 //		}
 		if(tmpeval!=null){
@@ -117,7 +117,7 @@ public class SnuMenuDetails extends Activity{
 
 
 		//String url = "http://laputan32.cafe24.com/Eval";
-		SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
+		SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, time);
 		a.setMno(mno);
 		
 		SendServer send = new SendServer(a, SendServerURL.commentURL);
@@ -160,7 +160,7 @@ public class SnuMenuDetails extends Activity{
 				// TODO Auto-generated method stub
 
 				//String url = "http://laputan32.cafe24.com/Eval";
-				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
+				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, time);
 
 				SendServer send = new SendServer(a, SendServerURL.commentURL);
 				String sendresult = send.send();
@@ -198,7 +198,7 @@ public class SnuMenuDetails extends Activity{
 				// TODO Auto-generated method stub
 
 				//String url = "http://laputan32.cafe24.com/Eval";
-				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, classify);
+				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, time);
 
 				SendServer send = new SendServer(a, SendServerURL.commentURL);
 				String sendresult = send.send();
@@ -254,7 +254,7 @@ public class SnuMenuDetails extends Activity{
 					i.putExtra("cafe", cafe);
 					i.putExtra("menu", menu);
 					i.putExtra("price", price);
-					i.putExtra("classify", classify);
+					i.putExtra("time", time);
 					i.putExtra("eval", tmpeval);
 					i.putExtra("search", search);
 					

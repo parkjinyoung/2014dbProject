@@ -6,7 +6,7 @@ public class SnuMenu {
 	private String rating;
 	private String cafe;
 	private int price;
-	private String classify;
+	private String time;
 	public String getCafe() {
 		return cafe;
 	}
@@ -22,19 +22,19 @@ public class SnuMenu {
 	public SnuMenu(){
 		
 	}
-	public SnuMenu(String menu, String cafe, String rating, int price, String classify){
+	public SnuMenu(String menu, String cafe, String rating, int price, String time){
 		this.menu=menu;
 		this.cafe=cafe;
 		this.rating=rating;
 		this.price=price;
-		this.classify=classify;
+		this.time = time;
 	}
 	public SnuMenu(String cafe, String menu, String rating){
 		this.cafe = cafe;
 		this.menu = menu;
 		this.rating = rating;
 		this.price = 0;
-		this.classify = null;
+		this.time = null;
 	}
 	public String getRating() {
 		return rating;
@@ -48,11 +48,11 @@ public class SnuMenu {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getClassify() {
-		return classify;
+	public String getTime() {
+		return time;
 	}
-	public void setClassify(String classify) {
-		this.classify = classify;
+	public void setTime(String time) {
+		this.time = time;
 	}
 	public String getMno() {
 		return mno;

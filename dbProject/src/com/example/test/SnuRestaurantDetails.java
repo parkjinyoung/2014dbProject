@@ -34,19 +34,19 @@ public class SnuRestaurantDetails extends Activity{
 	    	
 	    	for(int i=0; i<allcafemenu.size() ;i++){
 	    		System.out.println("SNUMENU : " + allcafemenu.get(i).getMenu());
-	    		System.out.println("SNUMENU : " + allcafemenu.get(i).getClassify());
+	    		System.out.println("SNUMENU : " + allcafemenu.get(i).getTime());
 	    		
-	    		if(allcafemenu.get(i).getClassify().equals("아침")){
+	    		if(allcafemenu.get(i).getTime().equals("아침")){
 	        		list1.add(allcafemenu.get(i));
 	        	}
-	        	else if(allcafemenu.get(i).getClassify().equals("점심")){
+	        	else if(allcafemenu.get(i).getTime().equals("점심")){
 	        		list2.add(allcafemenu.get(i));
 	        	}
-	        	else if(allcafemenu.get(i).getClassify().equals("저녁")){
+	        	else if(allcafemenu.get(i).getTime().equals("저녁")){
 	        		list3.add(allcafemenu.get(i));
 	        	}
 	        	else{
-	        		System.out.println("Classify ERROR in " + allcafemenu.get(i).getClassify());
+	        		System.out.println("Time ERROR in " + allcafemenu.get(i).getTime());
 	        	}
 	    		
 	    	}
@@ -88,7 +88,7 @@ public class SnuRestaurantDetails extends Activity{
 				i.putExtra("cafe", snumenu.getCafe());
 				i.putExtra("menu", snumenu.getMenu());
 				i.putExtra("price", snumenu.getPrice());
-				i.putExtra("classify", snumenu.getClassify());
+				i.putExtra("time", snumenu.getTime());
 				i.putExtra("eval", snumenu.getRating());
 				
 				startActivity(i);
@@ -109,7 +109,7 @@ public class SnuRestaurantDetails extends Activity{
 				i.putExtra("cafe", snumenu.getCafe());
 				i.putExtra("menu", snumenu.getMenu());
 				i.putExtra("price", snumenu.getPrice());
-				i.putExtra("classify", snumenu.getClassify());
+				i.putExtra("time", snumenu.getTime());
 				i.putExtra("eval", snumenu.getRating());
 				
 				startActivity(i);
@@ -130,7 +130,7 @@ public class SnuRestaurantDetails extends Activity{
 				i.putExtra("cafe", snumenu.getCafe());
 				i.putExtra("menu", snumenu.getMenu());
 				i.putExtra("price", snumenu.getPrice());
-				i.putExtra("classify", snumenu.getClassify());
+				i.putExtra("time", snumenu.getTime());
 				i.putExtra("eval", snumenu.getRating());
 				
 				startActivity(i);

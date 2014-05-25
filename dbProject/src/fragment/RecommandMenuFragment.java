@@ -169,7 +169,7 @@ public class RecommandMenuFragment extends Fragment {
 				i.putExtra("rating", a.getRating());
 				i.putExtra("cafe", a.getCafe());
 				i.putExtra("price", a.getPrice());
-				i.putExtra("classify", a.getClassify());
+				i.putExtra("time", a.getTime());
 				adapter.notifyDataSetChanged();
 				startActivity(i);
 				return false;

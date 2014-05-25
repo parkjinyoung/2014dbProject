@@ -39,7 +39,7 @@ public class EvalSnuMenu extends Activity{
 		final String tmpeval = getIntent().getStringExtra("eval");
 		final String cafe = getIntent().getStringExtra("cafe");
 		final int price = getIntent().getIntExtra("price", 0);
-		final String classify = getIntent().getStringExtra("classify");
+		final String time = getIntent().getStringExtra("time");
 		final String search = getIntent().getStringExtra("search");
 		System.out.println("eval search = " + search);
 
@@ -107,7 +107,7 @@ public class EvalSnuMenu extends Activity{
 				i.putExtra("cafe", cafe);
 				i.putExtra("menu", menu);
 				i.putExtra("price", price);
-				i.putExtra("classify", classify);
+				i.putExtra("time", time);
 				i.putExtra("eval", geteval);
 				i.putExtra("search", search);
 				
