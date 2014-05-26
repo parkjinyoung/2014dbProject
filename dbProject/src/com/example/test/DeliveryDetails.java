@@ -103,6 +103,17 @@ public class DeliveryDetails extends Activity{
 		float_eval.setText(Float.toString(eval));
 		text_name.setText(resname);
 
+		Button menubtn = (Button) findViewById(R.id.detail_delivery_menu_btn);
+		
+		menubtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				//메뉴 버튼 클릭했을때 메뉴 보여주기
+			}
+		});
+		
 		Button sortdatebtn = (Button) findViewById(R.id.comment_sortbydate);
 		Button sortrecbtn = (Button) findViewById(R.id.comment_sortbyrec);
 
