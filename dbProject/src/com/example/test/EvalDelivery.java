@@ -46,6 +46,8 @@ public class EvalDelivery extends Activity{
 		final String comment = getIntent().getStringExtra("comment");
 		final String resname = getIntent().getStringExtra("resname");
 		final String group = getIntent().getStringExtra("group");
+		System.out.println("take : resname = " + resname);
+
 		
 		TextView restxt = (TextView) findViewById(R.id.eval_delivery_res_name);
 		Button evalbtn = (Button) findViewById(R.id.eval_delivery_btn);

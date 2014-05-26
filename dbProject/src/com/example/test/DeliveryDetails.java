@@ -38,6 +38,7 @@ public class DeliveryDetails extends Activity{
 	String group="";
 	String menu = "";
 	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,7 +61,6 @@ public class DeliveryDetails extends Activity{
 		final String resname = getIntent().getStringExtra("deliveryName");
 		/*search = getIntent().getStringExtra("search");
 		System.out.println("search = " + search);*/
-
 
 			db = new DatabaseHelper(getApplicationContext());
 			DeliveryRestaurant delres = new DeliveryRestaurant(resname);
@@ -220,7 +220,7 @@ public class DeliveryDetails extends Activity{
 				MyApplication myApp=(MyApplication) getApplicationContext();
 				if(myApp.loginStatus){
 
-					Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
+					Intent i = new Intent(v.getContext(), EvalDelivery.class);
 
 					i.putExtra("menu", menu);
 					i.putExtra("time", time);
