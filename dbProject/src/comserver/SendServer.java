@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import object.Comment;
+import object.DeliveryRestaurant;
 import object.RecComment;
 import object.Search;
 import object.SnuMenu;
@@ -29,7 +30,8 @@ public class SendServer {
 	private SnuMenu snumenu;
 	private RecComment reccomment;
 	private Search keyword;
-
+	private DeliveryRestaurant del;
+	
 	private final String SEND_ERROR = "0";
 
 	private final String SEARCH_MENU_SEND_NAME = "searchmenu";
@@ -37,36 +39,56 @@ public class SendServer {
 	private final String MENU_SEND_NAME = "menupage";
 	private final String INSERT_COMMENT_SEND_NAME = "insertcomment";
 	private final String RECOM_COMMENT_SEND_NAME = "recomcomment";
-	private final String TODAYMENU_SEND_NAME = "todaymenu";
+	private final String TODAYMENU_REQUEST_NAME = "todaymenu";
+	private final String DELIVERY_ALL_REQUEST_NAME = "delivery_all_request";
+	private final String DELIVERY_REQUEST_NAME = "one_res_request";
 	private String DATA_NAME = null;
 	// 평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4
 	private String identifier = null;
 
+	//delivery
+	public SendServer(DeliveryRestaurant del, String url){
+		if(del.getCafe().equals("getAllDelivery")) this.DATA_NAME = DELIVERY_ALL_REQUEST_NAME;
+		else {
+			this.del = del;
+			this.DATA_NAME = DELIVERY_REQUEST_NAME;
+		}
+		this.SERVER_URL = url;
+	}
+
+	//snu menu
 	public SendServer(String url) {
 		this.SERVER_URL = url;
-		this.DATA_NAME = TODAYMENU_SEND_NAME;
+		this.DATA_NAME = TODAYMENU_REQUEST_NAME;
 		this.identifier = "1";
 	}
+	public SendServer(SnuMenu snumenu, String url) {
+		this.snumenu = snumenu;
+		this.SERVER_URL = url;
+		this.DATA_NAME = MENU_SEND_NAME;
+		this.identifier = "2";
+	}
+	//search
 	public SendServer(String url, String keyword) {
 		this.SERVER_URL = url;
 		this.DATA_NAME = SEARCH_MENU_SEND_NAME;
 		this.identifier = "2";
 		this.keyword = new Search(keyword);
 	}
+	//user
 	public SendServer(UserInfo userinfo, String url) {
 		this.userinfo = userinfo;
 		this.SERVER_URL = url;
 		this.DATA_NAME = USER_SEND_NAME;
 	}
-	
+
 	public SendServer(UserInfo userinfo, String url, String identifier) {
 		this.userinfo = userinfo;
 		this.SERVER_URL = url;
 		this.DATA_NAME = USER_SEND_NAME;
 		this.identifier = identifier;
 	}
-	
-
+	//comment
 	public SendServer(Comment comment, String url, String identifier) {
 		this.SERVER_URL = url;
 		this.comment = comment;
@@ -83,12 +105,7 @@ public class SendServer {
 		this.DATA_NAME = RECOM_COMMENT_SEND_NAME;
 	}
 
-	public SendServer(SnuMenu snumenu, String url) {
-		this.snumenu = snumenu;
-		this.SERVER_URL = url;
-		this.DATA_NAME = MENU_SEND_NAME;
-		this.identifier = "2";
-	}
+	
 
 	public String send() {
 		StrictMode.enableDefaults();
@@ -126,15 +143,18 @@ public class SendServer {
 			json = new Gson().toJson(reccomment);
 		}
 
-		else if (DATA_NAME.equals(TODAYMENU_SEND_NAME)) {
+		else if (DATA_NAME.equals(TODAYMENU_REQUEST_NAME)) {
 			json = "get today menu";
-		}
-		else if (DATA_NAME.equals(SEARCH_MENU_SEND_NAME)) {
+		} else if (DATA_NAME.equals(SEARCH_MENU_SEND_NAME)) {
 			json = new Gson().toJson(keyword);
-			
-			
-		}
 
+		}
+		else if (DATA_NAME.equals(DELIVERY_ALL_REQUEST_NAME)) {
+			json = "get delivery all";
+		}
+		else if (DATA_NAME.equals(DELIVERY_REQUEST_NAME)){
+			json = new Gson().toJson(del);
+		}
 		else {
 			return null;
 		}

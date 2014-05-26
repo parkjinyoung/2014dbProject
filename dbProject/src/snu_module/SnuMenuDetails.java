@@ -9,7 +9,6 @@ import java.util.Comparator;
 import login_module.LoginActivity;
 import login_module.MyApplication;
 import object.Comment;
-import object.SendServerURL;
 import object.SnuMenu;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -34,6 +33,7 @@ import com.example.test.R.layout;
 import com.google.gson.Gson;
 
 import comserver.SendServer;
+import comserver.SendServerURL;
 
 public class SnuMenuDetails extends Activity{
 	DatabaseHelper db;

@@ -79,9 +79,9 @@ public class DeliveryDetails extends Activity{
 			db.closeDB();
 
 			tmpeval = delres.getRating();
-			time = delres.getTime();
-			group = delres.getGroup();
-			menu = delres.getMenu();
+			time = delres.getHours();
+			group = delres.getGrouping();
+			menu = delres.getMenu_url();
 			
 		if(tmpeval!=null){
 			float eval = Float.parseFloat(tmpeval);

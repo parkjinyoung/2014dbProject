@@ -15,7 +15,6 @@ import com.example.test.R.id;
 import object.Comment;
 import object.RecComment;
 import object.Search;
-import object.SendServerURL;
 import object.SnuMenu;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import comserver.SendServer;
+import comserver.SendServerURL;
 
 public class MyListAdapter extends ArrayAdapter<Comment> {
 	private ArrayList<Comment> items;

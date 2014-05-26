@@ -11,7 +11,7 @@ import org.json.simple.JSONValue;
 import com.google.gson.Gson;
 
 import object.Comment;
-import object.SendServerURL;
+import object.DeliveryRestaurant;
 import object.SnuMenu;
 import object.UserInfo;
 import android.app.ActionBar;
@@ -28,6 +28,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import comserver.SendServer;
+import comserver.SendServerURL;
 import fragment.ConfigFragment;
 import fragment.DeliveryMenuFragment;
 import fragment.RecommandMenuFragment;
@@ -36,19 +37,8 @@ import fragment.SnuMenuFragment;
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 	ViewPager mViewPager;
 	DatabaseHelper db;
 	static String RES1 = "학생회관";
@@ -230,21 +220,26 @@ public class MainActivity extends FragmentActivity implements
 		db = new DatabaseHelper(getApplicationContext());
 
 		db.deleteSnuMenuAll();
+		db.deleteDeliveryAll();
 
 		SendServer send = new SendServer(SendServerURL.getMenuURL);
 		String result = send.send();
-		System.out.println("result = " + result);
 
 		SnuMenu[] todaymenu_arr = new Gson().fromJson(result, SnuMenu[].class);
 		for (int i = 0; i < todaymenu_arr.length; i++) {
-			/*System.out.println("comment arr [" + Integer.toString(i) + "] : "
-					+ " menu : " + todaymenu_arr[i].getMenu() + " cafe : "
-					+ todaymenu_arr[i].getCafe() + " eval : "
-					+ todaymenu_arr[i].getRating() + " price : "
-					+ todaymenu_arr[i].getPrice() + " classify : "
-					+ todaymenu_arr[i].getClassify());*/
 
 			db.createTodayMenu(todaymenu_arr[i]);
+		}
+		
+		DeliveryRestaurant del = new DeliveryRestaurant("getAllDelivery");
+		send = new SendServer(del, SendServerURL.getDeliveryURL);
+		result = send.send();
+		System.out.println("get delivery all = " + result);
+
+		DeliveryRestaurant[] delarr = new Gson().fromJson(result, DeliveryRestaurant[].class);
+		for (int i = 0; i < delarr.length; i++) {
+
+			db.createDelivery(delarr[i]);
 		}
 
 		db.closeDB();

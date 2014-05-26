@@ -3,6 +3,9 @@ package fragment;
 import java.util.ArrayList;
 
 import object.DeliveryRestaurant;
+import object.Delivery_group;
+import object.SnuMenu;
+import object.SnuRestaurant;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -12,29 +15,34 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.test.MainActivity;
+import com.example.test.DatabaseHelper;
 import com.example.test.R;
 
 import delivery_module.DeliveryDetails;
-import delivery_module.DeliveryListAdapter;
+import delivery_module.ExpandableAdapter_delivery;
 
 @SuppressLint("ValidFragment")
 public class DeliveryMenuFragment extends Fragment {
 
 	Context mContext;
-	ArrayList<DeliveryRestaurant> deliveryRestaurantarr;
-	ArrayAdapter<CharSequence> adspin;
-	String[] delgrouparr;
+	//ArrayList<DeliveryRestaurant> deliveryRestaurantarr;
+	//ArrayAdapter<CharSequence> adspin;
+	//String[] delgrouparr;
+	//////////////////////////////////////////////////////
+	ArrayList<String> groupArr = new ArrayList<String>();
+	ArrayList<ArrayList<DeliveryRestaurant>> resArr = new ArrayList<ArrayList<DeliveryRestaurant>>();
 
+	DatabaseHelper db;
+	ArrayList<Delivery_group> DelGroupList;
+	ExpandableListView exList;
+	ExpandableAdapter_delivery adapter;
+//////////////////////////////////////////////////////
+	
 	public DeliveryMenuFragment(Context context) {
 		mContext = context;
 	}
@@ -42,9 +50,9 @@ public class DeliveryMenuFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_delivery_menu, null);
+		
 ///spinner start///
-		Spinner spinner = (Spinner) view.findViewById(R.id.delgroup_spinner);
+/*		Spinner spinner = (Spinner) view.findViewById(R.id.delgroup_spinner);
 		spinner.setPrompt("종류를 선택하세요.");
 
 		// adspin = ArrayAdapter.createFromResource(mContext, R.array.selected,
@@ -72,11 +80,10 @@ public class DeliveryMenuFragment extends Fragment {
 
 			}
 
-		});
+		});*/
 ///spinner end///
-		createArr();
 
-		ListView list = (ListView) view.findViewById(R.id.list);
+		/*ListView list = (ListView) view.findViewById(R.id.list);
 		ArrayAdapter<DeliveryRestaurant> adapter = new DeliveryListAdapter(
 				this.mContext, R.layout.delivery_list_item_1, R.id.row_title,
 				deliveryRestaurantarr);
@@ -88,18 +95,80 @@ public class DeliveryMenuFragment extends Fragment {
 					int position, long id) {
 
 				String deliveryName = deliveryRestaurantarr.get(position)
-						.getResname();
+						.getCafe();
 
 				Intent i = new Intent(v.getContext(), DeliveryDetails.class);
 				i.putExtra("deliveryName", deliveryName);
 				startActivity(i);
 			}
 		});
+*/
+		View view = inflater.inflate(R.layout.activity_delivery_menu, null);
+		View tmpview = inflater.inflate(R.layout.del_menu_group_row, container);
+		DelGroupList = new ArrayList<Delivery_group>();
+		onCreateData();
+
+		exList = (ExpandableListView) view.findViewById(R.id.expandablelist);
+		adapter = new ExpandableAdapter_delivery(getActivity(), DelGroupList);
+		exList.setAdapter(adapter);
+
+		exList.setItemsCanFocus(true);
+		exList.setOnChildClickListener(new OnChildClickListener() {
+
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+
+
+				DeliveryRestaurant a = DelGroupList.get(groupPosition).getMyres().get(childPosition);
+				Delivery_group b = DelGroupList.get(groupPosition);
+
+				Intent i = new Intent(v.getContext(), DeliveryDetails.class);
+				i.putExtra("groupName", b.getGroup_name());
+				i.putExtra("deliveryName", a.getCafe());
+				startActivity(i);
+				return false;
+			}
+		});
 
 		return view;
+		
 	}
 
-	private void createGroup() {
+	protected void onCreateData() {
+
+		db = new DatabaseHelper(getActivity());
+		groupArr = db.getAllDeliveryGroupName();
+		
+		for (int j = 0; j < groupArr.size(); j++) {
+			resArr.add(j, new ArrayList<DeliveryRestaurant>());
+		}
+
+		ArrayList<DeliveryRestaurant> alldelres = db.getAllDelivery();
+		for (DeliveryRestaurant del : alldelres) {
+			for (int j = 0; j < groupArr.size(); j++) {
+				if (del.getGrouping().equals(groupArr.get(j))) {
+					resArr.get(j).add(del);
+					break;
+				}
+			}
+		}
+		for (int j = 0; j < groupArr.size(); j++)
+			DelGroupList.add(new Delivery_group(groupArr.get(j), resArr.get(j)));
+
+		db.closeDB();
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		adapter.notifyDataSetChanged();
+	}
+		
+	
+
+	/*private void createGroup() {
 		delgrouparr = new String[3];
 		delgrouparr[0] = "전체";
 		delgrouparr[1] = "피자";
@@ -114,9 +183,10 @@ public class DeliveryMenuFragment extends Fragment {
 		deliveryRestaurantarr.add(a);
 		deliveryRestaurantarr.add(b);
 		deliveryRestaurantarr.add(c);
-	}
-
-	public class SpinnerAdapter extends ArrayAdapter<String> {
+	}*/
+	
+/////////////////////////////////////////////////////////////////////////////////////////////
+	/*public class SpinnerAdapter extends ArrayAdapter<String> {
 		Context context;
 		String[] items = new String[] {};
 
@@ -127,9 +197,9 @@ public class DeliveryMenuFragment extends Fragment {
 			this.context = context;
 		}
 
-		/**
+		*//**
 		 * 스피너 클릭시 보여지는 View의 정의
-		 */
+		 *//*
 		@Override
 		public View getDropDownView(int position, View convertView,
 				ViewGroup parent) {
@@ -150,9 +220,9 @@ public class DeliveryMenuFragment extends Fragment {
 			return convertView;
 		}
 
-		/**
+		*//**
 		 * 기본 스피너 View 정의
-		 */
+		 *//*
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
@@ -168,5 +238,5 @@ public class DeliveryMenuFragment extends Fragment {
 			tv.setTextSize(20);
 			return convertView;
 		}
-	}
+	}*/
 }

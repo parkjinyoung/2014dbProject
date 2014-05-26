@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import object.Comment;
-import object.SendServerURL;
 import object.SnuMenu;
 import object.SnuRestaurant;
 import snu_module.ExpandableAdapter;
@@ -18,6 +17,7 @@ import com.example.test.R.layout;
 import com.google.gson.Gson;
 
 import comserver.SendServer;
+import comserver.SendServerURL;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;

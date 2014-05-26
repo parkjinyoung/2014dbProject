@@ -43,7 +43,7 @@ public class DeliveryListAdapter extends ArrayAdapter<DeliveryRestaurant>{
     		image_eval[3] = (ImageView) v.findViewById(R.id.del_eval_stars4);
     		image_eval[4] = (ImageView) v.findViewById(R.id.del_eval_stars5);
         	
-            ((TextView)v.findViewById(R.id.row_title)).setText(e.getResname());
+            ((TextView)v.findViewById(R.id.row_title)).setText(e.getCafe());
            
             String tmpeval = e.getRating();
             System.out.println("delivery rating : " + tmpeval);

@@ -18,8 +18,8 @@ import com.example.test.R.layout;
 import com.google.gson.Gson;
 
 import comserver.SendServer;
+import comserver.SendServerURL;
 import object.Comment;
-import object.SendServerURL;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

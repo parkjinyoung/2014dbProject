@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import object.DeliveryRestaurant;
+import object.Delivery_group;
 import object.SnuMenu;
 import object.SnuRestaurant;
 import android.content.ContentValues;
@@ -32,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_SEARCH_MENU = "searchmenutable";
 	private static final String TABLE_VISIBLE_RES = "visibleres";
 	private static final String TABLE_DELIVERY = "delivery";
+	private static final String TABLE_DELIVERY_GROUP = "delivery_group";
 	
 	// user
 	private static final String USER_NAME = "user_name";
@@ -52,24 +54,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TIME = "time";
 	private static final String MNO = "mno";
 	
+	private static final String DEL_NO = "dno";
 	private static final String DEL_RES = "cafe";
-	private static final String DEL_GROUP = "group";
-	private static final String DEL_TIME = "time";
-	private static final String DEL_MENU = "menu";
+	private static final String DEL_GROUP = "grouping";
+	private static final String DEL_TIME = "hours";
+	private static final String DEL_MENU = "menu_url";
 	private static final String DEL_RATING = "rating";
 
+	private static final String DEL_GROUP_NAME = "del_group_name";
 	//res
 	private static final String RES_NAME = "resname";
 
 
 	// Table Create Statements
 	// Todo table create statement
+	private static final String CREATE_TABLE_DELIVERY_GROUP = "CREATE TABLE "
+			+ TABLE_DELIVERY_GROUP + "(" + DEL_GROUP_NAME + " TEXT" + ")";
 	private static final String CREATE_TABLE_DELIVERY = "CREATE TABLE "
-			+ TABLE_DELIVERY + "(" + DEL_RES + " TEXT,"
+			+ TABLE_DELIVERY + "(" + 
+			DEL_NO + " TEXT,"
+			+ DEL_RES + " TEXT,"
 			+ DEL_GROUP + " TEXT,"
 			+ DEL_TIME + " TEXT,"
-			+ DEL_MENU + " INTEGER,"
-			+ DEL_RATING + " TEXT,"
+			+ DEL_MENU + " TEXT,"
+			+ DEL_RATING + " TEXT"
 			+ ")";
 	private static final String CREATE_TABLE_TODAYMENU = "CREATE TABLE "
 			+ TABLE_TODAY_MENU + "(" + TODAY_CAFE + " TEXT,"
@@ -106,7 +114,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_USERINFO);
 		db.execSQL(CREATE_TABLE_VISIBLERES);
 		db.execSQL(CREATE_TABLE_DELIVERY);
-
+		db.execSQL(CREATE_TABLE_DELIVERY_GROUP);
+		
+		initable_delGroup(db);
 		initable_VisibleRes(db);
 	}
 
@@ -118,6 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_INFO);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_VISIBLE_RES);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_DELIVERY);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_DELIVERY_GROUP);
 		// create new tables
 		onCreate(db);
 	}
@@ -471,14 +482,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 ////////////////////////////////////////////////////
 	//delivery
+	private void initable_delGroup(SQLiteDatabase db){
+		ContentValues values = new ContentValues();
+		values.put(DEL_GROUP_NAME, "피자");
+		db.insert(TABLE_DELIVERY_GROUP, null, values);
+		values.put(DEL_GROUP_NAME, "치킨");
+		db.insert(TABLE_DELIVERY_GROUP, null, values);
+		values.put(DEL_GROUP_NAME, "한식·분식");
+		db.insert(TABLE_DELIVERY_GROUP, null, values);
+		values.put(DEL_GROUP_NAME, "중식");
+		db.insert(TABLE_DELIVERY_GROUP, null, values);
+		values.put(DEL_GROUP_NAME, "돈까스·일식");
+		db.insert(TABLE_DELIVERY_GROUP, null, values);
+		values.put(DEL_GROUP_NAME, "냉면");
+		db.insert(TABLE_DELIVERY_GROUP, null, values);
+		values.put(DEL_GROUP_NAME, "도시락");
+		db.insert(TABLE_DELIVERY_GROUP, null, values);
+	}
+	public ArrayList<String> getAllDeliveryGroupName(){
+		ArrayList<String> delarr = new ArrayList<String>();
+		String selectQuery = "SELECT  * FROM " + TABLE_DELIVERY_GROUP;
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if(c.moveToFirst()){
+			do{
+				Delivery_group delg = new Delivery_group();
+				delg.setGroup_name(c.getString(c.getColumnIndex(DEL_GROUP_NAME)));
+				delarr.add(delg.getGroup_name());
+			}
+			while(c.moveToNext());
+		}
+		c.close();
+		return delarr;
+	}
 	public long createDelivery(DeliveryRestaurant del){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(DEL_GROUP, del.getGroup());
-		values.put(DEL_MENU, del.getMenu());
+		values.put(DEL_NO, del.getDno());
+		values.put(DEL_GROUP, del.getGrouping());
+		values.put(DEL_MENU, del.getMenu_url());
 		values.put(DEL_RATING, del.getRating());
-		values.put(DEL_RES, del.getResname());
-		values.put(DEL_TIME, del.getTime());
+		values.put(DEL_RES, del.getCafe());
+		values.put(DEL_TIME, del.getHours());
 		long result = db.insert(TABLE_DELIVERY, null, values);
 		return result;
 	}
@@ -486,19 +533,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public DeliveryRestaurant getDelivery(String resname){
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		String selectQuery = "SELECT * FROM " + TABLE_DELIVERY + " WHERE " 
+		 Cursor c = db.query(TABLE_DELIVERY,
+                 null,
+                 DEL_RES + "=?",
+                 new String[] { resname }, null, null, null, null);
+		 
+		/*String selectQuery = "SELECT * FROM " + TABLE_DELIVERY + " WHERE " 
 				+ DEL_RES + " = '" + resname + "'";
 
-		Cursor c = db.rawQuery(selectQuery, null);
+		Cursor c = db.rawQuery(selectQuery, null);*/
 
 		if(c != null)
 			c.moveToFirst();
 
-		DeliveryRestaurant del = new DeliveryRestaurant(resname);
-		del.setGroup(c.getString(c.getColumnIndex(DEL_GROUP)));
-		del.setMenu(c.getString(c.getColumnIndex(DEL_MENU)));
+		DeliveryRestaurant del = new DeliveryRestaurant();
+		del.setCafe(c.getString(c.getColumnIndex(DEL_RES)));
+		del.setDno(c.getString(c.getColumnIndex(DEL_NO)));
+		del.setGrouping(c.getString(c.getColumnIndex(DEL_GROUP)));
+		del.setMenu_url(c.getString(c.getColumnIndex(DEL_MENU)));
 		del.setRating(c.getString(c.getColumnIndex(DEL_RATING)));
-		del.setTime(c.getString(c.getColumnIndex(DEL_TIME)));
+		del.setHours(c.getString(c.getColumnIndex(DEL_TIME)));
 		
 //		Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 		c.close();
@@ -528,11 +582,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if(c.moveToFirst()){
 			do{
 				DeliveryRestaurant del = new DeliveryRestaurant();
-				del.setResname(c.getString(c.getColumnIndex(DEL_RES)));
-				del.setGroup(c.getString(c.getColumnIndex(DEL_GROUP)));
-				del.setMenu(c.getString(c.getColumnIndex(DEL_MENU)));
+				del.setDno(c.getString(c.getColumnIndex(DEL_NO)));
+				del.setCafe(c.getString(c.getColumnIndex(DEL_RES)));
+				del.setGrouping(c.getString(c.getColumnIndex(DEL_GROUP)));
+				del.setMenu_url(c.getString(c.getColumnIndex(DEL_MENU)));
 				del.setRating(c.getString(c.getColumnIndex(DEL_RATING)));
-				del.setTime(c.getString(c.getColumnIndex(DEL_TIME)));
+				del.setHours(c.getString(c.getColumnIndex(DEL_TIME)));
 				delarr.add(del);
 //				Log.d("SNUMENU getallsnumenus", "cafe : " + sm.getCafe() + " menu : " + sm.getMenu() + " eval : " + sm.getEval());
 			}
