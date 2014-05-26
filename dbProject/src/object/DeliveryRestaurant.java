@@ -8,6 +8,7 @@ public class DeliveryRestaurant {
 	private String time;
 	private String menu;
 	
+	public DeliveryRestaurant(){}
 	public DeliveryRestaurant(String resname){
 		this.resname = resname;
 		this.rating = "4";
