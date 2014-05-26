@@ -1,7 +1,11 @@
-package com.example.test;
+package login_module;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
+import com.example.test.R;
+import com.example.test.R.id;
+import com.example.test.R.layout;
 
 import comserver.SendServer;
 import object.UserInfo;
@@ -50,7 +54,7 @@ public class AuthkeyActivity extends Activity {
 		String url = "http://laputan32.cafe24.com/User";
 		UserInfo a = new UserInfo();
 		MyApplication myApp = (MyApplication)getApplicationContext();
-		if(!myApp.getLoginStauts())
+		if(!myApp.getLoginStatus())
 		{
 			new AlertDialog.Builder(this)
 			.setTitle("Critical Error")

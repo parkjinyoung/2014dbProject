@@ -1,9 +1,16 @@
-package com.example.test;
+package snu_module;
 
 import java.util.ArrayList;
 
+import login_module.MyApplication;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
+import com.example.test.DatabaseHelper;
+import com.example.test.R;
+import com.example.test.R.drawable;
+import com.example.test.R.id;
 
 import object.Comment;
 import object.RecComment;
@@ -104,7 +111,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			MyApplication myApp = (MyApplication) v.getContext()
 					.getApplicationContext();
 
-			final String user_id = myApp.nickName;
+			final String user_id = myApp.getNickName();
 
 			mycommentlayout.setVisibility(View.GONE);
 			modifybtn.setVisibility(View.GONE);

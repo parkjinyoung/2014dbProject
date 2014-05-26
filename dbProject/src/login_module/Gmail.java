@@ -1,4 +1,4 @@
-package com.example.test;
+package login_module;
   
 import java.util.Properties;    
 import javax.mail.Address;

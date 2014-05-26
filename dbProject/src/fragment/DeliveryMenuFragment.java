@@ -21,10 +21,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.test.DeliveryDetails;
-import com.example.test.DeliveryListAdapter;
 import com.example.test.MainActivity;
 import com.example.test.R;
+
+import delivery_module.DeliveryDetails;
+import delivery_module.DeliveryListAdapter;
 
 @SuppressLint("ValidFragment")
 public class DeliveryMenuFragment extends Fragment {

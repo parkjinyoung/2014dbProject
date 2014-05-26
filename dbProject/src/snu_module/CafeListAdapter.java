@@ -1,6 +1,10 @@
-package com.example.test;
+package snu_module;
 
 import java.util.ArrayList;
+
+import com.example.test.R;
+import com.example.test.R.drawable;
+import com.example.test.R.id;
 
 import object.Comment;
 import object.SnuMenu;

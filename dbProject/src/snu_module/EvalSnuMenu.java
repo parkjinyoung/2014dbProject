@@ -1,4 +1,4 @@
-package com.example.test;
+package snu_module;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,9 +6,15 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import login_module.MyApplication;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.example.test.DatabaseHelper;
+import com.example.test.R;
+import com.example.test.R.id;
+import com.example.test.R.layout;
 import com.google.gson.Gson;
 
 import comserver.SendServer;

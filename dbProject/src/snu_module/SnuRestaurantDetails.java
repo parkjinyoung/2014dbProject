@@ -1,6 +1,11 @@
-package com.example.test;
+package snu_module;
 
 import java.util.ArrayList;
+
+import com.example.test.DatabaseHelper;
+import com.example.test.R;
+import com.example.test.R.id;
+import com.example.test.R.layout;
 
 import object.SnuMenu;
 import android.app.Activity;

@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
-encoding//src/com/example/test/DeliveryDetails.java=UTF-8
-encoding//src/com/example/test/SnuMenuDetails.java=UTF-8
-encoding//src/com/example/test/SnuRestaurantDetails.java=UTF-8
+encoding//src/delivery_module/DeliveryDetails.java=UTF-8
+encoding//src/fragment/DeliveryMenuFragment.java=UTF-8
 encoding//src/fragment/SnuMenuFragment.java=UTF-8
+encoding//src/snu_module/SnuMenuDetails.java=UTF-8
+encoding//src/snu_module/SnuRestaurantDetails.java=UTF-8

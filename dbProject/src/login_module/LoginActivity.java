@@ -1,9 +1,15 @@
-package com.example.test;
+package login_module;
 
 import object.UserInfo;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
+import com.example.test.R;
+import com.example.test.R.id;
+import com.example.test.R.layout;
+import com.example.test.R.menu;
+import com.example.test.R.string;
 
 import comserver.SendServer;
 import android.animation.Animator;

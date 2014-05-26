@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import object.SnuMenu;
 import object.SnuRestaurant;
+import snu_module.ExpandableAdapter;
+import snu_module.SnuMenuDetails;
+import snu_module.SnuRestaurantDetails;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -22,10 +25,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 import com.example.test.DatabaseHelper;
-import com.example.test.ExpandableAdapter;
 import com.example.test.R;
-import com.example.test.SnuMenuDetails;
-import com.example.test.SnuRestaurantDetails;
 
 @SuppressLint("ValidFragment")
 public class SnuMenuFragment extends Fragment {

@@ -1,18 +1,18 @@
 package fragment;
 
 
-import com.example.test.AuthkeyActivity;
-import com.example.test.LoginActivity;
 import com.example.test.MainActivity;
-import com.example.test.MyApplication;
 import com.example.test.R;
-import com.example.test.RegisterActivity;
-import com.example.test.SnuRestaurantDetails;
 import com.example.test.R.layout;
-import com.example.test.myPreference;
 
 import java.util.ArrayList;
 
+import snu_module.SnuRestaurantDetails;
+import login_module.AuthkeyActivity;
+import login_module.LoginActivity;
+import login_module.MyApplication;
+import login_module.RegisterActivity;
+import login_module.myPreference;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -71,7 +71,7 @@ public class ConfigFragment extends Fragment {
 				switch(position){
 				//로그아웃
 				case 0:
-					if(myApp.getLoginStauts()){
+					if(myApp.getLoginStatus()){
 						myApp.setLoginStatus(false);
 						myApp.setId("");
 						myApp.setAuth(false);
@@ -95,7 +95,7 @@ public class ConfigFragment extends Fragment {
 					break;
 					//인증/로그인
 				case 1:
-					if(myApp.getLoginStauts())
+					if(myApp.getLoginStatus())
 					{
 						Intent intent = new Intent(v.getContext(), AuthkeyActivity.class);
 						startActivity(intent);

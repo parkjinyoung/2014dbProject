@@ -1,4 +1,4 @@
-package com.example.test;
+package delivery_module;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -6,10 +6,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
+import login_module.LoginActivity;
+import login_module.MyApplication;
 import object.Comment;
 import object.DeliveryRestaurant;
-import object.SendServerURL;
-import object.SnuMenu;
+import snu_module.MyListAdapter;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -25,9 +26,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.test.DatabaseHelper;
+import com.example.test.R;
+import com.example.test.R.drawable;
+import com.example.test.R.id;
+import com.example.test.R.layout;
 import com.google.gson.Gson;
-
-import comserver.SendServer;
 
 public class DeliveryDetails extends Activity{
 	DatabaseHelper db;
@@ -218,7 +222,7 @@ public class DeliveryDetails extends Activity{
 				// TODO Auto-generated method stub
 
 				MyApplication myApp=(MyApplication) getApplicationContext();
-				if(myApp.loginStatus){
+				if(myApp.getLoginStatus()){
 
 					Intent i = new Intent(v.getContext(), EvalDelivery.class);
 

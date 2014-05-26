@@ -2,6 +2,9 @@ package com.example.test;
 
 import java.util.Locale;
 
+import login_module.MyApplication;
+import login_module.myPreference;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 

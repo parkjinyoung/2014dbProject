@@ -7,13 +7,13 @@ import object.Comment;
 import object.SendServerURL;
 import object.SnuMenu;
 import object.SnuRestaurant;
+import snu_module.ExpandableAdapter;
+import snu_module.MyListAdapter;
+import snu_module.SnuMenuDetails;
 
 import com.example.test.DatabaseHelper;
-import com.example.test.ExpandableAdapter;
 import com.example.test.ExpandableAdapterforSearch;
-import com.example.test.MyListAdapter;
 import com.example.test.R;
-import com.example.test.SnuMenuDetails;
 import com.example.test.R.layout;
 import com.google.gson.Gson;
 

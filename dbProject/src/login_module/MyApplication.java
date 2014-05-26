@@ -1,4 +1,4 @@
-package com.example.test;
+package login_module;
 
 import android.app.Application;
 
@@ -25,7 +25,7 @@ public class MyApplication extends Application{
 	{
 		this.loginStatus = loginStatus;
 	}
-	public boolean getLoginStauts()
+	public boolean getLoginStatus()
 	{
 		return loginStatus;
 	}
