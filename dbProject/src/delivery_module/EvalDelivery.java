@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import comserver.SendServer;
 import comserver.SendServerURL;
 import object.Comment;
+import object.DeliveryRestaurant;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,18 +42,23 @@ public class EvalDelivery extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.evaldelivery_layout);
 		
+		db = new DatabaseHelper(getApplicationContext());
+		final String resname = getIntent().getStringExtra("resname");
+		/*
 		final String menu = getIntent().getStringExtra("menu");
 		final String tmpeval = getIntent().getStringExtra("eval");
-		final String time = getIntent().getStringExtra("time");
 		
-		//final String search = getIntent().getStringExtra("search");
-		//System.out.println("eval search = " + search);
+		final String time = getIntent().getStringExtra("time");*/
+		final String search = getIntent().getStringExtra("search");
 
 		final String rating = getIntent().getStringExtra("rating");
 		final String comment = getIntent().getStringExtra("comment");
-		final String resname = getIntent().getStringExtra("resname");
-		final String group = getIntent().getStringExtra("group");
-		System.out.println("take : resname = " + resname);
+		
+		DeliveryRestaurant del = new DeliveryRestaurant();
+		del = db.getDelivery(resname);
+		String menu = del.getMenu_url();
+		String tmpeval = del.getRating();
+		String time = del.getHours();
 
 		
 		TextView restxt = (TextView) findViewById(R.id.eval_delivery_res_name);
@@ -88,25 +94,22 @@ public class EvalDelivery extends Activity{
 				Comment com = new Comment(resname,"",user_id,comment,eval,mTime,0,0);
 				// (in server) using eval as float instead of string 
 				
-				//이것도 제대로 구현하기 - delivery comment 랑 snumenu comment 를 같이쓸것인지?
 				//send com to SetEval
-				//평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 
-				SendServer send = new SendServer(com, SendServerURL.commentURL, "1");
+				//평가등록 5, 평가받아옴 6, 평가삭제 7, 추천 4 ?
+				SendServer send = new SendServer(com, SendServerURL.commentURL, "5");
 				String sendresult = send.send();
-				System.out.println("comment insert = " + sendresult);
 				
 				String geteval = "0";
-				
+				System.out.println("comment sendresult = " + sendresult);
 				if (sendresult != null && !sendresult.equals("")) {
 					JSONObject jo = (JSONObject) JSONValue.parse(sendresult);
 					geteval = (String) jo.get("rating");
 				}
 				
 					db = new DatabaseHelper(getApplicationContext());
-					//디비부분구현해야함.
 					//if(search!=null&&search.equals("true")) db.updateSearchSnuMenu(cafe, menu, geteval);
 					//else 
-					//db.updateSnuMenu(cafe, menu, geteval);
+					db.updateDeliveryEval(resname, geteval);
 					db.closeDB();
 				Toast.makeText(EvalDelivery.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
 				

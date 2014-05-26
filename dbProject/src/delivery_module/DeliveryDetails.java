@@ -28,10 +28,9 @@ import android.widget.TextView;
 
 import com.example.test.DatabaseHelper;
 import com.example.test.R;
-import com.example.test.R.drawable;
-import com.example.test.R.id;
-import com.example.test.R.layout;
 import com.google.gson.Gson;
+import comserver.SendServer;
+import comserver.SendServerURL;
 
 public class DeliveryDetails extends Activity{
 	DatabaseHelper db;
@@ -73,8 +72,7 @@ public class DeliveryDetails extends Activity{
 			else*/
 				
 			
-			//delivery db 구현해야함!
-			//delres = db.getDeliveryRes(resname);
+			delres = db.getDelivery(resname);
 			
 			db.closeDB();
 
@@ -115,17 +113,18 @@ public class DeliveryDetails extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//메뉴 버튼 클릭했을때 메뉴 보여주기
+				
 			}
 		});
 		
 		Button sortdatebtn = (Button) findViewById(R.id.comment_sortbydate);
 		Button sortrecbtn = (Button) findViewById(R.id.comment_sortbyrec);
 
-		//delivery send 구현해야함!
-		String sendresult = "";
-		/*SendServer send = new SendServer(a, SendServerURL.commentURL);
+		DeliveryRestaurant del = new DeliveryRestaurant();
+		del = db.getDelivery(resname);
+		SendServer send = new SendServer(del, SendServerURL.commentURL);
 		String sendresult = send.send();
-		System.out.println("snumenudetails sendserver return : " + sendresult);*/
+		
 		ArrayAdapter<Comment> madapter1;
 		final ListView listView1 = (ListView)findViewById(R.id.detail_delivery_comment_listview);
 		Comment[] com_arr = null;
@@ -146,13 +145,12 @@ public class DeliveryDetails extends Activity{
 			@Override
 			public void onClick(View v) {
 
-				/*SendServer send = new SendServer(a, SendServerURL.commentURL);
-				String sendresult = send.send();
-				System.out.println("snumenudetails sendserver return in date : " + sendresult);*/
 				
-				//여기도 역시 구현해야함
-				String sendresult = "";
-				ArrayAdapter<Comment> madapter1;
+				DeliveryRestaurant del = new DeliveryRestaurant();
+				del = db.getDelivery(resname);
+				SendServer send = new SendServer(del, SendServerURL.commentURL);
+				String sendresult = send.send();
+				
 				Comment[] com_arr = null;
 				ArrayList<Comment> comarrlist = null;
 
@@ -160,16 +158,12 @@ public class DeliveryDetails extends Activity{
 
 					//json array parsing
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
-					for(int ii=0; ii<com_arr.length; ii++){
-						System.out.println("comment arr [" + Integer.toString(ii) + "] : " + com_arr[ii].getComment());
-					}
 
 					if(com_arr.length!=0){
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , dateComparator);
 						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
-						System.out.println("comment sort by date");
 						listView1.setAdapter(madapter2);
 
 					}
@@ -182,30 +176,23 @@ public class DeliveryDetails extends Activity{
 			@Override
 			public void onClick(View v) {
 
-				/*SendServer send = new SendServer(a, SendServerURL.commentURL);
+				DeliveryRestaurant del = new DeliveryRestaurant();
+				del = db.getDelivery(resname);
+				SendServer send = new SendServer(del, SendServerURL.commentURL);
 				String sendresult = send.send();
-				System.out.println("snumenudetails sendserver return in rec : " + sendresult);*/
-
-				//여기도 구현
-				String sendresult = "";
-				ArrayAdapter<Comment> madapter1;
+				
 				Comment[] com_arr = null;
 				ArrayList<Comment> comarrlist = null;
 
 				if (sendresult != null && !sendresult.equals("")) {
 
-					//json array parsing
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
-					for(int ii=0; ii<com_arr.length; ii++){
-						System.out.println("comment arr [" + Integer.toString(ii) + "] : " + com_arr[ii].getComment());
-					}
 
 					if(com_arr.length!=0){
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , recComparator);
 						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
-						System.out.println("comment sort by rec");
 						listView1.setAdapter(madapter2);
 
 					}
@@ -219,19 +206,13 @@ public class DeliveryDetails extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 
 				MyApplication myApp=(MyApplication) getApplicationContext();
 				if(myApp.getLoginStatus()){
 
 					Intent i = new Intent(v.getContext(), EvalDelivery.class);
-
-					i.putExtra("menu", menu);
-					i.putExtra("time", time);
-					i.putExtra("eval", tmpeval);
-				//	i.putExtra("search", search);
 					i.putExtra("resname", resname);
-					i.putExtra("group", group);
+				//	i.putExtra("search", search);
 					
 					startActivity(i);
 				}
@@ -245,11 +226,6 @@ public class DeliveryDetails extends Activity{
 	}
 
 
-	//	@Override
-	//	protected void onNewIntent(Intent intent){
-	//		super.onNewIntent(intent);
-	//
-	//	}
 
 	private final static Comparator<Comment> recComparator= new Comparator<Comment>() {
 		@Override

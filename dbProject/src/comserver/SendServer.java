@@ -43,7 +43,7 @@ public class SendServer {
 	private final String DELIVERY_ALL_REQUEST_NAME = "delivery_all_request";
 	private final String DELIVERY_REQUEST_NAME = "one_res_request";
 	private String DATA_NAME = null;
-	// 평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4
+	// 평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 / 배달음식 평가등록/수정 5 받아옴 6 삭제 7 
 	private String identifier = null;
 
 	//delivery
@@ -52,6 +52,7 @@ public class SendServer {
 		else {
 			this.del = del;
 			this.DATA_NAME = DELIVERY_REQUEST_NAME;
+			this.identifier = "6";
 		}
 		this.SERVER_URL = url;
 	}

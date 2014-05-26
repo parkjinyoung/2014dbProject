@@ -65,10 +65,7 @@ public class SnuMenuDetails extends Activity{
 		TextView float_eval = (TextView) findViewById(R.id.detail_snu_menu_eval_float);
 
 		final String menu = getIntent().getStringExtra("menu");
-		//		final String tmpeval = getIntent().getStringExtra("eval");
 		final String cafe = getIntent().getStringExtra("cafe");
-		//		final int price = getIntent().getIntExtra("price", 0);
-		//		final String classify = getIntent().getStringExtra("classify");
 		search = getIntent().getStringExtra("search");
 		System.out.println("search = " + search);
 

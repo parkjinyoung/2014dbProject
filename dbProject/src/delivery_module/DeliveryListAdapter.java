@@ -15,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+//안쓰는 파일
 public class DeliveryListAdapter extends ArrayAdapter<DeliveryRestaurant>{
     private ArrayList<DeliveryRestaurant> items;
     private int rsrc;
