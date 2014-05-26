@@ -62,7 +62,6 @@ public class DeliveryMenuFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				// TODO Auto-generated method stub
 				// Toast.makeText(mContext, adspin.getItem(arg2) +
 				// "을/를 선택 했습니다.", 1).show();
 			}

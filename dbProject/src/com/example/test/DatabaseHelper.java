@@ -470,6 +470,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 ////////////////////////////////////////////////////
+	//delivery
 	public long createDelivery(DeliveryRestaurant del){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
