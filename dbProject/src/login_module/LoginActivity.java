@@ -211,6 +211,7 @@ public class LoginActivity extends Activity {
 
 		boolean flag;
 		boolean auth;
+		int uno;
 		String nickName;
 		@Override
 		protected Boolean doInBackground(Void... params) {
@@ -226,6 +227,7 @@ public class LoginActivity extends Activity {
 				if(result.equals("success")){
 					nickName = (String) job.get("nickname");
 					auth = Boolean.parseBoolean((String)job.get("authenticated"));
+					uno = Integer.parseInt((String)job.get("uno"));
 					return true;
 				}
 				else if(result.equals("wrong password"))
@@ -251,6 +253,7 @@ public class LoginActivity extends Activity {
 				myApp.setAuth(auth);
 				myApp.setNickName(nickName);
 				myApp.setId(mId);
+				myApp.setUno(uno);
 				if(mAutoLogin.isChecked()){
 					myPreference pref = new myPreference(getApplicationContext());
 					pref.put(myPreference.AUTO_LOGIN, true);

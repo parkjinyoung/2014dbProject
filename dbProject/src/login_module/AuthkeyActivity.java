@@ -69,6 +69,7 @@ public class AuthkeyActivity extends Activity {
 			}).show();
 		}
 		a.setId(myApp.getId());
+		a.setUno(myApp.getUno());
 		a.setKey(mKey);
 		SendServer send = new SendServer(a, url, "5");
 		String sendresult = send.send();

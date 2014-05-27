@@ -8,6 +8,7 @@ public class MyApplication extends Application{
 	boolean authenticated;
 	String nickName;
 	String id;
+	int uno;
 	@Override
 	public void onCreate()
 	{
@@ -15,6 +16,7 @@ public class MyApplication extends Application{
 		authenticated = false;
 		nickName = "USER";
 		id = "";
+		uno = -1;
 	}
 	@Override
 	public void onTerminate()
@@ -52,5 +54,13 @@ public class MyApplication extends Application{
 	public String getId()
 	{
 		return id;
+	}
+	public int getUno()
+	{
+		return uno;
+	}
+	public void setUno(int uno)
+	{
+		this.uno = uno;
 	}
 }

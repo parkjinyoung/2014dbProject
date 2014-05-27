@@ -349,6 +349,7 @@ public class RegisterActivity extends Activity {
 
 		String errorTitle;
 		String errorMessage;
+		int uno;
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
@@ -370,6 +371,7 @@ public class RegisterActivity extends Activity {
 				String sendresult = send.send();
 				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
 				String result = (String) job.get("message");
+				uno = Integer.parseInt((String)job.get("uno"));
 				if(result.equals("success"))
 				{
 					return true;
@@ -395,6 +397,7 @@ public class RegisterActivity extends Activity {
 				myApp.setAuth(false);
 				myApp.setNickName(mNickname);
 				myApp.setId(mId);
+				myApp.setUno(uno);
 				new AlertDialog.Builder(RegisterActivity.this)
 				.setTitle("Success!")
 				.setMessage("Succeed to register. please authorize key in your e-mail to key tab")
