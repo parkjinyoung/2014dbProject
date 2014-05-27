@@ -47,7 +47,51 @@ public class AuthkeyActivity extends Activity {
 		}
 		
 	}
-	
+	private String keygen()
+	{
+		Integer a1 = (int)(Math.random()*10);
+		Integer a2 = (int)(Math.random()*10);
+		Integer a3 = (int)(Math.random()*10);
+		Integer a4 = (int)(Math.random()*10);
+		Integer a5 = (int)(Math.random()*10);
+		Integer a6 = (int)(Math.random()*10);
+		return a1.toString()+a2.toString()+a3.toString()+a4.toString()+a5.toString()+a6.toString();
+	}
+	public void newAuth(View view)
+	{
+		MyApplication myApp = (MyApplication)getApplicationContext();
+		String newKey = keygen();
+		String mId = myApp.getId();
+		Gmail m = new Gmail(mId+"@snu.ac.kr",newKey);
+		if(!m.send()){
+			new AlertDialog.Builder(this)
+			.setTitle("Error on sending e-mail")
+			.setMessage("Please try again after check internet connection")
+			.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			}).show();
+		}
+		String url = "http://laputan32.cafe24.com/User";
+		UserInfo a = new UserInfo();
+		a.setUno(myApp.getUno());
+		a.setKey(newKey);
+		SendServer send = new SendServer(a,url,"7");
+		String sendresult = send.send();
+		JSONObject job = (JSONObject) JSONValue.parse(sendresult);
+		String result = (String) job.get("message");
+		if(result.equals("success"))
+		{
+			new AlertDialog.Builder(this)
+			.setTitle("Succeed")
+			.setMessage("Please check your e-mail again")
+			.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			}).show();
+		}
+	}
 	public void sendKey(View view)
 	{
 		mKey = mKeyView.getText().toString();
@@ -109,5 +153,6 @@ public class AuthkeyActivity extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
+	
 
 }

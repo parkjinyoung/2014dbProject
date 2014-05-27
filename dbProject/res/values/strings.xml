@@ -14,5 +14,6 @@
     <string name="title_activity_config">Config</string>
     <string name="title_activity_fag_">FAG_Activity</string>
     <string name="title_activity_authkey">AuthkeyActivity</string>
+    <string name="title_activity_my_info">MyInfoActivity</string>
 
 </resources>

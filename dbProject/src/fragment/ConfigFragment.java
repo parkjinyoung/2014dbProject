@@ -11,6 +11,7 @@ import snu_module.SnuRestaurantDetails;
 import login_module.AuthkeyActivity;
 import login_module.LoginActivity;
 import login_module.MyApplication;
+import login_module.MyInfoActivity;
 import login_module.RegisterActivity;
 import login_module.myPreference;
 import android.annotation.SuppressLint;
@@ -114,6 +115,8 @@ public class ConfigFragment extends Fragment {
 					break;
 					//내 정보 보기
 				case 3:
+					Intent j = new Intent(v.getContext(), MyInfoActivity.class);
+					startActivity(j);
 					break;
 					//공지사항
 				case 4:
