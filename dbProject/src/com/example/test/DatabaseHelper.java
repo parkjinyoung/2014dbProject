@@ -566,7 +566,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		long result = db.insert(TABLE_DELIVERY, null, values);
 		return result;
 	}
+	public String getDeliveryRes(String dno) {
+		SQLiteDatabase db = this.getReadableDatabase();
 
+		Cursor c = db.query(TABLE_DELIVERY, null, DEL_NO + "=?",
+				new String[] { dno }, null, null, null, null);
+
+		/*
+		 * String selectQuery = "SELECT * FROM " + TABLE_DELIVERY + " WHERE " +
+		 * DEL_RES + " = '" + resname + "'";
+		 * 
+		 * Cursor c = db.rawQuery(selectQuery, null);
+		 */
+
+		if (c != null)
+			c.moveToFirst();
+
+		DeliveryRestaurant del = new DeliveryRestaurant();
+		del.setCafe(c.getString(c.getColumnIndex(DEL_RES)));
+		del.setDno(c.getString(c.getColumnIndex(DEL_NO)));
+		del.setGrouping(c.getString(c.getColumnIndex(DEL_GROUP)));
+		del.setMenu_url(c.getString(c.getColumnIndex(DEL_MENU)));
+		del.setRating(c.getString(c.getColumnIndex(DEL_RATING)));
+		del.setHours(c.getString(c.getColumnIndex(DEL_TIME)));
+
+		// Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " +
+		// sm.getMenu() + " eval : " + sm.getEval());
+		c.close();
+		return del.getCafe();
+	}
 	public DeliveryRestaurant getDelivery(String resname) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
@@ -606,7 +634,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		int count = c.getCount();
 		c.close();
-
+		db.close();
 		// return count
 		return count;
 	}
@@ -635,6 +663,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			} while (c.moveToNext());
 		}
 		c.close();
+		db.close();
 		return delarr;
 	}
 

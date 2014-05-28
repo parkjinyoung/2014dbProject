@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 public class EvalDelivery extends Activity{
 	DatabaseHelper db;
+	DeliveryRestaurant del;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class EvalDelivery extends Activity{
 		final String rating = getIntent().getStringExtra("rating");
 		final String comment = getIntent().getStringExtra("comment");
 		
-		DeliveryRestaurant del = new DeliveryRestaurant();
+		del = new DeliveryRestaurant();
 		del = db.getDelivery(resname);
 		String menu = del.getMenu_url();
 		String tmpeval = del.getRating();
@@ -83,7 +84,7 @@ public class EvalDelivery extends Activity{
 				float rating = ratingbar.getRating();
 				
 				MyApplication myApp = (MyApplication)getApplicationContext();
-				String user_id = myApp.getNickName(); // get from db
+				String uno = Integer.toString(myApp.getUno()); // get from db
 				
 				SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
 				Date currentTime = new Date ();
@@ -91,7 +92,8 @@ public class EvalDelivery extends Activity{
 				
 				System.out.println ("time : " +  mTime );
 				
-				Comment com = new Comment(resname,"",user_id,comment,eval,mTime,0,0);
+				Comment com = new Comment(resname,"",uno,comment,eval,mTime,0,0);
+				com.setDno(del.getDno());
 				// (in server) using eval as float instead of string 
 				
 				//send com to SetEval
@@ -116,7 +118,7 @@ public class EvalDelivery extends Activity{
 				Intent i = new Intent(getApplicationContext(), DeliveryDetails.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				
-				i.putExtra("deliveryName", resname);
+				i.putExtra("resname", resname);
 				
 				startActivity(i);
 			}

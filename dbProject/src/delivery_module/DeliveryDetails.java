@@ -61,7 +61,7 @@ public class DeliveryDetails extends Activity{
 
 		TextView float_eval = (TextView) findViewById(R.id.detail_del_eval_float);
 
-		final String resname = getIntent().getStringExtra("deliveryName");
+		final String resname = getIntent().getStringExtra("resname");
 		/*search = getIntent().getStringExtra("search");
 		System.out.println("search = " + search);*/
 
@@ -124,7 +124,7 @@ public class DeliveryDetails extends Activity{
 		del = db.getDelivery(resname);
 		SendServer send = new SendServer(del, SendServerURL.commentURL);
 		String sendresult = send.send();
-		
+		System.out.println("comment sendresult : " + sendresult);
 		ArrayAdapter<Comment> madapter1;
 		final ListView listView1 = (ListView)findViewById(R.id.detail_delivery_comment_listview);
 		Comment[] com_arr = null;
@@ -135,7 +135,7 @@ public class DeliveryDetails extends Activity{
 			if(com_arr.length!=0){
 				comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 
-				madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
+				madapter1 = new CommentListAdapter(this, R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
 				listView1.setAdapter(madapter1);
 			}
 		}
@@ -163,7 +163,7 @@ public class DeliveryDetails extends Activity{
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , dateComparator);
-						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
+						ArrayAdapter<Comment> madapter2 = new CommentListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
 						listView1.setAdapter(madapter2);
 
 					}
@@ -192,7 +192,7 @@ public class DeliveryDetails extends Activity{
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , recComparator);
-						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
+						ArrayAdapter<Comment> madapter2 = new CommentListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
 						listView1.setAdapter(madapter2);
 
 					}

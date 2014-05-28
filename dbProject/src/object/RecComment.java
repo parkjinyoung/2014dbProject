@@ -1,19 +1,46 @@
 package object;
 
 public class RecComment {
+	String uno;
+	String eno;
 	String rec_nick;
 	String eval_nick;
 	String recommend;
 	String menu;
 	String cafe;
 	
-	public RecComment(String rec_nickname, String eval_nickname,
+	public RecComment(String uno, String eno,
 			String recommend, String menu, String cafe) {
-		this.rec_nick = rec_nickname;
-		this.eval_nick = eval_nickname;
+		this.uno = uno;
+		this.eno = eno;
 		this.recommend = recommend;
 		this.menu = menu;
 		this.cafe = cafe;
+	}
+	public RecComment(String uno, String eno,
+			String recommend) {
+		this.uno = uno;
+		this.eno = eno;
+		this.recommend = recommend;
+	}
+	public String getUno() {
+		return uno;
+	}
+
+	public void setUno(String uno) {
+		this.uno = uno;
+	}
+
+	public String getEno() {
+		return eno;
+	}
+
+	public void setEno(String eno) {
+		this.eno = eno;
+	}
+
+	public String getRecommend() {
+		return recommend;
 	}
 
 	public String getRec_nick() {

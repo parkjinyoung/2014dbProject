@@ -68,7 +68,7 @@ public class DeliveryMenuFragment extends Fragment {
 
 				Intent i = new Intent(v.getContext(), DeliveryDetails.class);
 				//i.putExtra("groupName", b.getGroup_name());
-				i.putExtra("deliveryName", a.getCafe());
+				i.putExtra("resname", a.getCafe());
 				startActivity(i);
 				return false;
 			}

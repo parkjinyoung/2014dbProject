@@ -1,25 +1,16 @@
-package snu_module;
+package delivery_module;
 
 import java.util.ArrayList;
 
 import login_module.MyApplication;
+import object.Comment;
+import object.RecComment;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import com.example.test.DatabaseHelper;
-import com.example.test.R;
-import com.example.test.R.drawable;
-import com.example.test.R.id;
-
-import object.Comment;
-import object.RecComment;
-import object.Search;
-import object.SnuMenu;
 import android.content.Context;
 import android.content.Intent;
-import android.sax.StartElementListener;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,22 +21,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.test.DatabaseHelper;
+import com.example.test.R;
 import comserver.SendServer;
 import comserver.SendServerURL;
 
-public class MyListAdapter extends ArrayAdapter<Comment> {
+public class CommentListAdapter extends ArrayAdapter<Comment> {
 	private ArrayList<Comment> items;
 	private int rsrc;
 	DatabaseHelper db;
 	String search;
 
-	public MyListAdapter(Context context, int resource, int textViewResourceId,
+	public CommentListAdapter(Context context, int resource, int textViewResourceId,
 			ArrayList<Comment> objects, String search) {
 		super(context, resource, textViewResourceId, objects);
 		this.items = objects;
 		this.rsrc = resource;
 		this.search = search;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -82,7 +75,11 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 					.setText(e.getComment());
 			((TextView) v.findViewById(R.id.detail_comment_nickname))
 					.setText(e.getNickname());
-			System.out.println("nick1 : " + e.getNickname());
+			
+			db = new DatabaseHelper(v.getContext());
+			String cafe = db.getDeliveryRes(e.getDno());
+			e.setCafe(cafe);
+			db.closeDB();
 
 			String tmpeval = e.getRating();
 
@@ -112,13 +109,13 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			MyApplication myApp = (MyApplication) v.getContext()
 					.getApplicationContext();
 
-			final String user_id = myApp.getNickName();
+			final String uno = Integer.toString(myApp.getUno());
 
 			mycommentlayout.setVisibility(View.GONE);
 			modifybtn.setVisibility(View.GONE);
 			deletebtn.setVisibility(View.GONE);
 
-			if (e.getNickname().equals(user_id)) {
+			if (e.getUno().equals(uno)) {
 				modifybtn.setVisibility(View.VISIBLE);
 				deletebtn.setVisibility(View.VISIBLE);
 				mycommentlayout.setVisibility(View.VISIBLE);
@@ -135,9 +132,8 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 				@Override
 				public void onClick(View v) {
-					RecComment reccom = new RecComment(user_id,
-							e.getNickname(), "true", e.getMenu(), e.getCafe());
-					// String url = "http://laputan32.cafe24.com/Eval";
+					RecComment reccom = new RecComment(uno,
+							e.getEno(), "true");
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);
 					String sendresult = send.send();
@@ -151,7 +147,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 					}
 
 					System.out.println("recommend true : " + sendresult);
-					Toast.makeText(getContext(), "추천 " + e.getNickname(),
+					Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 추천하였습니다." ,
 							Toast.LENGTH_SHORT).show();
 				}
 			});
@@ -164,8 +160,8 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 				@Override
 				public void onClick(View v) {
-					RecComment reccom = new RecComment(user_id,
-							e.getNickname(), "false", e.getMenu(), e.getCafe());
+					RecComment reccom = new RecComment(uno,
+							e.getEno(), "false");
 					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);
@@ -181,7 +177,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 					}
 
 					System.out.println("recommend false : " + sendresult);
-					Toast.makeText(getContext(), "안추천", Toast.LENGTH_SHORT)
+					Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 비추천하였습니다.", Toast.LENGTH_SHORT)
 							.show();
 				}
 			});
@@ -192,10 +188,9 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 
-					Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
+					Intent i = new Intent(v.getContext(), EvalDelivery.class);
 
-					i.putExtra("cafe", e.getCafe());
-					i.putExtra("menu", e.getMenu());
+					i.putExtra("resname", e.getCafe());
 					i.putExtra("comment", e.getComment());
 					i.putExtra("rating", e.getRating());
 					i.putExtra("search", search);
@@ -214,7 +209,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(e,
-							SendServerURL.commentURL, "3");
+							SendServerURL.commentURL, "7");
 					String sendresult = send.send();
 					System.out.println("delete send = " + sendresult);
 
@@ -225,11 +220,11 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 						tmpeval = (String) jo.get("rating");
 					}
 
-					Intent i = new Intent(v.getContext(), SnuMenuDetails.class);
+					Intent i = new Intent(v.getContext(), DeliveryDetails.class);
 
 					db = new DatabaseHelper(v.getContext());
 
-					if (search != null && search.equals("true")) {
+				/*	if (search != null && search.equals("true")) {
 						if (db.getSearchSnuMenu(e.getCafe(), e.getMenu()) != null) {
 							db.updateSearchSnuMenu(e.getCafe(), e.getMenu(),
 									tmpeval); // 수정된
@@ -248,26 +243,20 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 						}
 
-					} else {
-						if (db.getSnuMenu(e.getCafe(), e.getMenu()) != null) {
-							db.updateSnuMenu(e.getCafe(), e.getMenu(), tmpeval); // 수정된
-																					// eval
-																					// 넣어줌
-
-							i.putExtra("menu", e.getMenu());
-							i.putExtra("cafe", e.getCafe());
+					} else {*/
+						if (db.getDelivery(e.getCafe()) != null) {
+							db.updateDeliveryEval(e.getCafe(), tmpeval);
+							i.putExtra("resname", e.getCafe());
 							i.putExtra("search", search);
 
 							i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 							v.getContext().startActivity(i);
 						} else {
-							i.putExtra("menu", e.getMenu());
-							i.putExtra("cafe", e.getCafe());
-							i.putExtra("rating", tmpeval);
+							i.putExtra("resname", e.getCafe());
 							i.putExtra("search", search);
 
 						}
-					}
+					/*}*/
 					db.closeDB();
 				}
 			});
