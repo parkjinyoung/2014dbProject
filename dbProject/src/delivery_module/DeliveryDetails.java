@@ -162,6 +162,7 @@ public class DeliveryDetails extends Activity {
 		if (sendresult != null && !sendresult.equals("")) {
 			com_arr = new Gson().fromJson(sendresult, Comment[].class);
 			if (com_arr.length != 0) {
+				listView1.setVisibility(listView1.VISIBLE);
 				comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 
 				madapter1 = new CommentListAdapter(this,
@@ -171,7 +172,9 @@ public class DeliveryDetails extends Activity {
 				listView1.setAdapter(madapter1);
 				setListViewHeightBasedOnChildren(listView1);
 			}
+			else listView1.setVisibility(listView1.INVISIBLE);
 		}
+		
 
 		sortdatebtn.setOnClickListener(new OnClickListener() {
 
@@ -362,7 +365,6 @@ public class DeliveryDetails extends Activity {
 		return imgBitmap;
 	}
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
-
 		ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition
@@ -377,8 +379,9 @@ public class DeliveryDetails extends Activity {
         }
  
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        //params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        params.height = (int) (displayHeight * 0.5);
+        int h1 = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1)) + 10;
+        int h2 = (int) (displayHeight * 0.5);
+        params.height = Math.min(h1, h2);
         listView.setLayoutParams(params);
         listView.requestLayout();
 }
