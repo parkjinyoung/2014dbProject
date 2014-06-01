@@ -444,7 +444,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		 */
 		SQLiteDatabase db = this.getReadableDatabase();
 		/* Cursor c = db.rawQuery(selectQuery, null); */
-		Cursor c = db.query(TABLE_TODAY_MENU, null, CAFE + "= ?",
+		Cursor c = db.query(TABLE_TODAY_MENU, null, TODAY_CAFE + "= ?",
 				new String[] { cafe }, null, null, null, null);
 
 		if (c.moveToFirst()) {
