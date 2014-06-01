@@ -50,7 +50,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
+		db = new DatabaseHelper(getContext());
 		View v = convertView;
 		if (v == null) {
 			LayoutInflater li = (LayoutInflater) getContext().getSystemService(
@@ -112,13 +112,13 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			MyApplication myApp = (MyApplication) v.getContext()
 					.getApplicationContext();
 
-			final String user_id = myApp.getNickName();
+			final String user_id = Integer.toString(myApp.getUno());
 
 			mycommentlayout.setVisibility(View.GONE);
 			modifybtn.setVisibility(View.GONE);
 			deletebtn.setVisibility(View.GONE);
 
-			if (e.getNickname().equals(user_id)) {
+			if (e.getUno().equals(user_id)) {
 				modifybtn.setVisibility(View.VISIBLE);
 				deletebtn.setVisibility(View.VISIBLE);
 				mycommentlayout.setVisibility(View.VISIBLE);
@@ -136,7 +136,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 				@Override
 				public void onClick(View v) {
 					RecComment reccom = new RecComment(user_id,
-							e.getNickname(), "true", e.getMenu(), e.getCafe());
+							e.getEno(), "true", e.getMenu(), e.getCafe());
 					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);
@@ -165,7 +165,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 				@Override
 				public void onClick(View v) {
 					RecComment reccom = new RecComment(user_id,
-							e.getNickname(), "false", e.getMenu(), e.getCafe());
+							e.getEno(), "false", e.getMenu(), e.getCafe());
 					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);
@@ -194,6 +194,22 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 					Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
 
+					i.putExtra("mno", e.getMno());
+					if(search != null && search.equals("true")){
+						System.out.println("mno : " + e.getMno());
+						SnuMenu a = db.getSearchSnuMenu(e.getMno());
+						e.setCafe(a.getCafe());
+						e.setMenu(a.getMenu());
+					}
+					else{
+						System.out.println("mno : " + e.getMno());
+						SnuMenu a = db.getSnuMenu(e.getMno());
+						e.setCafe(a.getCafe());
+						e.setMenu(a.getMenu());
+					}
+					
+					db.closeDB();
+					
 					i.putExtra("cafe", e.getCafe());
 					i.putExtra("menu", e.getMenu());
 					i.putExtra("comment", e.getComment());
@@ -230,10 +246,16 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 					db = new DatabaseHelper(v.getContext());
 
 					if (search != null && search.equals("true")) {
+						System.out.println("mno : " + e.getMno());
+						SnuMenu a = db.getSearchSnuMenu(e.getMno());
+						e.setCafe(a.getCafe());
+						e.setMenu(a.getMenu());
 						if (db.getSearchSnuMenu(e.getCafe(), e.getMenu()) != null) {
 							db.updateSearchSnuMenu(e.getCafe(), e.getMenu(),
 									tmpeval); // 수정된
 												// eval
+							
+							i.putExtra("mno", e.getMno());
 							i.putExtra("menu", e.getMenu());
 							i.putExtra("cafe", e.getCafe());
 							i.putExtra("search", search);
@@ -249,6 +271,10 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 						}
 
 					} else {
+						System.out.println("mno : " + e.getMno());
+						SnuMenu a = db.getSnuMenu(e.getMno());
+						e.setCafe(a.getCafe());
+						e.setMenu(a.getMenu());
 						if (db.getSnuMenu(e.getCafe(), e.getMenu()) != null) {
 							db.updateSnuMenu(e.getCafe(), e.getMenu(), tmpeval); // 수정된
 																					// eval

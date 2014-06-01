@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SnuRestaurantDetails extends Activity{
@@ -31,7 +32,10 @@ public class SnuRestaurantDetails extends Activity{
 	    setContentView(R.layout.detail_snu_res_layout);
 	
 	    String cafe = getIntent().getStringExtra("cafe");
-	    Toast.makeText(getApplicationContext(), "cafe : " + cafe, Toast.LENGTH_SHORT).show();
+//	    Toast.makeText(getApplicationContext(), "cafe : " + cafe, Toast.LENGTH_SHORT).show();
+	    TextView cafename = (TextView) findViewById(R.id.detail_snu_res_name);
+	    cafename.setText(cafe);
+	    cafename.setTextSize(30);
 	    if(cafe!=null){
 	    	db = new DatabaseHelper(getApplicationContext());
 	    	allcafemenu = db.getCafeMenus(cafe);

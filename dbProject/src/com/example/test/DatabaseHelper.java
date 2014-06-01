@@ -253,6 +253,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return result;
 	}
 
+	public SnuMenu getSearchSnuMenu(String Mno) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor c = db.query(TABLE_SEARCH_MENU, null, MNO + "= ?",
+				new String[] { Mno }, null, null, null, null);
+		/*
+		 * String selectQuery = "SELECT * FROM " + TABLE_SEARCH_MENU + " WHERE "
+		 * + CAFE + " = '" + cafe + "' AND " + MENU + " = '" + menu + "'";
+		 * 
+		 * Cursor c = db.rawQuery(selectQuery, null);
+		 */
+
+		if (c != null)
+			c.moveToFirst();
+
+		SnuMenu sm = new SnuMenu();
+		sm.setCafe(c.getString(c.getColumnIndex(CAFE)));
+		sm.setMenu(c.getString(c.getColumnIndex(MENU)));
+		sm.setRating(c.getString(c.getColumnIndex(EVAL)));
+		sm.setPrice(c.getInt(c.getColumnIndex(PRICE)));
+		sm.setTime(c.getString(c.getColumnIndex(TIME)));
+		sm.setMno(c.getString(c.getColumnIndex(MNO)));
+		c.close();
+		return sm;
+	}
+	
 	public SnuMenu getSearchSnuMenu(String cafe, String menu) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
@@ -391,6 +417,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return result;
 	}
 
+	public SnuMenu getSnuMenu(String Mno) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		/*
+		 * String selectQuery = "SELECT * FROM " + TABLE_TODAY_MENU + " WHERE "
+		 * + TODAY_CAFE + " = '" + cafe + "' AND " + TODAY_MENU + " = '" + menu
+		 * + "'";
+		 * 
+		 * Cursor c = db.rawQuery(selectQuery, null);
+		 */
+		Cursor c = db.query(TABLE_TODAY_MENU, null, TODAY_MNO + "= ?",
+				new String[] { Mno }, null, null, null, null);
+
+		if (c != null)
+			c.moveToFirst();
+
+		SnuMenu sm = new SnuMenu();
+		sm.setCafe(c.getString(c.getColumnIndex(TODAY_CAFE)));
+		sm.setMenu(c.getString(c.getColumnIndex(TODAY_MENU)));
+		sm.setRating(c.getString(c.getColumnIndex(TODAY_EVAL)));
+		sm.setPrice(c.getInt(c.getColumnIndex(TODAY_PRICE)));
+		sm.setTime(c.getString(c.getColumnIndex(TODAY_TIME)));
+		sm.setMno(c.getString(c.getColumnIndex(TODAY_MNO)));
+		// Log.d("SNUMENU getsnumenus", "cafe : " + sm.getCafe() + " menu : " +
+		// sm.getMenu() + " eval : " + sm.getEval());
+		c.close();
+		return sm;
+	}
+	
 	public SnuMenu getSnuMenu(String cafe, String menu) {
 		SQLiteDatabase db = this.getReadableDatabase();
 

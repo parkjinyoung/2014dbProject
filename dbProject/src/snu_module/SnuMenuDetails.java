@@ -166,7 +166,8 @@ public class SnuMenuDetails extends Activity{
 
 				//String url = "http://laputan32.cafe24.com/Eval";
 				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, time);
-
+				a.setMno(mno);
+				
 				SendServer send = new SendServer(a, SendServerURL.commentURL);
 				String sendresult = send.send();
 				System.out.println("snumenudetails sendserver return in date : " + sendresult);
@@ -204,7 +205,8 @@ public class SnuMenuDetails extends Activity{
 
 				//String url = "http://laputan32.cafe24.com/Eval";
 				SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, time);
-
+				a.setMno(mno);
+				
 				SendServer send = new SendServer(a, SendServerURL.commentURL);
 				String sendresult = send.send();
 				System.out.println("snumenudetails sendserver return in rec : " + sendresult);
@@ -256,6 +258,7 @@ public class SnuMenuDetails extends Activity{
 
 					Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
 
+					i.putExtra("mno", mno);
 					i.putExtra("cafe", cafe);
 					i.putExtra("menu", menu);
 					i.putExtra("price", price);

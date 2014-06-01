@@ -47,6 +47,8 @@ public class EvalSnuMenu extends Activity{
 		final int price = getIntent().getIntExtra("price", 0);
 		final String time = getIntent().getStringExtra("time");
 		final String search = getIntent().getStringExtra("search");
+		final String mno = getIntent().getStringExtra("mno");
+		
 		System.out.println("eval search = " + search);
 
 		final String rating = getIntent().getStringExtra("rating");
@@ -76,7 +78,7 @@ public class EvalSnuMenu extends Activity{
 				float rating = ratingbar.getRating();
 				
 				MyApplication myApp = (MyApplication)getApplicationContext();
-				String user_id = myApp.getNickName(); // get from db
+				String user_id = Integer.toString(myApp.getUno()); // get from db
 				
 				SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
 				Date currentTime = new Date ();
@@ -85,7 +87,8 @@ public class EvalSnuMenu extends Activity{
 				System.out.println ("time : " +  mTime );
 				
 				Comment com = new Comment(cafe,menu,user_id,comment,eval,mTime,0,0);
-				// (in server) using eval as float instead of string 
+				com.setMno(mno);
+				
 				
 				//send com to SetEval
 				//평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 
@@ -110,6 +113,7 @@ public class EvalSnuMenu extends Activity{
 				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				
+				i.putExtra("mno", mno);
 				i.putExtra("cafe", cafe);
 				i.putExtra("menu", menu);
 				i.putExtra("price", price);
