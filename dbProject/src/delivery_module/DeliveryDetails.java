@@ -1,5 +1,9 @@
 package delivery_module;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,21 +14,27 @@ import login_module.LoginActivity;
 import login_module.MyApplication;
 import object.Comment;
 import object.DeliveryRestaurant;
-import snu_module.MyListAdapter;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.test.DatabaseHelper;
 import com.example.test.R;
@@ -32,22 +42,26 @@ import com.google.gson.Gson;
 import comserver.SendServer;
 import comserver.SendServerURL;
 
-public class DeliveryDetails extends Activity{
+public class DeliveryDetails extends Activity {
 	DatabaseHelper db;
 	private AlertDialog mDialog = null;
 	String tmpeval = "";
 	String time = "";
 	String search = "false";
-	String group="";
+	String group = "";
 	String menu = "";
-	
-	
+	DeliveryRestaurant delres;
+	static int displayHeight;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		am.restartPackage(getPackageName()); 
-
+		am.restartPackage(getPackageName());
+		
+		Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+		displayHeight = display.getHeight();
+		
 		setContentView(R.layout.detail_delivery_layout);
 
 		TextView text_name = (TextView) findViewById(R.id.detail_delivery_name);
@@ -62,61 +76,74 @@ public class DeliveryDetails extends Activity{
 		TextView float_eval = (TextView) findViewById(R.id.detail_del_eval_float);
 
 		final String resname = getIntent().getStringExtra("resname");
-		/*search = getIntent().getStringExtra("search");
-		System.out.println("search = " + search);*/
+		/*
+		 * search = getIntent().getStringExtra("search");
+		 * System.out.println("search = " + search);
+		 */
 
-			db = new DatabaseHelper(getApplicationContext());
-			DeliveryRestaurant delres = new DeliveryRestaurant(resname);
-			/*if(search!=null && search.equals("true")) 
-				snumenu = db.getSearchSnuMenu(cafe, menu);
-			else*/
-				
-			
-			delres = db.getDelivery(resname);
-			
-			db.closeDB();
+		db = new DatabaseHelper(getApplicationContext());
+		delres = new DeliveryRestaurant(resname);
+		/*
+		 * if(search!=null && search.equals("true")) snumenu =
+		 * db.getSearchSnuMenu(cafe, menu); else
+		 */
 
-			tmpeval = delres.getRating();
-			time = delres.getHours();
-			group = delres.getGrouping();
-			menu = delres.getMenu_url();
-			
-		if(tmpeval!=null){
+		delres = db.getDelivery(resname);
+
+		db.closeDB();
+
+		tmpeval = delres.getRating();
+		time = delres.getHours();
+		group = delres.getGrouping();
+		menu = delres.getMenu_url();
+
+		if (tmpeval != null) {
 			float eval = Float.parseFloat(tmpeval);
 
-			for(int j=0; j<5; j++){
-				if(eval >= 1) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.star25));
-				else if (eval >= 0.5) image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.halfstar25));
-				else image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
+			for (int j = 0; j < 5; j++) {
+				if (eval >= 1)
+					image_eval[j].setImageDrawable(getResources().getDrawable(
+							R.drawable.star25));
+				else if (eval >= 0.5)
+					image_eval[j].setImageDrawable(getResources().getDrawable(
+							R.drawable.halfstar25));
+				else
+					image_eval[j].setImageDrawable(getResources().getDrawable(
+							R.drawable.emptystar25));
 				eval -= 1;
 			}
-		}
-		else{
-			for(int j=0; j<5; j++){
-				image_eval[j].setImageDrawable(getResources().getDrawable(R.drawable.emptystar25));
+		} else {
+			for (int j = 0; j < 5; j++) {
+				image_eval[j].setImageDrawable(getResources().getDrawable(
+						R.drawable.emptystar25));
 			}
 		}
 
 		float teval = 0, eval = 0;
-		if(tmpeval != null){
+		if (tmpeval != null) {
 			teval = Float.parseFloat(tmpeval);
 			eval = (float) Math.floor(teval * 10f) / 10f;
 		}
 		float_eval.setText(Float.toString(eval));
 		text_name.setText(resname);
 
-		Button menubtn = (Button) findViewById(R.id.detail_delivery_menu_btn);
-		
+		final ToggleButton menubtn = (ToggleButton) findViewById(R.id.detail_delivery_menu_btn);
+		final ImageView imgView = (ImageView) findViewById(R.id.delmenuimage);
+		imgView.setAdjustViewBounds(true);
 		menubtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				//메뉴 버튼 클릭했을때 메뉴 보여주기
-				
+				// 메뉴 버튼 클릭했을때 메뉴 보여주기
+				if(menubtn.isChecked()){
+					imgView.setImageBitmap(getImageFromURL(delres.getMenu_url()));
+				}
+				else {
+					imgView.setImageBitmap(null);
+				}
 			}
 		});
-		
+
 		Button sortdatebtn = (Button) findViewById(R.id.comment_sortbydate);
 		Button sortrecbtn = (Button) findViewById(R.id.comment_sortbyrec);
 
@@ -125,18 +152,24 @@ public class DeliveryDetails extends Activity{
 		SendServer send = new SendServer(del, SendServerURL.commentURL);
 		String sendresult = send.send();
 		System.out.println("comment sendresult : " + sendresult);
+		
 		ArrayAdapter<Comment> madapter1;
-		final ListView listView1 = (ListView)findViewById(R.id.detail_delivery_comment_listview);
+		final ListView listView1 = (ListView) findViewById(R.id.detail_delivery_comment_listview);
+   
 		Comment[] com_arr = null;
 		ArrayList<Comment> comarrlist = null;
 
 		if (sendresult != null && !sendresult.equals("")) {
 			com_arr = new Gson().fromJson(sendresult, Comment[].class);
-			if(com_arr.length!=0){
+			if (com_arr.length != 0) {
 				comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 
-				madapter1 = new CommentListAdapter(this, R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
+				madapter1 = new CommentListAdapter(this,
+						R.layout.comment_list_item, R.id.detail_comment_text,
+						comarrlist, search);
+				
 				listView1.setAdapter(madapter1);
+				setListViewHeightBasedOnChildren(listView1);
 			}
 		}
 
@@ -145,25 +178,27 @@ public class DeliveryDetails extends Activity{
 			@Override
 			public void onClick(View v) {
 
-				
 				DeliveryRestaurant del = new DeliveryRestaurant();
 				del = db.getDelivery(resname);
 				SendServer send = new SendServer(del, SendServerURL.commentURL);
 				String sendresult = send.send();
-				
+
 				Comment[] com_arr = null;
 				ArrayList<Comment> comarrlist = null;
 
 				if (sendresult != null && !sendresult.equals("")) {
 
-					//json array parsing
+					// json array parsing
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
 
-					if(com_arr.length!=0){
+					if (com_arr.length != 0) {
 
-						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
-						Collections.sort(comarrlist , dateComparator);
-						ArrayAdapter<Comment> madapter2 = new CommentListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
+						comarrlist = new ArrayList<Comment>(Arrays
+								.asList(com_arr));
+						Collections.sort(comarrlist, dateComparator);
+						ArrayAdapter<Comment> madapter2 = new CommentListAdapter(
+								v.getContext(), R.layout.comment_list_item,
+								R.id.detail_comment_text, comarrlist, search);
 						listView1.setAdapter(madapter2);
 
 					}
@@ -180,7 +215,7 @@ public class DeliveryDetails extends Activity{
 				del = db.getDelivery(resname);
 				SendServer send = new SendServer(del, SendServerURL.commentURL);
 				String sendresult = send.send();
-				
+
 				Comment[] com_arr = null;
 				ArrayList<Comment> comarrlist = null;
 
@@ -188,18 +223,21 @@ public class DeliveryDetails extends Activity{
 
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
 
-					if(com_arr.length!=0){
+					if (com_arr.length != 0) {
 
-						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
-						Collections.sort(comarrlist , recComparator);
-						ArrayAdapter<Comment> madapter2 = new CommentListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
+						comarrlist = new ArrayList<Comment>(Arrays
+								.asList(com_arr));
+						Collections.sort(comarrlist, recComparator);
+						ArrayAdapter<Comment> madapter2 = new CommentListAdapter(
+								v.getContext(), R.layout.comment_list_item,
+								R.id.detail_comment_text, comarrlist, search);
 						listView1.setAdapter(madapter2);
 
 					}
 				}
 			}
 		});
-		//////////////////////
+		// ////////////////////
 
 		Button evalbtn = (Button) findViewById(R.id.detail_delivery_do_eval_btn);
 		evalbtn.setOnClickListener(new OnClickListener() {
@@ -207,16 +245,15 @@ public class DeliveryDetails extends Activity{
 			@Override
 			public void onClick(View v) {
 
-				MyApplication myApp=(MyApplication) getApplicationContext();
-				if(myApp.getLoginStatus()){
+				MyApplication myApp = (MyApplication) getApplicationContext();
+				if (myApp.getLoginStatus()) {
 
 					Intent i = new Intent(v.getContext(), EvalDelivery.class);
 					i.putExtra("resname", resname);
-				//	i.putExtra("search", search);
-					
+					// i.putExtra("search", search);
+
 					startActivity(i);
-				}
-				else{
+				} else {
 					mDialog = createDialog();
 					mDialog.show();
 				}
@@ -225,36 +262,38 @@ public class DeliveryDetails extends Activity{
 
 	}
 
-
-
-	private final static Comparator<Comment> recComparator= new Comparator<Comment>() {
+	private final static Comparator<Comment> recComparator = new Comparator<Comment>() {
 		@Override
-		public int compare(Comment object1,Comment object2) {
+		public int compare(Comment object1, Comment object2) {
 
 			int result = 0;
 			int i1 = object1.getRecommend() - object1.getUnrecommend();
 			int i2 = object2.getRecommend() - object2.getUnrecommend();
-			if(i1 > i2){
+			if (i1 > i2) {
 				result = -1;
-			}else if(i1 < i2){
+			} else if (i1 < i2) {
 				result = 1;
-			}else{
-				if(object1.getRecommend() > object2.getRecommend()){
+			} else {
+				if (object1.getRecommend() > object2.getRecommend()) {
 					result = -1;
-				}
-				else if(object1.getRecommend() < object2.getRecommend())
+				} else if (object1.getRecommend() < object2.getRecommend())
 					result = 1;
-				else result = 0;
+				else
+					result = 0;
 			}
 			return result;
 		}
 	};
 
-	private final static Comparator<Comment> dateComparator= new Comparator<Comment>() {
+	private final static Comparator<Comment> dateComparator = new Comparator<Comment>() {
 		private final Collator collator = Collator.getInstance();
+
 		@Override
-		public int compare(Comment object1,Comment object2) {
-			System.out.println("comment date compare : o1 = " + object1.getDate() + " o2 = " + object2.getDate() + " ans = " + collator.compare(object2.getDate(), object1.getDate()));
+		public int compare(Comment object1, Comment object2) {
+			System.out.println("comment date compare : o1 = "
+					+ object1.getDate() + " o2 = " + object2.getDate()
+					+ " ans = "
+					+ collator.compare(object2.getDate(), object1.getDate()));
 			return collator.compare(object2.getDate(), object1.getDate());
 
 		}
@@ -270,7 +309,8 @@ public class DeliveryDetails extends Activity{
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
 				setDismiss(mDialog);
-				Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+				Intent i = new Intent(getApplicationContext(),
+						LoginActivity.class);
 				startActivity(i);
 
 			}
@@ -285,8 +325,61 @@ public class DeliveryDetails extends Activity{
 
 		return ab.create();
 	}
-	private void setDismiss(Dialog dialog){
-		if(dialog != null && dialog.isShowing())
+
+	private void setDismiss(Dialog dialog) {
+		if (dialog != null && dialog.isShowing())
 			dialog.dismiss();
 	}
+
+	// Get Image From URL
+	public Bitmap getImageFromURL(String imageURL) {
+		Bitmap imgBitmap = null;
+		HttpURLConnection conn = null;
+		BufferedInputStream bis = null;
+
+		try {
+			URL url = new URL(imageURL);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.connect();
+
+			int nSize = conn.getContentLength();
+			bis = new BufferedInputStream(conn.getInputStream(), nSize);
+			imgBitmap = BitmapFactory.decodeStream(bis);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null) {
+				try {
+					bis.close();
+				} catch (IOException e) {
+				}
+			}
+			if (conn != null) {
+				conn.disconnect();
+			}
+		}
+
+		return imgBitmap;
+	}
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+
+		ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+ 
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+ 
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        //params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = (int) (displayHeight * 0.5);
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+}
 }
