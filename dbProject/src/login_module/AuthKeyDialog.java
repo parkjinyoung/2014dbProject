@@ -43,10 +43,11 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 	Button sendbtn;
 	EditText mKeyView;
 	String mKey;
+	Context context;
 	public AuthKeyDialog(Context context)
 	{
 		super(context);
-		
+		this.context = context;
 		setContentView(R.layout.auth_dialog);
 		sendbtn = (Button)findViewById(R.id.auth_button);
 		mKeyView = (EditText)findViewById(R.id.authkey);
@@ -59,7 +60,7 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 			mKey = mKeyView.getText().toString();
 			String url = "http://laputan32.cafe24.com/User";
 			UserInfo a = new UserInfo();
-			MyApplication myApp = (MyApplication)getOwnerActivity().getApplicationContext();
+			MyApplication myApp = (MyApplication)context.getApplicationContext();
 			a.setId(myApp.getId());
 			a.setUno(myApp.getUno());
 			a.setKey(mKey);
@@ -69,7 +70,7 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 			String result = (String) job.get("message");
 			if(result.equals("success")){
 				myApp.setAuth(true);
-				new AlertDialog.Builder(getOwnerActivity())
+				new AlertDialog.Builder(context)
 				.setTitle("완료!")
 				.setMessage("인증되었습니다.")
 				.setNeutralButton("완료", new DialogInterface.OnClickListener() {
@@ -78,12 +79,12 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(null,MyInfoActivity.class);
-						getOwnerActivity().startActivity(intent);
+						context.startActivity(intent);
 					}
 				}).show();
 			}
 			else{
-				new AlertDialog.Builder(getOwnerActivity())
+				new AlertDialog.Builder(context)
 				.setTitle("실패")
 				.setMessage("인증 키를 다시 한번 확인 해 주세요.")
 				.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
