@@ -34,7 +34,7 @@ public class SendServer {
 	
 	private final String SEND_ERROR = "0";
 
-	private final String SEARCH_MENU_SEND_NAME = "searchmenu";
+	private final String SEARCH_SEND_NAME = "search";
 	private final String USER_SEND_NAME = "signup";
 	private final String MENU_SEND_NAME = "menupage";
 	private final String INSERT_COMMENT_SEND_NAME = "insertcomment";
@@ -43,7 +43,7 @@ public class SendServer {
 	private final String DELIVERY_ALL_REQUEST_NAME = "delivery_all_request";
 	private final String DELIVERY_REQUEST_NAME = "one_res_request";
 	private String DATA_NAME = null;
-	// 평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 / 배달음식 평가등록/수정 5 받아옴 6 삭제 7 
+	// 평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 / 배달음식 다받기 1 찾기 2 평가등록/수정 5 받아옴 6 삭제 7 
 	private String identifier = null;
 
 	//delivery
@@ -75,7 +75,7 @@ public class SendServer {
 	//search
 	public SendServer(String url, String keyword) {
 		this.SERVER_URL = url;
-		this.DATA_NAME = SEARCH_MENU_SEND_NAME;
+		this.DATA_NAME = SEARCH_SEND_NAME;
 		this.identifier = "2";
 		this.keyword = new Search(keyword);
 	}
@@ -149,7 +149,7 @@ public class SendServer {
 
 		else if (DATA_NAME.equals(TODAYMENU_REQUEST_NAME)) {
 			json = "get today menu";
-		} else if (DATA_NAME.equals(SEARCH_MENU_SEND_NAME)) {
+		} else if (DATA_NAME.equals(SEARCH_SEND_NAME)) {
 			json = new Gson().toJson(keyword);
 
 		}

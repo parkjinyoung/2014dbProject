@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.test.DatabaseHelper;
 import com.example.test.R;
+
 import comserver.SendServer;
 import comserver.SendServerURL;
 
@@ -55,6 +57,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 				.findViewById(R.id.comment_up_count);
 		final TextView unrectext = (TextView) v
 				.findViewById(R.id.comment_down_count);
+		final TextView commentdate = (TextView) v.findViewById(R.id.detail_comment_time);
 
 		final ImageView[] image_eval = new ImageView[5];
 		image_eval[0] = (ImageView) v.findViewById(R.id.comment_eval_stars1);
@@ -120,11 +123,12 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 				deletebtn.setVisibility(View.VISIBLE);
 				mycommentlayout.setVisibility(View.VISIBLE);
 			}
+			commentdate.setText(e.getDate().substring(0, 4) + "-" + e.getDate().substring(5, 7) + "-" + e.getDate().substring(8, 10));
 
 			rectext.setText(Integer.toString(e.getRecommend()));
 			unrectext.setText(Integer.toString(e.getUnrecommend()));
 
-			Button recommendbtn = (Button) v.findViewById(R.id.comment_up_btn);
+			ImageButton recommendbtn = (ImageButton) v.findViewById(R.id.comment_up_btn);
 			recommendbtn.setFocusable(true);
 			recommendbtn.setClickable(true);
 
@@ -152,7 +156,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 				}
 			});
 
-			Button unrecommendbtn = (Button) v
+			ImageButton unrecommendbtn = (ImageButton) v
 					.findViewById(R.id.comment_down_btn);
 			unrecommendbtn.setFocusable(true);
 			unrecommendbtn.setClickable(true);

@@ -380,7 +380,7 @@ public class DeliveryDetails extends Activity {
  
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         int h1 = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1)) + 10;
-        int h2 = (int) (displayHeight * 0.5);
+        int h2 = (int) (displayHeight * 0.6);
         params.height = Math.min(h1, h2);
         listView.setLayoutParams(params);
         listView.requestLayout();
