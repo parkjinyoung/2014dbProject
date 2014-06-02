@@ -141,18 +141,28 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);
 					String sendresult = send.send();
-
+					String isValid = "";
 					if (sendresult != null && !sendresult.equals("")) {
 						JSONObject jo = (JSONObject) JSONValue
 								.parse(sendresult);
-						String isValid = (String) jo.get("message");
+						isValid = (String) jo.get("message");
 						if (isValid.equals("success"))
 							rectext.setText(Integer.toString(e.getRecommend() + 1));
 					}
 
 					System.out.println("recommend true : " + sendresult);
-					Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 추천하였습니다." ,
+					if(uno == e.getUno()){
+						Toast.makeText(getContext(), "자신의 댓글은 추천할 수 없습니다." ,
+								Toast.LENGTH_SHORT).show();
+					}
+					else if(isValid.equals("success")){
+						Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 추천하였습니다." ,
 							Toast.LENGTH_SHORT).show();
+					}
+					else if(isValid.equals("fail")){
+						Toast.makeText(getContext(), "이미 평가한 댓글입니다." ,
+								Toast.LENGTH_SHORT).show();
+					}
 				}
 			});
 
@@ -170,19 +180,29 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 					SendServer send = new SendServer(reccom,
 							SendServerURL.commentURL);
 					String sendresult = send.send();
-
+					String isValid = "";
 					if (sendresult != null && !sendresult.equals("")) {
 						JSONObject jo = (JSONObject) JSONValue
 								.parse(sendresult);
-						String isValid = (String) jo.get("message");
+						isValid = (String) jo.get("message");
 						if (isValid.equals("success"))
 							unrectext.setText(Integer.toString(e
 									.getUnrecommend() + 1));
 					}
 
 					System.out.println("recommend false : " + sendresult);
-					Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 비추천하였습니다.", Toast.LENGTH_SHORT)
-							.show();
+					if(uno == e.getUno()){
+						Toast.makeText(getContext(), "자신의 댓글은 비추천할 수 없습니다." ,
+								Toast.LENGTH_SHORT).show();
+					}
+					else if(isValid.equals("success")){
+						Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 비추천하였습니다." ,
+							Toast.LENGTH_SHORT).show();
+					}
+					else if(isValid.equals("fail")){
+						Toast.makeText(getContext(), "이미 평가한 댓글입니다." ,
+								Toast.LENGTH_SHORT).show();
+					}
 				}
 			});
 
