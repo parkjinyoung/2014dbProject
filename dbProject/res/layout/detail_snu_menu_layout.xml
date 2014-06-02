@@ -115,6 +115,23 @@
             android:paddingRight="5dp"
             android:paddingTop="5dp" >
         </ListView>
+        
+        <TextView 
+            android:id="@+id/detail_snu_menu_comment_emptytext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/commentborder"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:text="저장된 코멘트가 없습니다."
+            />
+        
     </LinearLayout>
 
     <LinearLayout

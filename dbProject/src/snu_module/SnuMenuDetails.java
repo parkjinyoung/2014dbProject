@@ -16,6 +16,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -131,11 +132,12 @@ public class SnuMenuDetails extends Activity{
 
 		ArrayAdapter<Comment> madapter1;
 		final ListView listView1 = (ListView)findViewById(R.id.detail_snu_menu_comment_listview);
+		final TextView emptytext = (TextView) findViewById(R.id.detail_snu_menu_comment_emptytext);
 		Comment[] com_arr = null;
 		ArrayList<Comment> comarrlist = null;
 
 		if (sendresult != null && !sendresult.equals("")) {
-
+			
 			//json array parsing
 			com_arr = new Gson().fromJson(sendresult, Comment[].class);
 			for(int ii=0; ii<com_arr.length; ii++){
@@ -143,7 +145,8 @@ public class SnuMenuDetails extends Activity{
 			}
 
 			if(com_arr.length!=0){
-
+				emptytext.setVisibility(View.GONE);
+				listView1.setVisibility(View.VISIBLE);
 				comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 
 				madapter1 = new MyListAdapter(this, R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
@@ -151,10 +154,18 @@ public class SnuMenuDetails extends Activity{
 				listView1.setAdapter(madapter1);
 
 			}
+			
+			else{
+				System.out.println("comment arr visibility");
+				emptytext.setVisibility(View.VISIBLE);
+				listView1.setVisibility(View.GONE);
+			}
 
 			//			System.out.println("comment arr [ Id : " + com_arr[0].getId() + " cafe : " + com_arr[0].getCafe() + " menu : " + com_arr[0].getMenu()
 			//					+ " Date : " + com_arr[0].getDate() + " Rating : " + com_arr[0].getRating() + " recommend : " + com_arr[0].getRecommend());
 		}
+		
+
 
 		//		final ArrayList<Comment> comlist = comarrlist; // madapter2
 
@@ -177,7 +188,8 @@ public class SnuMenuDetails extends Activity{
 				ArrayList<Comment> comarrlist = null;
 
 				if (sendresult != null && !sendresult.equals("")) {
-
+					
+					
 					//json array parsing
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
 					for(int ii=0; ii<com_arr.length; ii++){
@@ -185,7 +197,9 @@ public class SnuMenuDetails extends Activity{
 					}
 
 					if(com_arr.length!=0){
-
+						emptytext.setVisibility(View.GONE);
+						listView1.setVisibility(View.VISIBLE);
+						
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , dateComparator);
 						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
@@ -193,7 +207,13 @@ public class SnuMenuDetails extends Activity{
 						listView1.setAdapter(madapter2);
 
 					}
+					else{
+
+						emptytext.setVisibility(View.VISIBLE);
+						listView1.setVisibility(View.GONE);
+					}
 				}
+				
 			}
 		});
 
@@ -216,7 +236,7 @@ public class SnuMenuDetails extends Activity{
 				ArrayList<Comment> comarrlist = null;
 
 				if (sendresult != null && !sendresult.equals("")) {
-
+					
 					//json array parsing
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
 					for(int ii=0; ii<com_arr.length; ii++){
@@ -224,6 +244,8 @@ public class SnuMenuDetails extends Activity{
 					}
 
 					if(com_arr.length!=0){
+						emptytext.setVisibility(View.GONE);
+						listView1.setVisibility(View.VISIBLE);
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , recComparator);
@@ -232,7 +254,13 @@ public class SnuMenuDetails extends Activity{
 						listView1.setAdapter(madapter2);
 
 					}
+					else{
+
+						emptytext.setVisibility(View.VISIBLE);
+						listView1.setVisibility(View.GONE);
+					}
 				}
+			
 
 				//				Collections.sort(comlist , recComparator);
 				//				ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.snumenu_detail_comment_text, comlist);
