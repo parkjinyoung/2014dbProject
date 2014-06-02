@@ -119,7 +119,7 @@ public class SendServer {
 		this.menurec = menurec;
 		this.identifier = "3";
 		
-		this.DATA_NAME = RECOM_COMMENT_SEND_NAME;
+		this.DATA_NAME = TODAYMENU_RECOMMEND;
 	}
 
 	
