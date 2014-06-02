@@ -3,10 +3,16 @@ package fragment;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import login_module.MyApplication;
 import object.DeliveryRestaurant;
 import object.Delivery_group;
+import object.MenuRecommend;
 import object.SnuMenu;
 import object.SnuRestaurant;
+import snu_module.ExpandableAdapter;
 import snu_module.SnuMenuDetails;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -52,6 +58,8 @@ public class RecommandMenuFragment extends Fragment implements
 
 	ExpandableAdapterforSearch adapter1; // snumenu
 	ExpandableAdapter_delivery adapter2; // delivery
+	
+	ExpandableAdapter adapter3;
 
 	ArrayList<SnuRestaurant> SnuResList;
 	ArrayList<String> RES = new ArrayList<String>();
@@ -82,6 +90,61 @@ public class RecommandMenuFragment extends Fragment implements
 		RadioGroup rdg = (RadioGroup) view.findViewById(R.id.search_choose);
 		rdg.setOnCheckedChangeListener(this); // 라디오버튼을 눌렸을때의 반응
 
+		recommbtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				db = new DatabaseHelper(mContext);
+				MenuRecommend menurec= new MenuRecommend();
+				MyApplication myApp = (MyApplication) mContext;
+				String uno = Integer.toString(myApp.getUno()); // get from db
+				menurec.setVisibleres(db.getVisibleResAll());
+				menurec.setUno(uno);
+				
+				SendServer send = new SendServer(menurec, SendServerURL.getMenuURL);
+				String sendresult = send.send();
+				System.out.println("sendresult : " + sendresult);
+				
+				if (sendresult != null && !sendresult.equals("")) {
+					JSONObject job = (JSONObject) JSONValue.parse(sendresult);
+					String mno = (String) job.get("mno");
+					
+					SnuMenu sm = db.getSnuMenu(mno);
+					
+					SnuResList = new ArrayList<SnuRestaurant>();
+					
+					onCreateData();
+
+					for (int j = 0; j < RES.size(); j++) {
+						res.add(j, new ArrayList<SnuMenu>());
+					}
+
+
+					for (int j = 0; j < RES.size(); j++) {
+						if (sm.getCafe().equals(RES.get(j))) {
+							res.get(j).add(sm);
+							break;
+						}
+					}
+					
+
+					for (int j = 0; j < RES.size(); j++) {
+						if (res.get(j).size() != 0)
+							SnuResList.add(new SnuRestaurant(
+									RES.get(j), res.get(j)));
+					}
+
+					adapter3 = new ExpandableAdapter(getActivity(), SnuResList);
+					exList.setAdapter(adapter3);
+					
+				}
+				
+				db.closeDB();
+			}
+		});
+		
+		
 		searchbtn.setOnClickListener(new OnClickListener() {
 
 			@Override
