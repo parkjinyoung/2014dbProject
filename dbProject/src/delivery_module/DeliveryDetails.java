@@ -182,6 +182,7 @@ public class DeliveryDetails extends Activity {
 
 		ArrayAdapter<Comment> madapter1;
 		final ListView listView1 = (ListView) findViewById(R.id.detail_delivery_comment_listview);
+		final TextView emptytext = (TextView) findViewById(R.id.detail_delivery_comment_emptytext);
 
 		Comment[] com_arr = null;
 		ArrayList<Comment> comarrlist = null;
@@ -189,7 +190,8 @@ public class DeliveryDetails extends Activity {
 		if (sendresult != null && !sendresult.equals("")) {
 			com_arr = new Gson().fromJson(sendresult, Comment[].class);
 			if (com_arr.length != 0) {
-				listView1.setVisibility(listView1.VISIBLE);
+				emptytext.setVisibility(View.GONE);
+				listView1.setVisibility(View.VISIBLE);
 				comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 
 				madapter1 = new CommentListAdapter(this,
@@ -198,8 +200,11 @@ public class DeliveryDetails extends Activity {
 
 				listView1.setAdapter(madapter1);
 				setListViewHeightBasedOnChildren(listView1);
-			} else
-				listView1.setVisibility(listView1.INVISIBLE);
+			} else{
+				System.out.println("comment arr visibility");
+				emptytext.setVisibility(View.VISIBLE);
+				listView1.setVisibility(View.GONE);
+			}
 		}
 
 		sortdatebtn.setOnClickListener(new OnClickListener() {
@@ -221,7 +226,8 @@ public class DeliveryDetails extends Activity {
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
 
 					if (com_arr.length != 0) {
-
+						emptytext.setVisibility(View.GONE);
+						listView1.setVisibility(View.VISIBLE);
 						comarrlist = new ArrayList<Comment>(Arrays
 								.asList(com_arr));
 						Collections.sort(comarrlist, dateComparator);
@@ -231,6 +237,11 @@ public class DeliveryDetails extends Activity {
 						listView1.setAdapter(madapter2);
 
 					}
+					else{
+						emptytext.setVisibility(View.VISIBLE);
+						listView1.setVisibility(View.GONE);
+					}
+					
 				}
 			}
 		});
@@ -253,7 +264,8 @@ public class DeliveryDetails extends Activity {
 					com_arr = new Gson().fromJson(sendresult, Comment[].class);
 
 					if (com_arr.length != 0) {
-
+						emptytext.setVisibility(View.GONE);
+						listView1.setVisibility(View.VISIBLE);
 						comarrlist = new ArrayList<Comment>(Arrays
 								.asList(com_arr));
 						Collections.sort(comarrlist, recComparator);
@@ -262,6 +274,11 @@ public class DeliveryDetails extends Activity {
 								R.id.detail_comment_text, comarrlist, search);
 						listView1.setAdapter(madapter2);
 
+					}
+					else{
+
+						emptytext.setVisibility(View.VISIBLE);
+						listView1.setVisibility(View.GONE);
 					}
 				}
 			}
