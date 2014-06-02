@@ -5,16 +5,19 @@ public class UserInfo {
 	String nickname;
 	String password;
 	String key;
+	String email;
 	int uno;
 	public UserInfo()
 	{
+		email="";
 		id="";
 		nickname="";
 		password="";
 		key="";
 		uno=0;
 	}
-	public UserInfo(String id, String nickname, String password, String key){
+	public UserInfo(String id, String nickname, String password, String email, String key){
+		this.email=email;
 		this.nickname = nickname;
 		this.password = password;
 		this.id = id;
@@ -61,5 +64,13 @@ public class UserInfo {
 	public String getKey()
 	{
 		return key;
+	}
+	public void setEmail(String email)
+	{
+		this.email=email;
+	}
+	public String getEmail()
+	{
+		return email;
 	}
 }

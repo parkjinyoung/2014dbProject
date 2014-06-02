@@ -1,6 +1,8 @@
 package fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import object.SnuMenu;
 import object.SnuRestaurant;
@@ -105,6 +107,17 @@ public class SnuMenuFragment extends Fragment {
 		for (int j = 0; j < RES.size(); j++) {
 			res.add(j, new ArrayList<SnuMenu>());
 		}
+		
+		// 현재 시간을 msec으로 구한다.
+		long now = System.currentTimeMillis();
+		// 현재 시간을 저장 한다.
+		Date date = new Date(now);
+		// 시간 포맷으로 만든다.
+		SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String strNow = sdfNow.format(date);
+		
+		System.out.println("month : " + date.getMonth() + " date : " + date.getDate()
+				+ " time : " + date.getHours() + " minutes : " + date.getMinutes());
 
 		ArrayList<SnuMenu> allsnumenu = db.getAllSnuMenus();
 		for (SnuMenu snumenu : allsnumenu) {

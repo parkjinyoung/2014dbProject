@@ -91,6 +91,7 @@ public class MainActivity extends FragmentActivity implements
 			try {
 				String url = "http://laputan32.cafe24.com/User";
 				String mId = m.getValue(myPreference.USER_ID, "");
+				String email;
 				UserInfo a = new UserInfo(mId, m.getValue(
 						myPreference.USER_PWD, ""));
 				SendServer send = new SendServer(a, url, "1");
@@ -99,8 +100,9 @@ public class MainActivity extends FragmentActivity implements
 				String result = (String) job.get("message");
 				if (result.equals("success")) {
 					myApp.setNickName((String) job.get("nickname"));
-					myApp.setAuth(Boolean.parseBoolean((String) job
-							.get("authenticated")));
+					
+					myApp.setAuth((email=(String)job.get("email")).equals("authenticated"));
+					myApp.setEmail(email);
 					myApp.setId(mId);
 					myApp.setUno(Integer.parseInt((String)job.get("uno")));
 					myApp.setLoginStatus(true);

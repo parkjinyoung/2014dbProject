@@ -137,7 +137,7 @@ public class LoginActivity extends Activity {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} else if (mPassword.length() < 3) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
@@ -211,6 +211,7 @@ public class LoginActivity extends Activity {
 
 		boolean flag;
 		boolean auth;
+		String email;
 		int uno;
 		String nickName;
 		@Override
@@ -226,7 +227,7 @@ public class LoginActivity extends Activity {
 				String result = (String) job.get("message");
 				if(result.equals("success")){
 					nickName = (String) job.get("nickname");
-					auth = Boolean.parseBoolean((String)job.get("authenticated"));
+					auth =(email=(String)job.get("email")).equals("authenticated");
 					uno = Integer.parseInt((String)job.get("uno"));
 					return true;
 				}
@@ -254,6 +255,7 @@ public class LoginActivity extends Activity {
 				myApp.setNickName(nickName);
 				myApp.setId(mId);
 				myApp.setUno(uno);
+				myApp.setEmail(email);
 				if(mAutoLogin.isChecked()){
 					myPreference pref = new myPreference(getApplicationContext());
 					pref.put(myPreference.AUTO_LOGIN, true);

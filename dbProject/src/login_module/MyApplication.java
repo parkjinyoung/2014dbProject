@@ -8,10 +8,16 @@ public class MyApplication extends Application{
 	boolean authenticated;
 	String nickName;
 	String id;
+	String email;
 	int uno;
+	public void clear()
+	{
+		onCreate();
+	}
 	@Override
 	public void onCreate()
 	{
+		email="";
 		loginStatus = false;
 		authenticated = false;
 		nickName = "USER";
@@ -62,5 +68,13 @@ public class MyApplication extends Application{
 	public void setUno(int uno)
 	{
 		this.uno = uno;
+	}
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+	public String getEmail()
+	{
+		return email;
 	}
 }

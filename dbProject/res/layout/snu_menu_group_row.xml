@@ -21,11 +21,13 @@
         android:orientation="horizontal" >
 
         <Button
+            android:layout_marginRight="10dp"
             android:id="@+id/detail_snu_res_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:focusable="false"
             android:text="자세히"
+            android:background="@drawable/button_border"
             android:textSize="20sp" />
     </LinearLayout>
 

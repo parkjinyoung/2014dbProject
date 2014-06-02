@@ -73,10 +73,7 @@ public class ConfigFragment extends Fragment {
 				//로그아웃
 				case 0:
 					if(myApp.getLoginStatus()){
-						myApp.setLoginStatus(false);
-						myApp.setId("");
-						myApp.setAuth(false);
-						myApp.setNickName("User");
+						myApp.clear();
 						myPreference m = new myPreference(v.getContext());
 						m.put(myPreference.AUTO_LOGIN, false);
 						new AlertDialog.Builder(getActivity())
@@ -85,6 +82,8 @@ public class ConfigFragment extends Fragment {
 						.setNeutralButton("Close", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
+								Intent i = new Intent(null,MainActivity.class);
+								startActivity(i);
 							}
 						}).show();
 					}
@@ -95,34 +94,21 @@ public class ConfigFragment extends Fragment {
 					}
 					break;
 					//인증/로그인
-				case 1:
-					if(myApp.getLoginStatus())
-					{
-						Intent intent = new Intent(v.getContext(), AuthkeyActivity.class);
-						startActivity(intent);
-					}
-					else
-					{
-						Intent intent = new Intent(v.getContext(), RegisterActivity.class);
-						startActivity(intent);
-					}
-					break;
-
 					//식당 onoff
-				case 2:
+				case 1:
 					Intent i = new Intent(v.getContext(), Config_SnuResOnOff.class);
 					startActivity(i);
 					break;
 					//내 정보 보기
-				case 3:
+				case 2:
 					Intent j = new Intent(v.getContext(), MyInfoActivity.class);
 					startActivity(j);
 					break;
 					//공지사항
-				case 4:
+				case 3:
 					break;
 					//개발자 지원
-				case 5:
+				case 4:
 					break;
 				default:
 					break;
@@ -139,7 +125,6 @@ public class ConfigFragment extends Fragment {
 	private void createArr() {
 		configarr = new ArrayList<String>();
 		configarr.add("로그인/로그아웃");
-		configarr.add("회원가입/인증하기");
 		configarr.add("식당 on/off");
 		configarr.add("내 정보 보기");
 		configarr.add("공지사항");

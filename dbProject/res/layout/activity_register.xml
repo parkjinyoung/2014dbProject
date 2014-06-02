@@ -36,95 +36,121 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <LinearLayout
+        <GridLayout
             style="@style/LoginFormContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_gravity="center"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:useDefaultMargins="true" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <EditText
-                    android:id="@+id/rid"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.19"
-                    android:hint="mysnu ID"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="\@snu.ac.kr"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
+            <EditText
+                android:id="@+id/rid"
+                android:layout_height="30dp"
+                android:layout_columnSpan="3"
+                android:layout_gravity="fill"
+                android:hint="ID                               "
+                android:inputType="text"
+                android:layout_margin="5dip"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/idcheck_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="16dp"
+                android:layout_height="30dp"
+                android:layout_gravity="fill"
+                android:background="@drawable/button_border"
                 android:onClick="idCheck"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="DUP CHECK" />
+                android:text="중복 확인"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/rnick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.23"
+                android:layout_height="30dp"
+                android:layout_columnSpan="3"
+                android:layout_gravity="fill"
                 android:hint="Nickname"
                 android:inputType="text"
+                android:layout_margin="5dip"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="15dp" />
+            
 
             <Button
                 android:id="@+id/nickcheck_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="16dp"
+                android:layout_height="20dp"
+                android:layout_gravity="fill"
+                android:background="@drawable/button_border"
                 android:onClick="nickCheck"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="DUP CHECK" />
+                android:text="중복 확인"
+                android:textSize="15dp" />
+            <EditText
+                android:id="@+id/email"
+                android:layout_height="30dp"
+                android:layout_columnSpan="3"
+                android:layout_gravity="fill"
+                android:hint="mysnuID"
+                android:inputType="text"
+                android:layout_margin="5dip"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="15dp" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:text="\@snu.ac.kr"
+                android:textSize="15dp" />
+             <Button
+                 android:layout_columnSpan="4"
+                android:id="@+id/emailcheck_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="fill"
+                android:background="@drawable/button_border"
+                android:onClick="emailCheck"
+                android:text="중복 확인"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/rpassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                 android:layout_height="30dp"
+                android:layout_columnSpan="4"
+                android:layout_gravity="fill"
                 android:hint="Password"
+                android:textSize="15dp"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
 
             <EditText
                 android:id="@+id/rrepeat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_columnSpan="4"
+                android:layout_gravity="fill"
+                android:textSize="15dp"
                 android:hint="Repeat your password"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:layout_height="30dp" />
 
             <Button
                 android:id="@+id/rregister_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_columnSpan="4"
+                android:layout_gravity="fill"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/button_border"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="Register" />
-        </LinearLayout>
+                android:text="회원 가입하기" />
+        </GridLayout>
     </ScrollView>
 
 </merge>
