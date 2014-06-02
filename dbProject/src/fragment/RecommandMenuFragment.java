@@ -55,7 +55,8 @@ public class RecommandMenuFragment extends Fragment implements
 
 	DatabaseHelper db;
 	int search_identifier = 1;
-
+	int flag = 0;
+	
 	ExpandableAdapterforSearch adapter1; // snumenu
 	ExpandableAdapter_delivery adapter2; // delivery
 	
@@ -94,11 +95,17 @@ public class RecommandMenuFragment extends Fragment implements
 			
 			@Override
 			public void onClick(View v) {
+				flag = 0;
 				// TODO Auto-generated method stub
 				db = new DatabaseHelper(mContext);
 				MenuRecommend menurec= new MenuRecommend();
 				MyApplication myApp = (MyApplication) mContext;
 				String uno = myApp.getUno(); // get from db
+				
+				if(uno.equals("")){
+					Toast.makeText(mContext, "로그인해주세요", Toast.LENGTH_SHORT).show();
+				}
+				else{
 				menurec.setVisibleres(db.getVisibleResAll());
 				menurec.setUno(uno);
 				
@@ -139,7 +146,7 @@ public class RecommandMenuFragment extends Fragment implements
 					exList.setAdapter(adapter3);
 					
 				}
-				
+				}
 				db.closeDB();
 			}
 		});
@@ -149,6 +156,7 @@ public class RecommandMenuFragment extends Fragment implements
 
 			@Override
 			public void onClick(View v) {
+				flag = 1;
 				// TODO Auto-generated method stub
 				String keyword = searchtext.getText().toString();
 				if (keyword.equals("")) {
@@ -266,7 +274,7 @@ public class RecommandMenuFragment extends Fragment implements
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 
-				if (search_identifier == 1) {
+				if (search_identifier == 1 && flag==1) {
 					Intent i = new Intent(v.getContext(), SnuMenuDetails.class);
 
 					SnuMenu a = SnuResList.get(groupPosition).getMymenu()
@@ -281,12 +289,27 @@ public class RecommandMenuFragment extends Fragment implements
 					i.putExtra("time", a.getTime());
 					adapter1.notifyDataSetChanged();
 					startActivity(i);
-				} else if (search_identifier == 2) {
+				} else if (search_identifier == 2 && flag==1) {
 					DeliveryRestaurant a = DelGroupList.get(groupPosition)
 							.getMyres().get(childPosition);
 
 					Intent i = new Intent(v.getContext(), DeliveryDetails.class);
 					i.putExtra("resname", a.getCafe());
+					startActivity(i);
+				}
+				else if(flag==0){
+					Intent i = new Intent(v.getContext(), SnuMenuDetails.class);
+
+					SnuMenu a = SnuResList.get(groupPosition).getMymenu()
+							.get(childPosition);
+					SnuRestaurant b = SnuResList.get(groupPosition);
+
+					i.putExtra("menu", a.getMenu());
+					i.putExtra("rating", a.getRating());
+					i.putExtra("cafe", a.getCafe());
+					i.putExtra("price", a.getPrice());
+					i.putExtra("time", a.getTime());
+					adapter3.notifyDataSetChanged();
 					startActivity(i);
 				}
 				return false;
