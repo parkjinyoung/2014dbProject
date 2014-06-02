@@ -45,10 +45,11 @@ public class ChangePasswordDialog extends Dialog implements OnClickListener {
 	Button dupbtn;
 	EditText mPasswordView;
 	String mPassword;
+	Context context;
 	public ChangePasswordDialog(Context context)
 	{
 		super(context);
-
+		this.context = context;
 		setContentView(R.layout.changevalue_dialog);
 		sendbtn = (Button)findViewById(R.id.change_button);
 		mPasswordView = (EditText)findViewById(R.id.value);
@@ -62,7 +63,7 @@ public class ChangePasswordDialog extends Dialog implements OnClickListener {
 			mPassword = mPasswordView.getText().toString();
 			String url = "http://laputan32.cafe24.com/User";
 			UserInfo a = new UserInfo();
-			MyApplication myApp = (MyApplication)getOwnerActivity().getApplicationContext();
+			MyApplication myApp = (MyApplication)context.getApplicationContext();
 			a.setUno(myApp.getUno());
 			a.setPassword(mPassword);
 			SendServer send = new SendServer(a, url, "6");

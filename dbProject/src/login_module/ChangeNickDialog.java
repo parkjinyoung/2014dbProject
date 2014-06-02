@@ -44,10 +44,11 @@ public class ChangeNickDialog extends Dialog implements OnClickListener {
 	Button dupbtn;
 	EditText mNickView;
 	String mNick;
+	Context context;
 	public ChangeNickDialog(Context context)
 	{
 		super(context);
-
+		this.context = context;
 		setContentView(R.layout.changevalue_dialog);
 		sendbtn = (Button)findViewById(R.id.change_button);
 		mNickView = (EditText)findViewById(R.id.value);
@@ -61,7 +62,7 @@ public class ChangeNickDialog extends Dialog implements OnClickListener {
 			mNick = mNickView.getText().toString();
 			String url = "http://laputan32.cafe24.com/User";
 			UserInfo a = new UserInfo();
-			MyApplication myApp = (MyApplication)getOwnerActivity().getApplicationContext();
+			MyApplication myApp = (MyApplication)context.getApplicationContext();
 			a.setUno(myApp.getUno());
 			a.setNickname(mNick);
 			SendServer sender = new SendServer(a,url, "3");

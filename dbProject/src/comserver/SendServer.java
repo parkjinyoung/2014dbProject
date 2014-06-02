@@ -48,7 +48,10 @@ public class SendServer {
 
 	//delivery
 	public SendServer(DeliveryRestaurant del, String url){
-		if(del.getCafe().equals("getAllDelivery")) this.DATA_NAME = DELIVERY_ALL_REQUEST_NAME;
+		if(del.getCafe().equals("getAllDelivery")){
+			this.DATA_NAME = DELIVERY_ALL_REQUEST_NAME;
+			this.identifier = "1";
+		}
 		else {
 			this.del = del;
 			this.DATA_NAME = DELIVERY_REQUEST_NAME;

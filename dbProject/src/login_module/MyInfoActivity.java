@@ -38,6 +38,7 @@ import android.os.Build;
 
 public class MyInfoActivity extends Activity {
 
+	Context context;
 	MyApplication myApp;
 	TextView idView;
 	TextView nickView;
@@ -54,6 +55,8 @@ public class MyInfoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_info);
+		
+		context =this;
 
 		myApp = (MyApplication) getApplicationContext();
 
@@ -72,7 +75,7 @@ public class MyInfoActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						ChangeEmailDialog dialog = new ChangeEmailDialog(getParent());
+						ChangePasswordDialog dialog = new ChangePasswordDialog(context);
 						dialog.show();
 					}
 				});
@@ -80,7 +83,7 @@ public class MyInfoActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						ChangeNickDialog dialog = new ChangeNickDialog(getParent());
+						ChangeNickDialog dialog = new ChangeNickDialog(context);
 						dialog.show();
 					}
 				});
@@ -88,14 +91,14 @@ public class MyInfoActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						ChangeEmailDialog dialog = new ChangeEmailDialog(getParent());
+						ChangeEmailDialog dialog = new ChangeEmailDialog(context);
 						dialog.show();
 						MyApplication myApp = (MyApplication)getApplicationContext();
 						String newKey = keygen();
 						String mEmail = myApp.getEmail();
 						Gmail m = new Gmail(mEmail+"@snu.ac.kr",newKey);
 						if(!m.send()){
-							new AlertDialog.Builder(getParent())
+							new AlertDialog.Builder(context)
 							.setTitle("이메일 전송 오류")
 							.setMessage("인터넷 연결 혹은 이메일 주소를 다시 학인해 주세요.")
 							.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
@@ -113,7 +116,7 @@ public class MyInfoActivity extends Activity {
 						String result = (String) job.get("message");
 						if(result.equals("success"))
 						{
-							new AlertDialog.Builder(getParent())
+							new AlertDialog.Builder(context)
 							.setTitle("완료")
 							.setMessage("이메일을 확인해 주세요.")
 							.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
@@ -132,7 +135,7 @@ public class MyInfoActivity extends Activity {
 						String mEmail = myApp.getEmail();
 						Gmail m = new Gmail(mEmail+"@snu.ac.kr",newKey);
 						if(!m.send()){
-							new AlertDialog.Builder(getParent())
+							new AlertDialog.Builder(context)
 							.setTitle("이메일 전송 오류")
 							.setMessage("인터넷 연결 혹은 이메일 주소를 다시 학인해 주세요.")
 							.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
@@ -150,7 +153,7 @@ public class MyInfoActivity extends Activity {
 						String result = (String) job.get("message");
 						if(result.equals("success"))
 						{
-							new AlertDialog.Builder(getParent())
+							new AlertDialog.Builder(context)
 							.setTitle("완료")
 							.setMessage("이메일을 확인해 주세요.")
 							.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
@@ -164,7 +167,7 @@ public class MyInfoActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						AuthKeyDialog dialog = new AuthKeyDialog(getParent());
+						AuthKeyDialog dialog = new AuthKeyDialog(context);
 						dialog.show();
 					}
 				});
@@ -172,7 +175,7 @@ public class MyInfoActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						new AlertDialog.Builder(getParent())
+						new AlertDialog.Builder(context)
 						.setTitle("회원탈퇴")
 						.setMessage("정말로 회원을 탈퇴하시겠습니까?")
 						.setPositiveButton("네", new DialogInterface.OnClickListener() {
@@ -187,7 +190,7 @@ public class MyInfoActivity extends Activity {
 								String result = (String) job.get("message");
 								if(result.equals("success"))
 								{
-									new AlertDialog.Builder(getParent())
+									new AlertDialog.Builder(context)
 									.setTitle("완료")
 									.setMessage("이용해 주셔서 감사합니다.")
 									.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
@@ -195,13 +198,13 @@ public class MyInfoActivity extends Activity {
 											myApp.clear();
 											finish();
 											Intent i = new Intent(null,MainActivity.class);
-											getParent().startActivity(i);
+											context.startActivity(i);
 										}
 									}).show();
 								}
 								else
 								{
-									new AlertDialog.Builder(getParent())
+									new AlertDialog.Builder(context)
 									.setTitle("실패")
 									.setMessage("회원탈퇴가 정상적으로 처리되지 않았습니다. 다시 시도해 주세요")
 									.setNeutralButton("닫기", new DialogInterface.OnClickListener() {

@@ -44,10 +44,11 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 	Button dupbtn;
 	EditText mEmailView;
 	String mEmail;
+	Context context;
 	public ChangeEmailDialog(Context context)
 	{
 		super(context);
-
+		this.context =context;
 		setContentView(R.layout.changevalue_dialog);
 		sendbtn = (Button)findViewById(R.id.change_button);
 		mEmailView = (EditText)findViewById(R.id.value);
@@ -61,7 +62,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 			mEmail = mEmailView.getText().toString();
 			String url = "http://laputan32.cafe24.com/User";
 			UserInfo a = new UserInfo();
-			MyApplication myApp = (MyApplication)getOwnerActivity().getApplicationContext();
+			MyApplication myApp = (MyApplication)context.getApplicationContext();
 			a.setUno(myApp.getUno());
 			a.setEmail(mEmail);
 			SendServer sender = new SendServer(a,url, "10");
