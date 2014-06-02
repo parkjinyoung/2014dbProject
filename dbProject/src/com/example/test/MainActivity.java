@@ -107,7 +107,7 @@ public class MainActivity extends FragmentActivity implements
 					myApp.setUno(Integer.parseInt((String)job.get("uno")));
 					myApp.setLoginStatus(true);
 					new AlertDialog.Builder(this)
-							.setTitle("로그인  성공")
+							.setTitle("로그인 성공")
 							.setMessage("환영합니다, " + myApp.getNickName() + "님.")
 							.setNeutralButton("Close",
 									new DialogInterface.OnClickListener() {
