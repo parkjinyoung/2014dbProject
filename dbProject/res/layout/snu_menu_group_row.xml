@@ -3,36 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
-    
-     	<TextView 
+
+    <TextView
         android:id="@+id/group_title"
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/listPreferredItemHeight"
-   		android:paddingLeft="40dp"
-    	android:textAppearance="?android:attr/textAppearanceListItem"
-    	android:gravity="center_vertical"
-    	android:textAlignment="viewStart"
-        android:textSize="30sp"
-        />
+        android:gravity="center_vertical"
+        android:paddingLeft="40dp"
+        android:textAlignment="viewStart"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textSize="30sp" />
 
-
-     	
-     	   <LinearLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:gravity="right|center_vertical"
         android:orientation="horizontal" >
 
-		<Button 
-		    android:id="@+id/detail_snu_res_btn"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text = "자세히"
-		    android:textSize ="20sp"
-		    android:focusable="false"
-		    />
+        <Button
+            android:id="@+id/detail_snu_res_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="자세히"
+            android:textSize="20sp" />
     </LinearLayout>
 
- 
- 
 </LinearLayout>
