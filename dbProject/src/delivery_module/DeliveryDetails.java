@@ -1,7 +1,10 @@
 package delivery_module;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.Collator;
@@ -21,8 +24,10 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +44,7 @@ import android.widget.ToggleButton;
 import com.example.test.DatabaseHelper;
 import com.example.test.R;
 import com.google.gson.Gson;
+
 import comserver.SendServer;
 import comserver.SendServerURL;
 
@@ -53,15 +59,18 @@ public class DeliveryDetails extends Activity {
 	DeliveryRestaurant delres;
 	static int displayHeight;
 
+	String imgcacheFile = "";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		am.restartPackage(getPackageName());
-		
-		Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+
+		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE))
+				.getDefaultDisplay();
 		displayHeight = display.getHeight();
-		
+
 		setContentView(R.layout.detail_delivery_layout);
 
 		TextView text_name = (TextView) findViewById(R.id.detail_delivery_name);
@@ -128,19 +137,37 @@ public class DeliveryDetails extends Activity {
 		text_name.setText(resname);
 
 		final ToggleButton menubtn = (ToggleButton) findViewById(R.id.detail_delivery_menu_btn);
+
 		final ImageView imgView = (ImageView) findViewById(R.id.delmenuimage);
 		imgView.setAdjustViewBounds(true);
+		imgcacheFile = "/mnt/sdcard/download/" + delres.getCafe() + ".png";
 		menubtn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// 메뉴 버튼 클릭했을때 메뉴 보여주기
-				if(menubtn.isChecked()){
-					imgView.setImageBitmap(getImageFromURL(delres.getMenu_url()));
+				Bitmap bitmap = null;
+				if (menubtn.isChecked()) {
+					// imgView.setImageBitmap(getImageFromURL(delres.getMenu_url()));
+					File file = new File(imgcacheFile);
+					if (!file.exists()) {
+						System.out.println("delivery_ file not exist");
+						bitmap = getImageFromURL(delres.getMenu_url());
+						try {
+							FileOutputStream fOut = new FileOutputStream(file);
+							bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+							fOut.flush();
+							fOut.close();
+						} catch (Exception e) {
+							e.printStackTrace();
+							Log.d(null, "Save file error!");
+						}
+					} else {
+						System.out.println("delivery_file exist");
+						bitmap = BitmapFactory.decodeFile(imgcacheFile);
+					}
 				}
-				else {
-					imgView.setImageBitmap(null);
-				}
+				imgView.setImageBitmap(bitmap);
 			}
 		});
 
@@ -152,10 +179,10 @@ public class DeliveryDetails extends Activity {
 		SendServer send = new SendServer(del, SendServerURL.commentURL);
 		String sendresult = send.send();
 		System.out.println("comment sendresult : " + sendresult);
-		
+
 		ArrayAdapter<Comment> madapter1;
 		final ListView listView1 = (ListView) findViewById(R.id.detail_delivery_comment_listview);
-   
+
 		Comment[] com_arr = null;
 		ArrayList<Comment> comarrlist = null;
 
@@ -168,13 +195,12 @@ public class DeliveryDetails extends Activity {
 				madapter1 = new CommentListAdapter(this,
 						R.layout.comment_list_item, R.id.detail_comment_text,
 						comarrlist, search);
-				
+
 				listView1.setAdapter(madapter1);
 				setListViewHeightBasedOnChildren(listView1);
-			}
-			else listView1.setVisibility(listView1.INVISIBLE);
+			} else
+				listView1.setVisibility(listView1.INVISIBLE);
 		}
-		
 
 		sortdatebtn.setOnClickListener(new OnClickListener() {
 
@@ -364,25 +390,42 @@ public class DeliveryDetails extends Activity {
 
 		return imgBitmap;
 	}
+
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
 		ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            // pre-condition
-            return;
-        }
- 
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
- 
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        int h1 = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1)) + 10;
-        int h2 = (int) (displayHeight * 0.6);
-        params.height = Math.min(h1, h2);
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-}
+		if (listAdapter == null) {
+			// pre-condition
+			return;
+		}
+
+		int totalHeight = 0;
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		int h1 = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1))
+				+ 10;
+		int h2 = (int) (displayHeight * 0.6);
+		params.height = Math.min(h1, h2);
+		listView.setLayoutParams(params);
+		listView.requestLayout();
+	}
+
+	/*
+	 * boolean HttpDown(String Url) { URL imageurl; int Read; try { imageurl =
+	 * new URL(Url); HttpURLConnection conn = (HttpURLConnection) imageurl
+	 * .openConnection(); conn.connect(); int len = conn.getContentLength();
+	 * byte[] raster = new byte[len]; InputStream is = conn.getInputStream();
+	 * FileOutputStream fos = new FileOutputStream(imgcacheFile);
+	 * 
+	 * for (;;) { Read = is.read(raster); if (Read <= 0) { break; }
+	 * fos.write(raster, 0, Read); }
+	 * 
+	 * is.close(); fos.close(); } catch (Exception e) { return false; } return
+	 * true; }
+	 */
 }
