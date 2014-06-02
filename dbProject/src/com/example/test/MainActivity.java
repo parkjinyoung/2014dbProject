@@ -104,7 +104,7 @@ public class MainActivity extends FragmentActivity implements
 					myApp.setAuth((email=(String)job.get("email")).equals("authenticated"));
 					myApp.setEmail(email);
 					myApp.setId(mId);
-					myApp.setUno(Integer.parseInt((String)job.get("uno")));
+					myApp.setUno(myApp.getUno());
 					myApp.setLoginStatus(true);
 					new AlertDialog.Builder(this)
 							.setTitle("로그인 성공")

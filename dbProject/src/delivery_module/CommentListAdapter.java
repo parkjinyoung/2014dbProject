@@ -112,7 +112,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 			MyApplication myApp = (MyApplication) v.getContext()
 					.getApplicationContext();
 
-			final String uno = Integer.toString(myApp.getUno());
+			final String uno = myApp.getUno();
 
 			mycommentlayout.setVisibility(View.GONE);
 			modifybtn.setVisibility(View.GONE);

@@ -98,7 +98,7 @@ public class RecommandMenuFragment extends Fragment implements
 				db = new DatabaseHelper(mContext);
 				MenuRecommend menurec= new MenuRecommend();
 				MyApplication myApp = (MyApplication) mContext;
-				String uno = Integer.toString(myApp.getUno()); // get from db
+				String uno = myApp.getUno(); // get from db
 				menurec.setVisibleres(db.getVisibleResAll());
 				menurec.setUno(uno);
 				

@@ -6,7 +6,7 @@ public class UserInfo {
 	String password;
 	String key;
 	String email;
-	int uno;
+	String uno;
 	public UserInfo()
 	{
 		email="";
@@ -14,7 +14,7 @@ public class UserInfo {
 		nickname="";
 		password="";
 		key="";
-		uno=0;
+		uno="0";
 	}
 	public UserInfo(String id, String nickname, String password, String email, String key){
 		this.email=email;
@@ -22,20 +22,20 @@ public class UserInfo {
 		this.password = password;
 		this.id = id;
 		this.key= key;
-		this.uno = 0;
+		this.uno = "0";
 	}
 	public UserInfo(String id, String password){
 		this.nickname="";
 		this.password = password;
 		this.id = id;
 		this.key="";
-		this.uno = 0;
+		this.uno = "0";
 	}
-	public int getUno()
+	public String getUno()
 	{
 		return uno;
 	}
-	public void setUno(int uno)
+	public void setUno(String uno)
 	{
 		this.uno = uno;
 	}

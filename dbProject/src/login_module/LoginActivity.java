@@ -212,7 +212,7 @@ public class LoginActivity extends Activity {
 		boolean flag;
 		boolean auth;
 		String email;
-		int uno;
+		String uno;
 		String nickName;
 		@Override
 		protected Boolean doInBackground(Void... params) {
@@ -228,7 +228,7 @@ public class LoginActivity extends Activity {
 				if(result.equals("success")){
 					nickName = (String) job.get("nickname");
 					auth =(email=(String)job.get("email")).equals("authenticated");
-					uno = Integer.parseInt((String)job.get("uno"));
+					uno = (String)job.get("uno");
 					return true;
 				}
 				else if(result.equals("wrong password"))

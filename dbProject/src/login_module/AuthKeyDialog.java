@@ -78,7 +78,8 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						Intent intent = new Intent(null,MyInfoActivity.class);
+						Intent intent = new Intent(context,MyInfoActivity.class);
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						context.startActivity(intent);
 					}
 				}).show();

@@ -285,6 +285,7 @@ public class RegisterActivity extends Activity {
 		mPassword = mPasswordView.getText().toString();
 		mRepeat = mRepeatView.getText().toString();
 		mNickname = mNicknameView.getText().toString();
+		mEmail = mEmailView.getText().toString();
 
 		boolean cancel = false;
 		View focusView = null;
@@ -309,9 +310,9 @@ public class RegisterActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_field_required));
 			focusView = mEmailView;
 			cancel = true;
-		} else if(!emailChk || mNickname.compareTo(chkEmail)!=0){
-			mNicknameView.setError("중복 확인 체크를 해 주세요.");
-			nickChk = false;
+		} else if(!emailChk || mEmail.compareTo(chkEmail)!=0){
+			mEmailView.setError("중복 확인 체크를 해 주세요.");
+			emailChk = false;
 			focusView = mEmailView;
 			cancel = true;
 		}
@@ -421,7 +422,7 @@ public class RegisterActivity extends Activity {
 
 		String errorTitle;
 		String errorMessage;
-		int uno;
+		String uno;
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
@@ -443,7 +444,7 @@ public class RegisterActivity extends Activity {
 				String sendresult = send.send();
 				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
 				String result = (String) job.get("message");
-				uno = Integer.parseInt((String)job.get("uno"));
+				uno = (String)job.get("uno");
 				if(result.equals("success"))
 				{
 					return true;

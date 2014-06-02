@@ -84,7 +84,7 @@ public class EvalDelivery extends Activity{
 				float rating = ratingbar.getRating();
 				
 				MyApplication myApp = (MyApplication)getApplicationContext();
-				String uno = Integer.toString(myApp.getUno()); // get from db
+				String uno = myApp.getUno(); // get from db
 				
 				SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
 				Date currentTime = new Date ();

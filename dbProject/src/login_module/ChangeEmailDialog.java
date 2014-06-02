@@ -98,16 +98,17 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 					sendresult = send.send();
 					job = (JSONObject) JSONValue.parse(sendresult);
 					result = (String) job.get("message");
-					if(result.equals("success"))
+					if(result.equals("success")&&m.send())
 					{
-						new AlertDialog.Builder(getOwnerActivity())
+						new AlertDialog.Builder(context)
 						.setTitle("완료!")
 						.setMessage("이메일이 변경되었습니다.")
 						.setNeutralButton("완료", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO Auto-generated method stub
-								Intent intent = new Intent(null,MyInfoActivity.class);
+								Intent intent = new Intent(context,MyInfoActivity.class);
+								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								context.startActivity(intent);
 							}
 
@@ -115,7 +116,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 					}
 					else
 					{
-						new AlertDialog.Builder(getOwnerActivity())
+						new AlertDialog.Builder(context)
 						.setTitle("이메일 전송 실패!")
 						.setMessage("이메일은 변경되었으나 인증번호 전송에 실패했습니다. 인증번호 재전송이 필요합니다.")
 						.setNeutralButton("완료", new DialogInterface.OnClickListener() {
@@ -123,6 +124,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO Auto-generated method stub
 								Intent intent = new Intent(null,MyInfoActivity.class);
+								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								context.startActivity(intent);
 							}
 
@@ -130,7 +132,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 					}
 				}
 				else{
-					new AlertDialog.Builder(getOwnerActivity())
+					new AlertDialog.Builder(context)
 					.setTitle("실패")
 					.setMessage("서버 상태나 인터넷 연결 상태가 좋지 않습니다.")
 					.setNeutralButton("닫기", new DialogInterface.OnClickListener() {

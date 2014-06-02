@@ -9,7 +9,7 @@ public class MyApplication extends Application{
 	String nickName;
 	String id;
 	String email;
-	int uno;
+	String uno;
 	public void clear()
 	{
 		onCreate();
@@ -22,7 +22,7 @@ public class MyApplication extends Application{
 		authenticated = false;
 		nickName = "USER";
 		id = "";
-		uno = -1;
+		uno = "";
 	}
 	@Override
 	public void onTerminate()
@@ -61,11 +61,11 @@ public class MyApplication extends Application{
 	{
 		return id;
 	}
-	public int getUno()
+	public String getUno()
 	{
 		return uno;
 	}
-	public void setUno(int uno)
+	public void setUno(String uno)
 	{
 		this.uno = uno;
 	}

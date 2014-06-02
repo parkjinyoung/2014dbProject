@@ -165,9 +165,9 @@ public class MyInfoActivity extends Activity {
 									.setNeutralButton("´Ý±â", new DialogInterface.OnClickListener() {
 										public void onClick(DialogInterface dialog, int which) {
 											myApp.clear();
+											myPreference pref = new myPreference(getApplicationContext());
+											pref.put(myPreference.AUTO_LOGIN,false);
 											finish();
-											Intent i = new Intent(null,MainActivity.class);
-											context.startActivity(i);
 										}
 									}).show();
 								}

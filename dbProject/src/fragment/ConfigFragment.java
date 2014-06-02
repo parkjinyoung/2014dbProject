@@ -82,8 +82,6 @@ public class ConfigFragment extends Fragment {
 						.setNeutralButton("Close", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								Intent i = new Intent(null,MainActivity.class);
-								startActivity(i);
 							}
 						}).show();
 					}
@@ -101,8 +99,22 @@ public class ConfigFragment extends Fragment {
 					break;
 					//내 정보 보기
 				case 2:
-					Intent j = new Intent(v.getContext(), MyInfoActivity.class);
-					startActivity(j);
+					if(myApp.getLoginStatus()){
+
+						Intent j = new Intent(v.getContext(), MyInfoActivity.class);
+						startActivity(j);
+					}
+					else
+					{
+						new AlertDialog.Builder(getActivity())
+						.setTitle("접근 불가능!")
+						.setMessage("로그인하셔야 합니다.")
+						.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						}).show();
+					}
 					break;
 					//공지사항
 				case 3:
