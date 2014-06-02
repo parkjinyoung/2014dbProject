@@ -140,7 +140,8 @@ public class DeliveryDetails extends Activity {
 
 		final ImageView imgView = (ImageView) findViewById(R.id.delmenuimage);
 		imgView.setAdjustViewBounds(true);
-		imgcacheFile = "/mnt/sdcard/download/" + delres.getCafe() + ".png";
+		imgcacheFile = getApplicationContext().getCacheDir().getAbsolutePath() + "/" + delres.getCafe() + ".png";
+		System.out.println("delivery__ " + imgcacheFile);
 		menubtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -415,17 +416,4 @@ public class DeliveryDetails extends Activity {
 		listView.requestLayout();
 	}
 
-	/*
-	 * boolean HttpDown(String Url) { URL imageurl; int Read; try { imageurl =
-	 * new URL(Url); HttpURLConnection conn = (HttpURLConnection) imageurl
-	 * .openConnection(); conn.connect(); int len = conn.getContentLength();
-	 * byte[] raster = new byte[len]; InputStream is = conn.getInputStream();
-	 * FileOutputStream fos = new FileOutputStream(imgcacheFile);
-	 * 
-	 * for (;;) { Read = is.read(raster); if (Read <= 0) { break; }
-	 * fos.write(raster, 0, Read); }
-	 * 
-	 * is.close(); fos.close(); } catch (Exception e) { return false; } return
-	 * true; }
-	 */
 }
