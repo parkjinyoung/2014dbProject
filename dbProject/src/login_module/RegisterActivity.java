@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -47,21 +48,25 @@ public class RegisterActivity extends Activity {
 	private String mPassword;
 	private String mRepeat;
 	private String mNickname;
+	private String mEmail;
 	// UI references.
 	private EditText mIdView;
 	private EditText mPasswordView;
 	private EditText mRepeatView;
 	private EditText mNicknameView;
-
+	private EditText mEmailView;
+	
 	private View mRegisterFormView;
 	private View mRegisterStatusView;
 	private TextView mRegisterStatusMessageView;
 
 	private String chkId;
 	private String chkNick;
+	private String chkEmail; 
 
 	private boolean nickChk;
 	private boolean idChk;
+	private boolean emailChk;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +77,22 @@ public class RegisterActivity extends Activity {
 
 		nickChk = false;
 		idChk = false;
+		emailChk = false;
 
 		mPasswordView = (EditText) findViewById(R.id.rpassword);
 
 		mIdView = (EditText) findViewById(R.id.rid);
+		
+		mEmailView =(EditText) findViewById(R.id.email);
 
 		mNicknameView = (EditText) findViewById(R.id.rnick);
 
 		mRepeatView = (EditText) findViewById(R.id.rrepeat);
+		
+		InputFilter[] filterArray = new InputFilter[1];
+		filterArray[0] = new InputFilter.LengthFilter(12);
+		mIdView.setFilters(filterArray);
+		mNicknameView.setFilters(filterArray);
 
 		mRegisterFormView = findViewById(R.id.register_form);
 		mRegisterStatusView = findViewById(R.id.register_status);
@@ -210,6 +223,46 @@ public class RegisterActivity extends Activity {
 			}).show();
 		}
 	}
+	
+	public void emailCheck(View view)
+	{
+		chkEmail = mEmailView.getText().toString().toLowerCase();
+
+		String url = "http://laputan32.cafe24.com/User"; 
+		UserInfo a = new UserInfo();
+		a.setEmail(chkEmail);
+		SendServer sender = new SendServer(a,url, "10");
+		String sendresult = sender.send();
+		JSONObject job = (JSONObject) JSONValue.parse(sendresult);
+		String result = (String) job.get("message");
+		if(result.equals("success")){
+
+			new AlertDialog.Builder(RegisterActivity.this)
+			.setTitle("You can use this E-mail")
+			.setMessage("You can use this E-mail")
+			.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+				}
+			}).show();
+			emailChk = true;
+		}
+		else
+		{
+			new AlertDialog.Builder(RegisterActivity.this)
+			.setTitle("You can't use this Email")
+			.setMessage("Please change Email address")
+			.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+				}
+			}).show();
+		}
+	}
 
 	/**
 	 * Attempts to sign in or register the account specified by the register form.
@@ -241,14 +294,25 @@ public class RegisterActivity extends Activity {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} else if (mPassword.length() < 3) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
 		} else if (mPassword.length()>20)
 		{
-			mPasswordView.setError("PASSWORD LENGTH>20");
+			mPasswordView.setError("너무 긴 비밀번호입니다.");
 			focusView = mPasswordView;
+			cancel = true;
+		}
+		
+		if (TextUtils.isEmpty(mEmail)) {
+			mEmailView.setError(getString(R.string.error_field_required));
+			focusView = mEmailView;
+			cancel = true;
+		} else if(!emailChk || mNickname.compareTo(chkEmail)!=0){
+			mNicknameView.setError("중복 확인 체크를 해 주세요.");
+			nickChk = false;
+			focusView = mEmailView;
 			cancel = true;
 		}
 
@@ -258,7 +322,13 @@ public class RegisterActivity extends Activity {
 			focusView = mIdView;
 			cancel = true;
 		} else if(!idChk || mId.compareTo(chkId)!=0){
-			mIdView.setError("Please check duplication");
+			mIdView.setError("중복 확인 체크를 해 주세요.");
+			idChk = false;
+			focusView = mIdView;
+			cancel = true;
+		} else if(!mId.matches("^[a-zA-Z0-9]*$"))
+		{
+			mIdView.setError("아이디는 영 대소문자, 숫자로만 이루어져야 합니다.");
 			idChk = false;
 			focusView = mIdView;
 			cancel = true;
@@ -269,18 +339,20 @@ public class RegisterActivity extends Activity {
 			focusView = mNicknameView;
 			cancel = true;
 		} else if(!nickChk || mNickname.compareTo(chkNick)!=0){
-			mNicknameView.setError("Please check duplication");
+			mNicknameView.setError("중복 확인 체크를 해 주세요.");
 			nickChk = false;
 			focusView = mNicknameView;
 			cancel = true;
 		}
+		
+		
 
 		if (TextUtils.isEmpty(mRepeat)) {
 			mRepeatView.setError(getString(R.string.error_field_required));
 			focusView = mRepeatView;
 			cancel = true;
 		} else if(mRepeat.compareTo(mPassword)!=0){
-			mRepeatView.setError("passwords are incorrect");
+			mRepeatView.setError("비밀번호가 일치하지 않습니다.");
 			focusView = mRepeatView;
 			cancel = true;
 		}
@@ -292,7 +364,7 @@ public class RegisterActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
-			mRegisterStatusMessageView.setText("Register now");
+			mRegisterStatusMessageView.setText("회원가입 중");
 			showProgress(true);
 			mAuthTask = new UserRegisterTask();
 			mAuthTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -356,17 +428,17 @@ public class RegisterActivity extends Activity {
 			errorTitle = "";
 			errorMessage = "";
 			mKey = keygen();
-			Gmail m = new Gmail(mId+"@snu.ac.kr",mKey);
+			Gmail m = new Gmail(mEmail+"@snu.ac.kr",mKey);
 			// TODO: register the new account here.
 			if(!m.send()){
-				errorTitle = "Fail to send e-mail";
-				errorMessage = "Please check your internet connection or e-mail address";
+				errorTitle = "인증 이메일 전송 실패";
+				errorMessage = "인터넷 연결이나 이메일 주소를 다시 한번 확인해 주세요.";
 				return false;
 			}
 			else
 			{
 				String url = "http://laputan32.cafe24.com/User";
-				UserInfo a = new UserInfo(mId,mNickname,mPassword,mKey);
+				UserInfo a = new UserInfo(mId,mNickname,mPassword,mEmail,mKey);
 				SendServer send = new SendServer(a,url,"4");
 				String sendresult = send.send();
 				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
@@ -377,8 +449,8 @@ public class RegisterActivity extends Activity {
 					return true;
 				}
 				else{
-					errorTitle = "Fail to connect server";
-					errorMessage = "Please check your internet connection";
+					errorTitle = "서버 연결 실패";
+					errorMessage = "인터넷 연결 상태나, 서버의 상태를 확인 해 주세요";
 					return false;
 				}
 			}
@@ -398,22 +470,23 @@ public class RegisterActivity extends Activity {
 				myApp.setNickName(mNickname);
 				myApp.setId(mId);
 				myApp.setUno(uno);
+				myApp.setEmail(mEmail);
 				new AlertDialog.Builder(RegisterActivity.this)
-				.setTitle("Success!")
-				.setMessage("Succeed to register. please authorize key in your e-mail to key tab")
-				.setPositiveButton("Finish", new DialogInterface.OnClickListener() {
+				.setTitle("완료!")
+				.setMessage("등록되었습니다. 이메일로 인증 번호가 전송되었으니 확인하고 인증해 주세요.")
+				.setPositiveButton("완료", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						finish();
 					}
 				})
-				.setNegativeButton("Authenticate", new DialogInterface.OnClickListener() {
+				.setNegativeButton("인증하러 가기", new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						Intent intent = new Intent(RegisterActivity.this,AuthkeyActivity.class);
+						Intent intent = new Intent(RegisterActivity.this,MyInfoActivity.class);
 						startActivity(intent);
 						finish();
 					}
@@ -423,7 +496,7 @@ public class RegisterActivity extends Activity {
 				new AlertDialog.Builder(RegisterActivity.this)
 				.setTitle(errorTitle)
 				.setMessage(errorMessage)
-				.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+				.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub

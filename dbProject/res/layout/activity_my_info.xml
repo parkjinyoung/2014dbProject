@@ -1,26 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-     <TextView
-        android:text="Your Id"
-        android:textSize="16dp"
-        android:singleLine="true"
-    	android:layout_height="wrap_content"
-    	android:layout_width="wrap_content"
-        />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:alignmentMode="alignBounds"
+    android:background="#EEEEEE"
+    android:columnCount="4"
     android:orientation="horizontal" >
-   
 
-    <ListView
-        android:id="@+id/infolist"
+    <TextView
+        android:layout_height="20dp"
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill"
+        android:layout_margin="10dip"
+        android:text="계정 정보"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/infoId"
+        android:layout_height="25dp"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill"
+        android:layout_marginBottom="3dip"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:text="계정 kangdongh"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/infoNick"
+        android:layout_height="25dp"
+        android:layout_columnSpan="1"
+        android:layout_gravity="fill"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:text="닉네임 깡통"
+        android:textSize="12dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="fill"
+            android:background="@drawable/button_border"
+            android:text="비밀번호 변경하기"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/changeNick"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="3dip"
+            android:background="@drawable/button_border"
+            android:text="닉네임 변경하기"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill"
+        android:layout_marginTop="10dip"
+        android:text="인증 정보"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/emailinfo"
+        android:layout_gravity="fill"
+        android:layout_height="25dp"
+        android:layout_columnSpan="4"
+        android:layout_margin="10dip"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:text="이메일 kangdongh@snu.ac.kr / 인증 되지 않음"
+        android:textSize="12dp" />
+
+    <Button
+        android:id="@+id/changeEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill"
+        android:layout_marginBottom="3dip"
+        android:background="@drawable/button_border"
+        android:text="이메일 변경 및 인증번호 재전송"
+        android:textSize="13dp" />
+
+    <Button
+        android:id="@+id/newauth_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/button_border"
+        android:text="인증번호 재전송"
+        android:textSize="13dp" />
+
+    <Button
+        android:id="@+id/auth"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="3dip"
+        android:background="@drawable/button_border"
+        android:text="인증하기"
+        android:textColor="#FF0000"
+        android:textSize="13dp" />
+
+    <TextView
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill"
+        android:layout_margin="10dip"
+        android:text="회원 탈퇴"
+        android:textSize="15dp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ListView>
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
-</LinearLayout>
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dip"
+            android:gravity="left|center"
+            android:text="-계정 삭제 후에는, 데이터 복구가 불가능 합니다."
+            android:textSize="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="10dip"
+            android:gravity="left|center"
+            android:text="-계정삭제 시 발생하는 모든 불이익에 대한 책임은 사용자에게 있습니다."
+            android:textSize="5dp" />
+
+        <Button
+            android:id="@+id/deleteId"
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:layout_marginBottom="10dip"
+            android:background="@drawable/button_border"
+            android:text="회원 탈퇴"
+            android:textSize="13dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill" >
+    </LinearLayout>
+
+</GridLayout>
