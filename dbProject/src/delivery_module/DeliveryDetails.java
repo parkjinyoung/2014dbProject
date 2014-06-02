@@ -146,7 +146,6 @@ public class DeliveryDetails extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// 메뉴 버튼 클릭했을때 메뉴 보여주기
 				Bitmap bitmap = null;
 				if (menubtn.isChecked()) {
 					// imgView.setImageBitmap(getImageFromURL(delres.getMenu_url()));
