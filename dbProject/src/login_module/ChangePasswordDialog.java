@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.sax.StartElementListener;
 import android.support.v4.app.NavUtils;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -54,6 +55,9 @@ public class ChangePasswordDialog extends Dialog implements OnClickListener {
 		sendbtn = (Button)findViewById(R.id.change_button);
 		mPasswordView = (EditText)findViewById(R.id.value);
 		mPasswordView.setHint("변경할 비밀번호");
+		InputFilter[] filterArray = new InputFilter[1];
+		filterArray[0] = new InputFilter.LengthFilter(12);
+		mPasswordView.setFilters(filterArray);
 		sendbtn.setOnClickListener(this);
 	}
 	public void onClick(View view)
@@ -61,41 +65,48 @@ public class ChangePasswordDialog extends Dialog implements OnClickListener {
 		if(view == sendbtn)
 		{
 			mPassword = mPasswordView.getText().toString();
-			String url = "http://laputan32.cafe24.com/User";
-			UserInfo a = new UserInfo();
-			MyApplication myApp = (MyApplication)context.getApplicationContext();
-			a.setUno(myApp.getUno());
-			a.setPassword(mPassword);
-			SendServer send = new SendServer(a, url, "6");
-			String sendresult = send.send();
-			JSONObject job = (JSONObject) JSONValue.parse(sendresult);
-			String result = (String) job.get("message");
-			if(result.equals("success")){
-				new AlertDialog.Builder(context)
-				.setTitle("완료!")
-				.setMessage("비밀번호가 변경되었습니다.")
-				.setNeutralButton("완료", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						Intent intent = new Intent(context,MyInfoActivity.class);
-						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						context.startActivity(intent);
-					}
-				}).show();
+			if(mPassword.length()<3){
+				mPasswordView.setError("비밀번호가 너무 짧습니다");
+				mPasswordView.requestFocus();
 			}
-			else{
-				new AlertDialog.Builder(context)
-				.setTitle("실패")
-				.setMessage("서버 상태나 인터넷 연결 상태가 좋지 않습니다.")
-				.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-					}
-				}).show();
+			else
+			{
+				String url = "http://laputan32.cafe24.com/User";
+				UserInfo a = new UserInfo();
+				MyApplication myApp = (MyApplication)context.getApplicationContext();
+				a.setUno(myApp.getUno());
+				a.setPassword(mPassword);
+				SendServer send = new SendServer(a, url, "6");
+				String sendresult = send.send();
+				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
+				String result = (String) job.get("message");
+				if(result.equals("success")){
+					new AlertDialog.Builder(context)
+					.setTitle("완료!")
+					.setMessage("비밀번호가 변경되었습니다.")
+					.setNeutralButton("완료", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							Intent intent = new Intent(context,MyInfoActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							context.startActivity(intent);
+						}
+					}).show();
+				}
+				else{
+					new AlertDialog.Builder(context)
+					.setTitle("실패")
+					.setMessage("서버 상태나 인터넷 연결 상태가 좋지 않습니다.")
+					.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+						}
+					}).show();
+				}
+				dismiss();
 			}
-			dismiss();
 		}
 	}
 

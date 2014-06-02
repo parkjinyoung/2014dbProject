@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.sax.StartElementListener;
 import android.support.v4.app.NavUtils;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -54,61 +55,73 @@ public class ChangeNickDialog extends Dialog implements OnClickListener {
 		mNickView = (EditText)findViewById(R.id.value);
 		mNickView.setHint("변경할 닉네임");
 		sendbtn.setOnClickListener(this);
+		InputFilter[] filterArray = new InputFilter[1];
+		filterArray[0] = new InputFilter.LengthFilter(12);
+		mNickView.setFilters(filterArray);
 	}
 	public void onClick(View view)
 	{
 		if(view == sendbtn)
 		{
 			mNick = mNickView.getText().toString();
-			String url = "http://laputan32.cafe24.com/User";
-			UserInfo a = new UserInfo();
-			MyApplication myApp = (MyApplication)context.getApplicationContext();
-			a.setUno(myApp.getUno());
-			a.setNickname(mNick);
-			SendServer sender = new SendServer(a,url, "3");
-			String sendresult = sender.send();
-			JSONObject job = (JSONObject) JSONValue.parse(sendresult);
-			String result = (String) job.get("message");
-			if(result.equals("success"))
+			if(TextUtils.isEmpty(mNick))
 			{
-				SendServer send = new SendServer(a, url, "8");
-				sendresult = send.send();
-				job = (JSONObject) JSONValue.parse(sendresult);
-				result = (String) job.get("message");
-				if(result.equals("success")){
-					myApp.setNickName(mNick);
-					new AlertDialog.Builder(context)
-					.setTitle("완료!")
-					.setMessage("닉네임이 변경되었습니다.")
-					.setNeutralButton("완료", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							Intent intent = new Intent(context,MyInfoActivity.class);
-							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							context.startActivity(intent);
-						}
-					}).show();
-				}
-				else{
-					new AlertDialog.Builder(context)
-					.setTitle("실패")
-					.setMessage("서버 상태나 인터넷 연결 상태가 좋지 않습니다.")
-					.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-						}
-					}).show();
-					dismiss();
-				}
-
-				dismiss();
+				mNickView.setError("변경 할 닉네임을 입력해 주세요");
+				mNickView.requestFocus();
 			}
 			else
 			{
-				mNickView.setError("중복된 닉네임입니다.");
-				mNickView.requestFocus();
+
+				String url = "http://laputan32.cafe24.com/User";
+				UserInfo a = new UserInfo();
+				MyApplication myApp = (MyApplication)context.getApplicationContext();
+				a.setUno(myApp.getUno());
+				a.setNickname(mNick);
+				SendServer sender = new SendServer(a,url, "3");
+				String sendresult = sender.send();
+				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
+				String result = (String) job.get("message");
+				if(result.equals("success"))
+				{
+					SendServer send = new SendServer(a, url, "8");
+					sendresult = send.send();
+					job = (JSONObject) JSONValue.parse(sendresult);
+					result = (String) job.get("message");
+					if(result.equals("success")){
+						myApp.setNickName(mNick);
+						new AlertDialog.Builder(context)
+						.setTitle("완료!")
+						.setMessage("닉네임이 변경되었습니다.")
+						.setNeutralButton("완료", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								Intent intent = new Intent(context,MyInfoActivity.class);
+								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+								context.startActivity(intent);
+							}
+						}).show();
+					}
+					else{
+						new AlertDialog.Builder(context)
+						.setTitle("실패")
+						.setMessage("서버 상태나 인터넷 연결 상태가 좋지 않습니다.")
+						.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+							}
+						}).show();
+						dismiss();
+					}
+
+					dismiss();
+				}
+				else
+				{
+					mNickView.setError("중복된 닉네임입니다.");
+					mNickView.requestFocus();
+				}
 			}
 
 		}

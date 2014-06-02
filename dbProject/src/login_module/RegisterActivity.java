@@ -93,6 +93,7 @@ public class RegisterActivity extends Activity {
 		filterArray[0] = new InputFilter.LengthFilter(12);
 		mIdView.setFilters(filterArray);
 		mNicknameView.setFilters(filterArray);
+		mPasswordView.setFilters(filterArray);
 
 		mRegisterFormView = findViewById(R.id.register_form);
 		mRegisterStatusView = findViewById(R.id.register_status);
