@@ -45,6 +45,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 	EditText mEmailView;
 	String mEmail;
 	Context context;
+	MyApplication myApp;
 	public ChangeEmailDialog(Context context)
 	{
 		super(context);
@@ -55,6 +56,16 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 		mEmailView.setHint("변경할 이메일(mySnu id)");
 		sendbtn.setOnClickListener(this);
 	}
+	private String keygen()
+	{
+		Integer a1 = (int)(Math.random()*10);
+		Integer a2 = (int)(Math.random()*10);
+		Integer a3 = (int)(Math.random()*10);
+		Integer a4 = (int)(Math.random()*10);
+		Integer a5 = (int)(Math.random()*10);
+		Integer a6 = (int)(Math.random()*10);
+		return a1.toString()+a2.toString()+a3.toString()+a4.toString()+a5.toString()+a6.toString();
+	}
 	public void onClick(View view)
 	{
 		if(view == sendbtn)
@@ -62,7 +73,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 			mEmail = mEmailView.getText().toString();
 			String url = "http://laputan32.cafe24.com/User";
 			UserInfo a = new UserInfo();
-			MyApplication myApp = (MyApplication)context.getApplicationContext();
+			myApp = (MyApplication)context.getApplicationContext();
 			a.setUno(myApp.getUno());
 			a.setEmail(mEmail);
 			SendServer sender = new SendServer(a,url, "10");
@@ -77,17 +88,46 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 				result = (String) job.get("message");
 				if(result.equals("success")){
 					myApp.setEmail(mEmail);
-					new AlertDialog.Builder(getOwnerActivity())
-					.setTitle("완료!")
-					.setMessage("이메일이 변경되었습니다.")
-					.setNeutralButton("완료", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							Intent intent = new Intent(null,MyInfoActivity.class);
-							getOwnerActivity().startActivity(intent);
-						}
-					}).show();
+					String newKey = keygen();
+					String mEmail = myApp.getEmail();
+					Gmail m = new Gmail(mEmail+"@snu.ac.kr",newKey);
+					a = new UserInfo();
+					a.setUno(myApp.getUno());
+					a.setKey(newKey);
+					send = new SendServer(a,url,"7");
+					sendresult = send.send();
+					job = (JSONObject) JSONValue.parse(sendresult);
+					result = (String) job.get("message");
+					if(result.equals("success"))
+					{
+						new AlertDialog.Builder(getOwnerActivity())
+						.setTitle("완료!")
+						.setMessage("이메일이 변경되었습니다.")
+						.setNeutralButton("완료", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								Intent intent = new Intent(null,MyInfoActivity.class);
+								context.startActivity(intent);
+							}
+
+						}).show();
+					}
+					else
+					{
+						new AlertDialog.Builder(getOwnerActivity())
+						.setTitle("이메일 전송 실패!")
+						.setMessage("이메일은 변경되었으나 인증번호 전송에 실패했습니다. 인증번호 재전송이 필요합니다.")
+						.setNeutralButton("완료", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								Intent intent = new Intent(null,MyInfoActivity.class);
+								context.startActivity(intent);
+							}
+
+						}).show();
+					}
 				}
 				else{
 					new AlertDialog.Builder(getOwnerActivity())

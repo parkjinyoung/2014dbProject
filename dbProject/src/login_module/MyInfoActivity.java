@@ -93,37 +93,6 @@ public class MyInfoActivity extends Activity {
 					public void onClick(View view) {
 						ChangeEmailDialog dialog = new ChangeEmailDialog(context);
 						dialog.show();
-						MyApplication myApp = (MyApplication)getApplicationContext();
-						String newKey = keygen();
-						String mEmail = myApp.getEmail();
-						Gmail m = new Gmail(mEmail+"@snu.ac.kr",newKey);
-						if(!m.send()){
-							new AlertDialog.Builder(context)
-							.setTitle("이메일 전송 오류")
-							.setMessage("인터넷 연결 혹은 이메일 주소를 다시 학인해 주세요.")
-							.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int which) {
-								}
-							}).show();
-						}
-						String url = "http://laputan32.cafe24.com/User";
-						UserInfo a = new UserInfo();
-						a.setUno(myApp.getUno());
-						a.setKey(newKey);
-						SendServer send = new SendServer(a,url,"7");
-						String sendresult = send.send();
-						JSONObject job = (JSONObject) JSONValue.parse(sendresult);
-						String result = (String) job.get("message");
-						if(result.equals("success"))
-						{
-							new AlertDialog.Builder(context)
-							.setTitle("완료")
-							.setMessage("이메일을 확인해 주세요.")
-							.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int which) {
-								}
-							}).show();
-						}
 					}
 				});
 		newBtn.setOnClickListener(

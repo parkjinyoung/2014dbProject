@@ -85,7 +85,7 @@ public class ChangeNickDialog extends Dialog implements OnClickListener {
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
 							Intent intent = new Intent(null,MyInfoActivity.class);
-							getOwnerActivity().startActivity(intent);
+							context.startActivity(intent);
 						}
 					}).show();
 				}
