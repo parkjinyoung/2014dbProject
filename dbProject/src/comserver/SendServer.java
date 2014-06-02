@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 import object.Comment;
 import object.DeliveryRestaurant;
+import object.MenuRecommend;
 import object.RecComment;
 import object.Search;
 import object.SnuMenu;
@@ -31,6 +32,7 @@ public class SendServer {
 	private RecComment reccomment;
 	private Search keyword;
 	private DeliveryRestaurant del;
+	private MenuRecommend menurec;
 	
 	private final String SEND_ERROR = "0";
 
@@ -40,11 +42,14 @@ public class SendServer {
 	private final String INSERT_COMMENT_SEND_NAME = "insertcomment";
 	private final String RECOM_COMMENT_SEND_NAME = "recomcomment";
 	private final String TODAYMENU_REQUEST_NAME = "todaymenu";
+	private final String TODAYMENU_RECOMMEND = "todaymenurec";
 	private final String DELIVERY_ALL_REQUEST_NAME = "delivery_all_request";
 	private final String DELIVERY_REQUEST_NAME = "one_res_request";
 	private String DATA_NAME = null;
 	// 평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 / 배달음식 다받기 1 찾기 2 평가등록/수정 5 받아옴 6 삭제 7 
 	private String identifier = null;
+
+
 
 	//delivery
 	public SendServer(DeliveryRestaurant del, String url){
@@ -108,6 +113,14 @@ public class SendServer {
 
 		this.DATA_NAME = RECOM_COMMENT_SEND_NAME;
 	}
+	
+	public SendServer(MenuRecommend menurec, String url) {
+		this.SERVER_URL = url;
+		this.menurec = menurec;
+		this.identifier = "3";
+		
+		this.DATA_NAME = RECOM_COMMENT_SEND_NAME;
+	}
 
 	
 
@@ -149,8 +162,14 @@ public class SendServer {
 
 		else if (DATA_NAME.equals(TODAYMENU_REQUEST_NAME)) {
 			json = "get today menu";
-		} else if (DATA_NAME.equals(SEARCH_SEND_NAME)) {
+		}
+		else if (DATA_NAME.equals(SEARCH_SEND_NAME)) {
 			json = new Gson().toJson(keyword);
+
+		}
+		
+		else if (DATA_NAME.equals(TODAYMENU_RECOMMEND)) {
+			json = new Gson().toJson(menurec);
 
 		}
 		else if (DATA_NAME.equals(DELIVERY_ALL_REQUEST_NAME)) {
