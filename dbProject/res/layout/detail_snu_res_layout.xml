@@ -16,9 +16,10 @@
     
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginTop="5dp"
         android:id="@+id/detail_snu_res_loc"
+        android:background="@drawable/button_border"
         android:text="위치정보"
         />
     
