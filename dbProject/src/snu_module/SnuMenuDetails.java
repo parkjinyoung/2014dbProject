@@ -37,6 +37,7 @@ import comserver.SendServer;
 import comserver.SendServerURL;
 
 public class SnuMenuDetails extends Activity{
+	// 메뉴 자세히 보기 화면 ( 이 화면에 메뉴에 대한 정보와 그 메뉴에 대한 평가가 존재 )
 	DatabaseHelper db;
 	private AlertDialog mDialog = null;
 	String tmpeval = "";
@@ -126,6 +127,7 @@ public class SnuMenuDetails extends Activity{
 		SnuMenu a = new SnuMenu(menu, cafe, tmpeval, price, time);
 		a.setMno(mno);
 		
+		// 해당 메뉴를 서버로 보내고 그 메뉴에 대한 평가정보를 받아옴
 		SendServer send = new SendServer(a, SendServerURL.commentURL);
 		String sendresult = send.send();
 		System.out.println("snumenudetails sendserver return : " + sendresult);
@@ -137,7 +139,7 @@ public class SnuMenuDetails extends Activity{
 		ArrayList<Comment> comarrlist = null;
 
 		if (sendresult != null && !sendresult.equals("")) {
-			
+			// 받아온 결과를 파싱하는부분
 			//json array parsing
 			com_arr = new Gson().fromJson(sendresult, Comment[].class);
 			for(int ii=0; ii<com_arr.length; ii++){
@@ -145,6 +147,7 @@ public class SnuMenuDetails extends Activity{
 			}
 
 			if(com_arr.length!=0){
+				// 코멘트가 없을경우와 있을경우 다른 화면을 보여줌
 				emptytext.setVisibility(View.GONE);
 				listView1.setVisibility(View.VISIBLE);
 				comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
@@ -170,7 +173,7 @@ public class SnuMenuDetails extends Activity{
 		//		final ArrayList<Comment> comlist = comarrlist; // madapter2
 
 		sortdatebtn.setOnClickListener(new OnClickListener() {
-
+			// 코멘트를 정렬 아래서 sort함수를 이용
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -201,7 +204,10 @@ public class SnuMenuDetails extends Activity{
 						listView1.setVisibility(View.VISIBLE);
 						
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
+						
 						Collections.sort(comarrlist , dateComparator);
+						// dateComparator를 이용해 sort한후 보여줌
+						
 						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
 						System.out.println("comment sort by date");
 						listView1.setAdapter(madapter2);
@@ -218,7 +224,7 @@ public class SnuMenuDetails extends Activity{
 		});
 
 		sortrecbtn.setOnClickListener(new OnClickListener() {
-
+			// 추천순에 따른 정렬
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -249,6 +255,8 @@ public class SnuMenuDetails extends Activity{
 
 						comarrlist = new ArrayList<Comment>(Arrays.asList(com_arr));
 						Collections.sort(comarrlist , recComparator);
+						// recComparator를 이용해 sort한후 보여줌
+						
 						ArrayAdapter<Comment> madapter2 = new MyListAdapter(v.getContext(), R.layout.comment_list_item, R.id.detail_comment_text, comarrlist, search);
 						System.out.println("comment sort by rec");
 						listView1.setAdapter(madapter2);
@@ -283,7 +291,7 @@ public class SnuMenuDetails extends Activity{
 				System.out.println(myApp.authenticated);
 				System.out.println(myApp.id);*/
 				if(myApp.getLoginStatus()){
-
+					// 로그인 되어있으면 평가 작성화면으로 intent
 					Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
 
 					i.putExtra("mno", mno);
@@ -297,6 +305,8 @@ public class SnuMenuDetails extends Activity{
 					startActivity(i);
 				}
 				else{
+					// 로그인 되어있지 않으면 평가를 작성할 수 없다는 dialog 띄워줌
+					// 로그인 화면으로 intent 가능
 					mDialog = createDialog();
 					mDialog.show();
 				}
@@ -315,7 +325,7 @@ public class SnuMenuDetails extends Activity{
 	private final static Comparator<Comment> recComparator= new Comparator<Comment>() {
 		@Override
 		public int compare(Comment object1,Comment object2) {
-
+			// 추천순으로 정렬하는데 사용한 Comparator
 			int result = 0;
 			int i1 = object1.getRecommend() - object1.getUnrecommend();
 			int i2 = object2.getRecommend() - object2.getUnrecommend();
@@ -336,6 +346,7 @@ public class SnuMenuDetails extends Activity{
 	};
 
 	private final static Comparator<Comment> dateComparator= new Comparator<Comment>() {
+		// 날짜순으로 정렬하는데 사용한 Comparator
 		private final Collator collator = Collator.getInstance();
 		@Override
 		public int compare(Comment object1,Comment object2) {
@@ -346,6 +357,8 @@ public class SnuMenuDetails extends Activity{
 	};
 
 	private AlertDialog createDialog() {
+		// 로그인 안되있을때 comment를 작성하는것을 막기위해 dialog 띄워줌
+		// 로그인 화면으로 intent 가능
 		AlertDialog.Builder ab = new AlertDialog.Builder(this);
 		ab.setTitle("알림");
 		ab.setMessage("로그인하신 후 코멘트를 작성하실 수 있습니다.");

@@ -90,18 +90,20 @@ public class RecommandMenuFragment extends Fragment implements
 
 		RadioGroup rdg = (RadioGroup) view.findViewById(R.id.search_choose);
 		rdg.setOnCheckedChangeListener(this); // 라디오버튼을 눌렸을때의 반응
-
+		// 스누메뉴에서 검색할지 / 배달음식에서 검색할지 선택
 		recommbtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				flag = 0;
-				// TODO Auto-generated method stub
+				// flag=0 은 추천 / flag=1 은 검색
+				// 지금은 추천 
 				db = new DatabaseHelper(mContext);
 				MenuRecommend menurec= new MenuRecommend();
 				MyApplication myApp = (MyApplication) mContext;
 				String uno = myApp.getUno(); // get from db
 				
+				// 로그인 되어있을 때에만 기능 사용 가능
 				if(uno.equals("")){
 					Toast.makeText(mContext, "로그인해주세요", Toast.LENGTH_SHORT).show();
 				}
@@ -117,6 +119,7 @@ public class RecommandMenuFragment extends Fragment implements
 					JSONObject job = (JSONObject) JSONValue.parse(sendresult);
 					String mno = (String) job.get("mno");
 					
+					// 추천받은 Menu 파싱하는 부분
 					SnuMenu sm = db.getSnuMenu(mno);
 					
 					SnuResList = new ArrayList<SnuRestaurant>();
@@ -157,6 +160,7 @@ public class RecommandMenuFragment extends Fragment implements
 			@Override
 			public void onClick(View v) {
 				flag = 1;
+				// 검색
 				// TODO Auto-generated method stub
 				String keyword = searchtext.getText().toString();
 				if (keyword.equals("")) {
@@ -175,6 +179,7 @@ public class RecommandMenuFragment extends Fragment implements
 
 					if (sendresult != null && !sendresult.equals("")) {
 						// json array parsing
+						// 검색한 data 파싱
 						snumenu_arr = new Gson().fromJson(sendresult,
 								SnuMenu[].class);
 						db.deleteSearchSnuMenuAll();
@@ -273,7 +278,9 @@ public class RecommandMenuFragment extends Fragment implements
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
-
+				// 각 List의 item을 선택했을때 처리
+				// 추천과 검색의 경우 서로 다른 adapter를 사용하기 때문에 flag로 구분
+				// 검색은 ExpandableAdapterforSearch 를 이용하고 / todaymenu에 대해선 ExpandableAdapter 이용
 				if (search_identifier == 1 && flag==1) {
 					Intent i = new Intent(v.getContext(), SnuMenuDetails.class);
 

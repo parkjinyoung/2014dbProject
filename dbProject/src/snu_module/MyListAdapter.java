@@ -35,6 +35,7 @@ import comserver.SendServer;
 import comserver.SendServerURL;
 
 public class MyListAdapter extends ArrayAdapter<Comment> {
+	// 각각의 Comment를 보여주는 adapter
 	private ArrayList<Comment> items;
 	private int rsrc;
 	DatabaseHelper db;
@@ -51,6 +52,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		// 코멘트 하나에 대한 정보를 보여줌
 		db = new DatabaseHelper(getContext());
 		View v = convertView;
 		if (v == null) {
@@ -116,6 +118,9 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 			final String uno = myApp.getUno();
 
+			// 내가 쓴 코멘트와 그렇지 않은 코멘트에 대해 layout을 다르게 함
+			// 내가 쓴 코멘트는 수정 삭제 가능 / 남이 쓴것은 불가능
+			
 			mycommentlayout.setVisibility(View.GONE);
 			modifybtn.setVisibility(View.GONE);
 			deletebtn.setVisibility(View.GONE);
@@ -136,15 +141,15 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			recommendbtn.setClickable(true);
 
 			recommendbtn.setOnClickListener(new OnClickListener() {
-
+				// 코멘트 추천 버튼
 				@Override
 				public void onClick(View v) {
 					MyApplication myApp = (MyApplication) v.getContext()
 							.getApplicationContext();
 
 					final String uno = myApp.getUno();
+					// 로그인 되어 있을때만 추천 가능 ( uno!=null )
 					if(!uno.equals("")){
-
 						RecComment reccom = new RecComment(uno,
 								e.getEno(), "true", e.getMenu(), e.getCafe());
 						// String url = "http://laputan32.cafe24.com/Eval";
@@ -162,6 +167,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 
 						System.out.println("recommend true : " + sendresult);
 						if(uno.equals(e.getUno())){
+							// 내가쓴 코멘트를 내가 추천하는것 방지
 							Toast.makeText(getContext(), "자신의 댓글은 추천할 수 없습니다." ,
 									Toast.LENGTH_SHORT).show();
 						}
@@ -175,6 +181,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 						}
 					}
 					else{
+						// 로그인 안되어 있을경우 추천 불가능
 						Toast.makeText(getContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
 					}
 				}
@@ -185,7 +192,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			unrecommendbtn.setFocusable(true);
 			unrecommendbtn.setClickable(true);
 			unrecommendbtn.setOnClickListener(new OnClickListener() {
-
+				// 비추천버튼 구현은 위와 같음
 				@Override
 				public void onClick(View v) {
 					MyApplication myApp = (MyApplication) v.getContext()
@@ -231,7 +238,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			});
 
 			modifybtn.setOnClickListener(new OnClickListener() {
-
+				// 내가 쓴 코멘트 수정버튼
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
@@ -239,6 +246,9 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 					Intent i = new Intent(v.getContext(), EvalSnuMenu.class);
 
 					i.putExtra("mno", e.getMno());
+					// 메뉴의 고유번호(Mno) 로 해당 메뉴에 대한 정보를 받아온후
+					// 내가 적은 코멘트의 정보와 함께 평가 화면으로 intent
+					
 					if(search != null && search.equals("true")){
 						System.out.println("mno : " + e.getMno());
 						SnuMenu a = db.getSearchSnuMenu(e.getMno());
@@ -265,7 +275,7 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 			});
 
 			deletebtn.setOnClickListener(new OnClickListener() {
-
+				// 내가 쓴 코멘트 삭제
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
@@ -273,6 +283,9 @@ public class MyListAdapter extends ArrayAdapter<Comment> {
 					.show();
 
 					// String url = "http://laputan32.cafe24.com/Eval";
+					// 코멘트를 삭제하고 이를 서버로 전송해 해당 메뉴에 대한 수정된 정보를 받아옴 
+					// 내가 코멘트를 삭제함으로써 별점이 변할것이므로 이 정보가 필요함
+					
 					SendServer send = new SendServer(e,
 							SendServerURL.commentURL, "3");
 					String sendresult = send.send();

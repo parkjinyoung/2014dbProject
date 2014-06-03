@@ -66,7 +66,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String RES_NAME = "resname";
 
 	// Table Create Statements
-	// Todo table create statement
+
+	
 	private static final String CREATE_TABLE_DELIVERY_GROUP = "CREATE TABLE "
 			+ TABLE_DELIVERY_GROUP + "(" + DEL_GROUP_NAME + " TEXT" + ")";
 	private static final String CREATE_TABLE_DELIVERY = "CREATE TABLE "
@@ -95,6 +96,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// creating required tables
+		// 여러개의 table을 생성
+		// 오늘의 메뉴 / 검색한 메뉴 / 유저정보 / 즐겨찾기한 식당
+		// 배달음식점 / 배달음식점그룹 ( 피자, 치킨, ...)
 		db.execSQL(CREATE_TABLE_TODAYMENU);
 		db.execSQL(CREATE_TABLE_SEARCHMENU);
 		db.execSQL(CREATE_TABLE_USERINFO);
@@ -144,6 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	// /////////////////////////////////////////////////////////////////////////
 	private void initable_VisibleRes(SQLiteDatabase db) {
+		// 식당을 초기화 ( 모든 식당을 다 즐겨찾기로 선택 )
 		ContentValues values = new ContentValues();
 		values.put(RES_NAME, "220동");
 		db.insert(TABLE_VISIBLE_RES, null, values);
@@ -184,6 +189,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public boolean isVisibleRes(String res_name) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
+		// 직접비교하지않고 preparedstatement를 이용하여 처리 (내부의 모든 db에서 이를 이용)
+		// 즐겨찾기된 식당만 보이게 함
 		Cursor c = db.query(TABLE_VISIBLE_RES, null, RES_NAME + "=?",
 				new String[] { res_name }, null, null, null, null);
 		/*
@@ -239,6 +246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// /////////////////////////////////////////////////////////////////////////
 	// search
 	public long createSearchMenu(SnuMenu snumenu) {
+		// 검색한 Menu를 table에 저장
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(CAFE, snumenu.getCafe());
@@ -254,6 +262,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public SnuMenu getSearchSnuMenu(String Mno) {
+		// Mno (메뉴의 고유값)으로 메뉴를 검색함
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor c = db.query(TABLE_SEARCH_MENU, null, MNO + "= ?",
@@ -280,6 +289,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public SnuMenu getSearchSnuMenu(String cafe, String menu) {
+		// 고유값을 지정하기 전 primary key로 사용하였던 (menu,cafe) pair로 검색하는 것
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor c = db.query(TABLE_SEARCH_MENU, null, CAFE + "= ? AND " + MENU
@@ -323,6 +333,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public ArrayList<SnuMenu> getSearchCafeMenus(String cafe) {
+		// 하나의 음식점이 가지고 있는 모든 메뉴를 arraylist로 돌려줌
 		ArrayList<SnuMenu> snumenus = new ArrayList<SnuMenu>();
 		/*
 		 * String selectQuery = "SELECT  * FROM " + TABLE_SEARCH_MENU +
@@ -382,6 +393,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public int updateSearchSnuMenu(String cafe, String menu, String eval) {
+		// 메뉴의 평점이 바뀌었을때 ( 평가정보가 바뀌었을때) update
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		String[] params = new String[] { cafe, menu };
@@ -391,17 +403,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public void deleteSearchSnuMenuAll() {
+		// 모든 메뉴 삭제
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_SEARCH_MENU, "", null);
 	}
 
 	public void deleteSearchSnuMenu(String cafe, String menu) {
+		// 해당 메뉴 삭제 ( 내부에서 사용되고 있지는 않음 )
 		SQLiteDatabase db = this.getWritableDatabase();
 		String[] params = new String[] { cafe, menu };
 		db.delete(TABLE_SEARCH_MENU, CAFE + " = ? AND " + MENU + " = ?", params);
 	}
 
 	// /////////////////////////////////////////////////////////////////////////
+	// 오늘의 메뉴 Table / 모든 기능이 위의 SearchTable과 동일
 	public long createTodayMenu(SnuMenu snumenu) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -571,6 +586,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	// //////////////////////////////////////////////////
 	// delivery
+	// 배달음식점 그룹
 	private void initable_delGroup(SQLiteDatabase db) {
 		ContentValues values = new ContentValues();
 		values.put(DEL_GROUP_NAME, "피자");
@@ -694,6 +710,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return count;
 	}
 
+	// 배달 음식점 각각의 정보를 받아옴
 	public ArrayList<DeliveryRestaurant> getAllDelivery() {
 		ArrayList<DeliveryRestaurant> delarr = new ArrayList<DeliveryRestaurant>();
 		/* String selectQuery = "SELECT  * FROM " + TABLE_DELIVERY; */

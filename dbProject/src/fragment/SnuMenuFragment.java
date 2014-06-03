@@ -71,7 +71,7 @@ public class SnuMenuFragment extends Fragment {
 		});
 
 		exList.setOnChildClickListener(new OnChildClickListener() {
-
+			// 각 List의 item들을 눌렀을때 처리 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
@@ -99,6 +99,8 @@ public class SnuMenuFragment extends Fragment {
 
 	protected void onCreateData() {
 
+		// 미리 받아온 data를(MainActivity에서 받음) 
+		// 조건에 맞게 list에 추가해줌(즐겨찾기한 식당만)
 		db = new DatabaseHelper(getActivity());
 		RES = db.getVisibleResAll();
 		
@@ -124,6 +126,8 @@ public class SnuMenuFragment extends Fragment {
 
 	@Override
 	public void onResume() {
+		// 화면이 보일때 마다 List의 바뀐 값이 있으면 update해서 보여줌
+		// 코멘트를 삭제하고 뒤로가기 버튼을 눌렀을때 바뀐 별점이 즉시 반영됨
 		super.onResume();
 		adapter.notifyDataSetChanged();
 	}

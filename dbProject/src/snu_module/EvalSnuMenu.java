@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EvalSnuMenu extends Activity{
+	// 스누메뉴(교내)를 평가하는데 사용됨 
 	DatabaseHelper db;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class EvalSnuMenu extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				// 평가버튼을 눌렀을때 
 				String comment = commenttext.getText().toString();
 				String eval = String.valueOf(ratingbar.getRating());
 				float rating = ratingbar.getRating();
@@ -94,6 +95,7 @@ public class EvalSnuMenu extends Activity{
 				//평가등록 1, 평가받아옴 2, 평가삭제 3, 추천 4 
 				//String url = "http://laputan32.cafe24.com/Eval";
 				SendServer send = new SendServer(com, SendServerURL.commentURL, "1");
+				// 해당 url로 전송하는 부분 자세한 것은 Sendserver.class에서
 				String sendresult = send.send();
 				System.out.println("comment insert = " + sendresult);
 				
@@ -111,8 +113,12 @@ public class EvalSnuMenu extends Activity{
 				Toast.makeText(EvalSnuMenu.this, comment + " " + eval, Toast.LENGTH_SHORT).show();
 				
 				Intent i = new Intent(getApplicationContext(), SnuMenuDetails.class);
+				// FLAG_ACTIVITY_CLEAR_TOP을 설정해 뒤로가기를 누르거나 다른 작업을 수행했을때
+				// 같은 화면이 중복되어 여러번 실행되지 않도록 방지
+				// 모든 화면사이의 관계를 따져 적당한 Flag를 설정하였음
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				
+				// 내가 평가함으로써 메뉴의 평점이 업데이트 된 것을 저장하고
+				// 메뉴 상세보기 화면으로 넘어감
 				i.putExtra("mno", mno);
 				i.putExtra("cafe", cafe);
 				i.putExtra("menu", menu);

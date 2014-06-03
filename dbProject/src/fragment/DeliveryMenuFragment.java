@@ -28,7 +28,7 @@ import delivery_module.ExpandableAdapter_delivery;
 
 @SuppressLint("ValidFragment")
 public class DeliveryMenuFragment extends Fragment {
-
+	// 배달 음식점을 보여주는 화면 SnuMenuFragment와 비슷함
 	Context mContext;
 	ArrayList<String> groupArr = new ArrayList<String>();
 	ArrayList<ArrayList<DeliveryRestaurant>> resArr = new ArrayList<ArrayList<DeliveryRestaurant>>();

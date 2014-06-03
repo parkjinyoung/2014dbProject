@@ -24,7 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ExpandableAdapter extends BaseExpandableListAdapter{
-
+	// TODAY MENU LIST를 표현하기 위해 사용된 CustomAdapter
+	// ExpandableAdapterForSearch와 비슷하지만 여기서는 TODAY MENU TABLE에만 접근함
 	Context mContext;
 	DatabaseHelper db;
 	ArrayList<SnuRestaurant> mSnuResList;
@@ -41,6 +42,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 
 	@Override
 	public SnuMenu getChild(int groupPosition, int childPosition) {
+		// 각 Child에 대해 SnuMenu 정보를 받아옴(해당 위치에 대해)
 		// TODO Auto-generated method stub
 		return mSnuResList.get(groupPosition).getMymenu().get(childPosition);
 	}
@@ -53,6 +55,8 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
+		// 각 Child를 어떻게 보여줄지 설정(각각의 메뉴)
+		// viewHolder를 매달아줌
 		View v = convertView;
 
 		if(v == null){
@@ -134,6 +138,9 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
+		// 식당이 어떻게 보일지 설정
+		// 식당의 이름과 식당 상세보기 버튼을 선택
+		// 리스트 속에 버튼이 있을시 리스트 클릭과 버튼 클릭이 동시에 안되는 문제를 전부다 해결
 
 		View v = convertView;
 		final int grppos = groupPosition;

@@ -31,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SnuRestaurantDetails extends Activity{
+	// 식당 상세정보 화면
+	// 식당의 이름과 아침,점심,저녁의 메뉴를 나누어 보여줌 
 	DatabaseHelper db;
 	ArrayList<SnuMenu> allcafemenu;
     ArrayList<SnuMenu> list1 = new ArrayList<SnuMenu>();
@@ -83,15 +85,6 @@ public class SnuRestaurantDetails extends Activity{
         madapter2 = new CafeListAdapter(this, R.layout.snu_menu_list_row, R.id.row_title, list2);
         madapter3 = new CafeListAdapter(this, R.layout.snu_menu_list_row, R.id.row_title, list3);
         
-        Button locbtn = (Button) findViewById(R.id.detail_snu_res_loc);
-        locbtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onCreateDialog(0);
-				// TODO Auto-generated method stub
-				
-			}
-		});
         
         // 由ъ뒪�몃럭���대뙌���곌껐
         ListView listView1 = (ListView)findViewById(R.id.detail_snu_res_morningmenu);
@@ -105,7 +98,7 @@ public class SnuRestaurantDetails extends Activity{
 
         
         listView1.setOnItemClickListener(new OnItemClickListener() {
-
+        	// 각각의 list의 item들(SnuMenu)을 눌렀을때 메뉴 상세보기 화면으로 intent
 			@Override
 			public void onItemClick(AdapterView<?> list, View view, int position,
 					long id) {
@@ -168,45 +161,5 @@ public class SnuRestaurantDetails extends Activity{
         	
 		});
         
-	}
-	protected Dialog onCreateDialog(int id) {
-	    Dialog dialog = null;
-	    switch(id) {
-	    case 0:
-	        // do the work to define the pause Dialog
-//	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//	    	builder.setMessage("Are you sure you want to exit?")
-//	    	        .setCancelable(false)
-//	    	        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//	    	           public void onClick(DialogInterface dialog, int id) {
-//	    	           }
-//	    	       })
-//	    	       .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//	    	           public void onClick(DialogInterface dialog, int id) {
-//	    	                dialog.cancel();
-//	    	           }
-//	    	       });
-	    	
-//	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//	    	AlertDialog alertDialog;
-//	    	Context mContext = getApplicationContext();
-//	    	LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-//	    	View layout = inflater.inflate(R.layout.snuresloc_dialog, (ViewGroup) findViewById(R.layout.detail_snu_res_layout));
-//	    	Button dismissbtn = (Button) layout.findViewById(R.id.snuresloc_dismissbtn);
-//	    	ImageView image = (ImageView) layout.findViewById(R.id.snuresloc_image);
-//	    	image.setImageResource(R.drawable.campusmap_resize);
-//	    	builder = new AlertDialog.Builder(mContext);
-//	    	builder.setView(layout);
-//	    	alertDialog = builder.create();
-//	    	alertDialog.show();
-	    	
-	        break;
-	    case 1:
-	        // do the work to define the game over Dialog
-	        break;
-	    default:
-	        dialog = null;
-	    }
-	    return dialog;
 	}
 }

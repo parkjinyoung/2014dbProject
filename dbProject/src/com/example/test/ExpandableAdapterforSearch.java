@@ -18,7 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ExpandableAdapterforSearch extends BaseExpandableListAdapter{
-
+	// ExpandableAdapter와 거의 유사함. 검색한 메뉴를 이용할수 있도록 바꿈
+	// 서로 다른 db에 접근함 여기서는 SEARCH MENU TABLE에 접근
 	Context mContext;
 	DatabaseHelper db;
 	ArrayList<SnuRestaurant> mSnuResList;

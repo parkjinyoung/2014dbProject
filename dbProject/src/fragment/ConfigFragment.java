@@ -38,7 +38,8 @@ import com.example.test.R;
 
 @SuppressLint("ValidFragment")
 public class ConfigFragment extends Fragment {
-
+	// 로그인 로그아웃 식당즐겨찾기등을 할수 있는 화면
+	// 간단한 List로 구성되어 있음 
 	Context mContext;
 	MyApplication myApp;
 	ArrayList<String> configarr;

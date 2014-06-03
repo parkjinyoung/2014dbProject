@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CafeListAdapter extends ArrayAdapter<SnuMenu>{
+	// 식당 상세보기 화면의 list를 표시하는데 사용
+	// 각각의 메뉴를 담고있는 list
     private ArrayList<SnuMenu> items;
     private int rsrc;
     
@@ -58,6 +60,7 @@ public class CafeListAdapter extends ArrayAdapter<SnuMenu>{
     		if(tmpeval!=null){
     			float eval = Float.parseFloat(tmpeval);
     			for(int j=0; j<5; j++){
+    				// 별점계산해서 화면에 그려주는부분
     				if(eval >= 1) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.star25));
     				else if (eval >= 0.5) image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.halfstar25));
     				else image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.emptystar25));
