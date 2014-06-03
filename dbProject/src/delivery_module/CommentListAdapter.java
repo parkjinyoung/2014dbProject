@@ -75,10 +75,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 		final Comment e = items.get(position);
 		if (e != null) {
 			((TextView) v.findViewById(R.id.detail_comment_text))
-					.setText(e.getComment());
+			.setText(e.getComment());
 			((TextView) v.findViewById(R.id.detail_comment_nickname))
-					.setText(e.getNickname());
-			
+			.setText(e.getNickname());
+
 			db = new DatabaseHelper(v.getContext());
 			String cafe = db.getDeliveryRes(e.getDno());
 			e.setCafe(cafe);
@@ -136,32 +136,43 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
 				@Override
 				public void onClick(View v) {
-					RecComment reccom = new RecComment(uno,
-							e.getEno(), "true");
-					SendServer send = new SendServer(reccom,
-							SendServerURL.commentURL);
-					String sendresult = send.send();
-					String isValid = "";
-					if (sendresult != null && !sendresult.equals("")) {
-						JSONObject jo = (JSONObject) JSONValue
-								.parse(sendresult);
-						isValid = (String) jo.get("message");
-						if (isValid.equals("success"))
-							rectext.setText(Integer.toString(e.getRecommend() + 1));
-					}
 
-					System.out.println("recommend true : " + sendresult);
-					if(uno == e.getUno()){
-						Toast.makeText(getContext(), "자신의 댓글은 추천할 수 없습니다." ,
-								Toast.LENGTH_SHORT).show();
+					MyApplication myApp = (MyApplication) v.getContext()
+							.getApplicationContext();
+
+					final String uno = myApp.getUno();
+
+					if(!uno.equals("")){
+						RecComment reccom = new RecComment(uno,
+								e.getEno(), "true");
+						SendServer send = new SendServer(reccom,
+								SendServerURL.commentURL);
+						String sendresult = send.send();
+						String isValid = "";
+						if (sendresult != null && !sendresult.equals("")) {
+							JSONObject jo = (JSONObject) JSONValue
+									.parse(sendresult);
+							isValid = (String) jo.get("message");
+							if (isValid.equals("success"))
+								rectext.setText(Integer.toString(e.getRecommend() + 1));
+						}
+
+						System.out.println("recommend true : " + sendresult);
+						if(uno.equals(e.getUno())){
+							Toast.makeText(getContext(), "자신의 댓글은 추천할 수 없습니다." ,
+									Toast.LENGTH_SHORT).show();
+						}
+						else if(isValid.equals("success")){
+							Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 추천하였습니다." ,
+									Toast.LENGTH_SHORT).show();
+						}
+						else if(isValid.equals("fail")){
+							Toast.makeText(getContext(), "이미 평가한 댓글입니다." ,
+									Toast.LENGTH_SHORT).show();
+						}
 					}
-					else if(isValid.equals("success")){
-						Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 추천하였습니다." ,
-							Toast.LENGTH_SHORT).show();
-					}
-					else if(isValid.equals("fail")){
-						Toast.makeText(getContext(), "이미 평가한 댓글입니다." ,
-								Toast.LENGTH_SHORT).show();
+					else{
+						Toast.makeText(getContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
@@ -174,34 +185,46 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
 				@Override
 				public void onClick(View v) {
-					RecComment reccom = new RecComment(uno,
-							e.getEno(), "false");
-					// String url = "http://laputan32.cafe24.com/Eval";
-					SendServer send = new SendServer(reccom,
-							SendServerURL.commentURL);
-					String sendresult = send.send();
-					String isValid = "";
-					if (sendresult != null && !sendresult.equals("")) {
-						JSONObject jo = (JSONObject) JSONValue
-								.parse(sendresult);
-						isValid = (String) jo.get("message");
-						if (isValid.equals("success"))
-							unrectext.setText(Integer.toString(e
-									.getUnrecommend() + 1));
-					}
 
-					System.out.println("recommend false : " + sendresult);
-					if(uno == e.getUno()){
-						Toast.makeText(getContext(), "자신의 댓글은 비추천할 수 없습니다." ,
-								Toast.LENGTH_SHORT).show();
+					MyApplication myApp = (MyApplication) v.getContext()
+							.getApplicationContext();
+
+					final String uno = myApp.getUno();
+
+					if(!uno.equals("")){
+
+						RecComment reccom = new RecComment(uno,
+								e.getEno(), "false");
+						// String url = "http://laputan32.cafe24.com/Eval";
+						SendServer send = new SendServer(reccom,
+								SendServerURL.commentURL);
+						String sendresult = send.send();
+						String isValid = "";
+						if (sendresult != null && !sendresult.equals("")) {
+							JSONObject jo = (JSONObject) JSONValue
+									.parse(sendresult);
+							isValid = (String) jo.get("message");
+							if (isValid.equals("success"))
+								unrectext.setText(Integer.toString(e
+										.getUnrecommend() + 1));
+						}
+
+						System.out.println("recommend false : " + sendresult);
+						if(uno.equals(e.getUno())){
+							Toast.makeText(getContext(), "자신의 댓글은 비추천할 수 없습니다." ,
+									Toast.LENGTH_SHORT).show();
+						}
+						else if(isValid.equals("success")){
+							Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 비추천하였습니다." ,
+									Toast.LENGTH_SHORT).show();
+						}
+						else if(isValid.equals("fail")){
+							Toast.makeText(getContext(), "이미 평가한 댓글입니다." ,
+									Toast.LENGTH_SHORT).show();
+						}
 					}
-					else if(isValid.equals("success")){
-						Toast.makeText(getContext(), e.getNickname() + "님의 댓글을 비추천하였습니다." ,
-							Toast.LENGTH_SHORT).show();
-					}
-					else if(isValid.equals("fail")){
-						Toast.makeText(getContext(), "이미 평가한 댓글입니다." ,
-								Toast.LENGTH_SHORT).show();
+					else{
+						Toast.makeText(getContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
@@ -229,7 +252,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					Toast.makeText(getContext(), "삭제", Toast.LENGTH_SHORT)
-							.show();
+					.show();
 
 					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(e,
@@ -248,7 +271,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
 					db = new DatabaseHelper(v.getContext());
 
-				/*	if (search != null && search.equals("true")) {
+					/*	if (search != null && search.equals("true")) {
 						if (db.getSearchSnuMenu(e.getCafe(), e.getMenu()) != null) {
 							db.updateSearchSnuMenu(e.getCafe(), e.getMenu(),
 									tmpeval); // 수정된
@@ -268,18 +291,18 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 						}
 
 					} else {*/
-						if (db.getDelivery(e.getCafe()) != null) {
-							db.updateDeliveryEval(e.getCafe(), tmpeval);
-							i.putExtra("resname", e.getCafe());
-							i.putExtra("search", search);
+					if (db.getDelivery(e.getCafe()) != null) {
+						db.updateDeliveryEval(e.getCafe(), tmpeval);
+						i.putExtra("resname", e.getCafe());
+						i.putExtra("search", search);
 
-							i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							v.getContext().startActivity(i);
-						} else {
-							i.putExtra("resname", e.getCafe());
-							i.putExtra("search", search);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						v.getContext().startActivity(i);
+					} else {
+						i.putExtra("resname", e.getCafe());
+						i.putExtra("search", search);
 
-						}
+					}
 					/*}*/
 					db.closeDB();
 				}
