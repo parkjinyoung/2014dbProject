@@ -55,42 +55,66 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 		sendbtn.setOnClickListener(this);
 	}
 	// 내용 입력하고 버틀 클릭 시, 서버에 인증키와 유저번호를 보내고 성공 여부를 받아옴. 성공 시, 인증됨으로 유저의 정보가 바뀐다.
-	
+	// 이메일이 도중에 인증되었을 경우가 있으므로 인증 시 다시 한 번확인한다.
 	public void onClick(View view)
 	{
 		if(view == sendbtn)
 		{
-			mKey = mKeyView.getText().toString();
 			String url = "http://laputan32.cafe24.com/User";
 			UserInfo a = new UserInfo();
 			MyApplication myApp = (MyApplication)context.getApplicationContext();
-			a.setId(myApp.getId());
 			a.setUno(myApp.getUno());
-			a.setKey(mKey);
-			SendServer send = new SendServer(a, url, "5");
-			String sendresult = send.send();
+			a.setEmail(myApp.getEmail());
+			SendServer sender = new SendServer(a,url, "10");
+			String sendresult = sender.send();
 			JSONObject job = (JSONObject) JSONValue.parse(sendresult);
 			String result = (String) job.get("message");
 			if(result.equals("success")){
-				myApp.setAuth(true);
-				new AlertDialog.Builder(context)
-				.setTitle("완료!")
-				.setMessage("인증되었습니다.")
-				.setNeutralButton("완료", new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						Intent intent = new Intent(context,MyInfoActivity.class);
-						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						context.startActivity(intent);
-					}
-				}).show();
+				mKey = mKeyView.getText().toString();
+				a = new UserInfo();
+				myApp = (MyApplication)context.getApplicationContext();
+				a.setId(myApp.getId());
+				a.setUno(myApp.getUno());
+				a.setKey(mKey);
+				SendServer send = new SendServer(a, url, "5");
+				sendresult = send.send();
+				job = (JSONObject) JSONValue.parse(sendresult);
+				result = (String) job.get("message");
+				if(result.equals("success")){
+					myApp.setAuth(true);
+					new AlertDialog.Builder(context)
+					.setTitle("완료!")
+					.setMessage("인증되었습니다.")
+					.setNeutralButton("완료", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							Intent intent = new Intent(context,MyInfoActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							context.startActivity(intent);
+						}
+					}).show();
+				}
+				else{
+					new AlertDialog.Builder(context)
+					.setTitle("실패")
+					.setMessage("인증 키를 다시 한번 확인 해 주세요.")
+					.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+						}
+					}).show();
+				}
 			}
-			else{
+			else
+			{
 				new AlertDialog.Builder(context)
 				.setTitle("실패")
-				.setMessage("인증 키를 다시 한번 확인 해 주세요.")
+				.setMessage("이미 다른 누군가가 인증한 이메일입니다. 이메일 변경을 해 주세요")
 				.setNeutralButton("닫기", new DialogInterface.OnClickListener() {
 
 					@Override
@@ -100,6 +124,7 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 				}).show();
 			}
 			dismiss();
+
 		}
 	}
 
