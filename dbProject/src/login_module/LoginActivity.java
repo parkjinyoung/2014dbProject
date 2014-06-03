@@ -49,6 +49,7 @@ public class LoginActivity extends Activity {
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
 	private CheckBox mAutoLogin;
+	//로그인 모듈. id, password를 입력받고 서버에 넘겨서 로그인 여부 확인, 로그인 성공 시 인증여부/이메일 값 받아옴
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

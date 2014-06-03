@@ -90,6 +90,7 @@ public class MainActivity extends FragmentActivity implements
 	private void onCreateLogin() {
 		MyApplication myApp = (MyApplication) this.getApplicationContext();
 		myPreference m = new myPreference(getApplicationContext());
+		//preference에서 자동 로그인 여부를 가져옴, autologin 설정이 되어있을 시  login과 동일한 프로세스 진행.
 		if (m.getValue(myPreference.AUTO_LOGIN, false)) {
 			try {
 				String mId = m.getValue(myPreference.USER_ID, "");

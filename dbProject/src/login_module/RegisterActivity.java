@@ -67,6 +67,8 @@ public class RegisterActivity extends Activity {
 	private boolean nickChk;
 	private boolean idChk;
 	private boolean emailChk;
+	
+	// 이메일, 아이디, 비밀번호에 대해 각각 중복체크를 해야 회원가입 가능하도록 설정.
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class RegisterActivity extends Activity {
 
 		mRepeatView = (EditText) findViewById(R.id.rrepeat);
 		
+		// 아이디, 닉네임, 비밀번호는 12자 제한
 		InputFilter[] filterArray = new InputFilter[1];
 		filterArray[0] = new InputFilter.LengthFilter(12);
 		mIdView.setFilters(filterArray);
@@ -145,6 +148,7 @@ public class RegisterActivity extends Activity {
 		return true;
 	}
 
+	
 	/**duplicate check*/
 	public void idCheck(View view)
 	{
@@ -264,12 +268,13 @@ public class RegisterActivity extends Activity {
 			}).show();
 		}
 	}
-
+	/* check end*/
 	/**
 	 * Attempts to sign in or register the account specified by the register form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
 	 * errors are presented and no actual register attempt is made.
 	 */
+	// 등록하기 버튼을 눌렀을 때, 여러가지 조건을 모두 충족시켰는지 확인. 그 후 회원가입 진행
 	public void attemptRegister() {
 		if (mAuthTask != null) {
 			return;
@@ -418,6 +423,7 @@ public class RegisterActivity extends Activity {
 	 * Represents an asynchronous register/registration task used to authenticate
 	 * the user.
 	 */
+	// 회원가입진행 부분, 이메일을 보내고 서버에 등록함.
 	public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
 
 

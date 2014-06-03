@@ -39,6 +39,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+//키 인증을 위한 dialog box
 public class AuthKeyDialog extends Dialog implements OnClickListener {
 	Button sendbtn;
 	EditText mKeyView;
@@ -53,6 +54,8 @@ public class AuthKeyDialog extends Dialog implements OnClickListener {
 		mKeyView = (EditText)findViewById(R.id.authkey);
 		sendbtn.setOnClickListener(this);
 	}
+	// 내용 입력하고 버틀 클릭 시, 서버에 인증키와 유저번호를 보내고 성공 여부를 받아옴. 성공 시, 인증됨으로 유저의 정보가 바뀐다.
+	
 	public void onClick(View view)
 	{
 		if(view == sendbtn)

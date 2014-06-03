@@ -8,7 +8,6 @@ import com.example.test.R.layout;
 import java.util.ArrayList;
 
 import snu_module.SnuRestaurantDetails;
-import login_module.AuthkeyActivity;
 import login_module.LoginActivity;
 import login_module.MyApplication;
 import login_module.MyInfoActivity;

@@ -38,7 +38,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
-
+//이메일 변경시 사용되는 다이얼로그 박스. 이메일 변경 시 1. 이메일 중복 확인 2. 이메일 변경 내용 서버에 전달 3. 새 인증키르 이메일 보내기 및 인증키변경 내용을 서버에 전달
 public class ChangeEmailDialog extends Dialog implements OnClickListener {
 	Button sendbtn;
 	Button dupbtn;
@@ -56,6 +56,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 		mEmailView.setHint("변경할 이메일(mySnu id)");
 		sendbtn.setOnClickListener(this);
 	}
+	//새 인증키
 	private String keygen()
 	{
 		Integer a1 = (int)(Math.random()*10);
@@ -70,6 +71,7 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 	{
 		if(view == sendbtn)
 		{
+			//중복확인
 			mEmail = mEmailView.getText().toString();
 			String url = "http://laputan32.cafe24.com/User";
 			UserInfo a = new UserInfo();
@@ -80,13 +82,16 @@ public class ChangeEmailDialog extends Dialog implements OnClickListener {
 			String sendresult = sender.send();
 			JSONObject job = (JSONObject) JSONValue.parse(sendresult);
 			String result = (String) job.get("message");
+			//결과
 			if(result.equals("success"))
 			{
+				// 변경된 이메일 서버에 전달
 				SendServer send = new SendServer(a, url, "11");
 				sendresult = send.send();
 				job = (JSONObject) JSONValue.parse(sendresult);
 				result = (String) job.get("message");
 				if(result.equals("success")){
+					//새 인증키 발행 및 메일로 보냄
 					myApp.setEmail(mEmail);
 					String newKey = keygen();
 					String mEmail = myApp.getEmail();

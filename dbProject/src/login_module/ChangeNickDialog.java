@@ -40,6 +40,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+//닉네임 0자 불가능(비어있는지 확인) -> 중복확인 -> 닉네임 변경
 public class ChangeNickDialog extends Dialog implements OnClickListener {
 	Button sendbtn;
 	Button dupbtn;
@@ -58,6 +59,7 @@ public class ChangeNickDialog extends Dialog implements OnClickListener {
 		InputFilter[] filterArray = new InputFilter[1];
 		filterArray[0] = new InputFilter.LengthFilter(12);
 		mNickView.setFilters(filterArray);
+		//12자 길이제한
 	}
 	public void onClick(View view)
 	{

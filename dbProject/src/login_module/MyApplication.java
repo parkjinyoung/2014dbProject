@@ -2,6 +2,7 @@ package login_module;
 
 import android.app.Application;
 
+// 앱 전체에서 사용되는 유저 정보 저장소.
 public class MyApplication extends Application{
 	
 	boolean loginStatus;

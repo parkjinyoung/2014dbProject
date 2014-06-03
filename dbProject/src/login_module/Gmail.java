@@ -9,7 +9,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;  
 import javax.mail.internet.MimeMessage;  
 
-
+//인증 번호 메일을 보내기 위한 모듈
 public class Gmail extends javax.mail.Authenticator
 {
 	String email;

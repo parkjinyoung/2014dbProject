@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+//비밀번호 변경을 위한 dialog box, 비밀번호 3자 이상인지 확인 -> 변경된 비밀번호 전송
 public class ChangePasswordDialog extends Dialog implements OnClickListener {
 	Button sendbtn;
 	Button dupbtn;

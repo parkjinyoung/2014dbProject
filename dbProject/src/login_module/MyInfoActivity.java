@@ -36,6 +36,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.os.Build;
 
+
+// 개인정보 관리.
 public class MyInfoActivity extends Activity {
 
 	Context context;
@@ -51,6 +53,8 @@ public class MyInfoActivity extends Activity {
 	Button authBtn;
 	Button outBtn;
 
+	// 인증되지 않은 유저 : 이메일, 인증에 관련된 부분 남겨놓고 인증된 유저는 그 부분을 disable시킴.
+	// 여러 다이얼로그를 이용해 간단하게 처리.
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,6 +68,7 @@ public class MyInfoActivity extends Activity {
 		nickView = (TextView) findViewById(R.id.infoNick);
 		emailView = (TextView) findViewById(R.id.emailinfo);
 
+		// 차례대로 비밀번호 변경, 닉네임 변경, 이메일 변경, 새로운 인증키, 인증하기, 회원탈퇴에 해당하는 버튼
 		passwordBtn = (Button) findViewById(R.id.changePassword);
 		nickBtn = (Button) findViewById(R.id.changeNick);
 		emailBtn = (Button) findViewById(R.id.changeEmail);
@@ -95,6 +100,7 @@ public class MyInfoActivity extends Activity {
 						dialog.show();
 					}
 				});
+		// 새인증번호는 따로 커스텀 다이얼로그 필요없이 이메일만 보내고, 서버에 등록하면 끝 
 		newBtn.setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -140,6 +146,7 @@ public class MyInfoActivity extends Activity {
 						dialog.show();
 					}
 				});
+		//회원탈퇴 시, 한번 더 물어봄.
 		outBtn.setOnClickListener(
 				new View.OnClickListener() {
 					@Override
