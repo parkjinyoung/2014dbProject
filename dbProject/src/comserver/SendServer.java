@@ -106,6 +106,7 @@ public class SendServer {
 		this.DATA_NAME = INSERT_COMMENT_SEND_NAME;
 	}
 
+	//comment 추천
 	public SendServer(RecComment reccomment, String url) {
 		this.SERVER_URL = url;
 		this.reccomment = reccomment;
@@ -114,6 +115,7 @@ public class SendServer {
 		this.DATA_NAME = RECOM_COMMENT_SEND_NAME;
 	}
 	
+	//메뉴 추천
 	public SendServer(MenuRecommend menurec, String url) {
 		this.SERVER_URL = url;
 		this.menurec = menurec;
@@ -123,7 +125,7 @@ public class SendServer {
 	}
 
 	
-
+//서버로 보내기 : json 으로 보냄
 	public String send() {
 		StrictMode.enableDefaults();
 		String json = "";
@@ -186,7 +188,8 @@ public class SendServer {
 
 			HttpResponse result = null;
 			parm += "data=" + json;
-			System.out.println("parm = " + parm);
+			//data 라는 이름으로 인자를 json으로 보낸다.
+			//Network 클래스 이용
 			result = new Network().execute(SERVER_URL, parm).get();
 			return isSend(result);
 
@@ -204,6 +207,7 @@ public class SendServer {
 
 	}
 
+	//서버로 보냈을 때의 응답을 읽어옴 (utf-8)
 	private String isSend(HttpResponse rtnResult)
 
 	{
@@ -243,6 +247,7 @@ public class SendServer {
 		return null;
 	}
 
+	
 	public ArrayList<String> stringtoList(String s) {
 		ArrayList<String> ret = new ArrayList<String>();
 		if (!s.equals("")) {

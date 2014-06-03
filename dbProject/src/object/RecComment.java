@@ -1,5 +1,6 @@
 package object;
 
+//코멘트 추천
 public class RecComment {
 	String uno;
 	String eno;

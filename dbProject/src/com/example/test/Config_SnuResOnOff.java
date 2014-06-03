@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
+//스누메뉴 즐겨찾기 설정
 public class Config_SnuResOnOff extends Activity {
 	private DatabaseHelper db;
 	private ArrayList<String> allsnures;
@@ -50,6 +51,7 @@ public class Config_SnuResOnOff extends Activity {
 		});
 	}
 
+	//초기화
 	private void ini_allsnures() {
 		for(int j=0; j<res_array.length; j++)
 			allsnures.add(res_array[j]);
@@ -67,6 +69,7 @@ public class Config_SnuResOnOff extends Activity {
 			this.sArrayList = mList;
 			this.isCheckedConfirm = new boolean[sArrayList.size()];
 
+			//현재 즐겨찾기 되어있는 식당들은 기본으로 체크
 			ArrayList<String> getVisibleRes = db.getVisibleResAll();
 			for(int j=0; j<getVisibleRes.size(); j++){
 				for(int k=0; k<res_array.length; k++){
@@ -135,8 +138,6 @@ public class Config_SnuResOnOff extends Activity {
 			viewHolder.cBox.setFocusable(false);
 			viewHolder.cBox.setChecked(true);
 			viewHolder.cBox.setText(sArrayList.get(position));
-			// isCheckedConfirm 배열은 초기화시 모두 false로 초기화 되기때문에
-			// 기본적으로 false로 초기화 시킬 수 있다.
 			viewHolder.cBox.setChecked(isCheckedConfirm[position]);
 
 			return v;
@@ -154,13 +155,13 @@ public class Config_SnuResOnOff extends Activity {
 	private void setLayout(){
 		mListView = (ListView) findViewById(R.id.res_onoff_list);
 		mSubmitbtn = (Button) findViewById(R.id.res_check_submit);
+		//확인 버튼 클릭
+		//디비에 새로운 즐겨찾기 식당들 저장
 		mSubmitbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				db.deleteVisibleResAll();
 				for(int i=0 ; i<mCustomAdapter.getChecked().size() ; i++){
-					Log.d("test", "체크되 있는 Position = " +
-							mCustomAdapter.getChecked().get(i));
 					db.createVisibleRes(allsnures.get(mCustomAdapter.getChecked().get(i)));
 				}
 				db.closeDB();

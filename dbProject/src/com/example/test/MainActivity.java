@@ -59,8 +59,11 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		onCreateData();
 		onCreateLogin();
+		
+		//네개의 탭으로 나누어져 있음 : 스누메뉴, 배달음식, 검색/추천, 환경설정
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -83,18 +86,17 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	//로그인 
 	private void onCreateLogin() {
 		MyApplication myApp = (MyApplication) this.getApplicationContext();
-		;
 		myPreference m = new myPreference(getApplicationContext());
 		if (m.getValue(myPreference.AUTO_LOGIN, false)) {
 			try {
-				String url = "http://laputan32.cafe24.com/User";
 				String mId = m.getValue(myPreference.USER_ID, "");
 				String email;
 				UserInfo a = new UserInfo(mId, m.getValue(
 						myPreference.USER_PWD, ""));
-				SendServer send = new SendServer(a, url, "1");
+				SendServer send = new SendServer(a, SendServerURL.UserURL, "1");
 				String sendresult = send.send();
 				JSONObject job = (JSONObject) JSONValue.parse(sendresult);
 				String result = (String) job.get("message");
@@ -167,10 +169,6 @@ public class MainActivity extends FragmentActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		Context mContext;
@@ -180,6 +178,7 @@ public class MainActivity extends FragmentActivity implements
 			mContext = context;
 		}
 
+		//탭 선택
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
@@ -195,11 +194,13 @@ public class MainActivity extends FragmentActivity implements
 			return null;
 		}
 
+		//탭 개수
 		@Override
 		public int getCount() {
 			return 4;
 		}
 
+		//탭 타이틀
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
@@ -218,13 +219,16 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	//앱을 킬때 서버에서 정보를 모두 받아온다.
 	protected void onCreateData() {
 
 		db = new DatabaseHelper(getApplicationContext());
-
+		
+		//지난 정보들 삭제
 		db.deleteSnuMenuAll();
 		db.deleteDeliveryAll();
 
+		//오늘의 메뉴들 받아옴
 		SendServer send = new SendServer(SendServerURL.getMenuURL);
 		String result = send.send();
 
@@ -234,10 +238,10 @@ public class MainActivity extends FragmentActivity implements
 			db.createTodayMenu(todaymenu_arr[i]);
 		}
 		
+		//배달음식 정보 받아옴
 		DeliveryRestaurant del = new DeliveryRestaurant("getAllDelivery");
 		send = new SendServer(del, SendServerURL.getDeliveryURL);
 		result = send.send();
-		System.out.println("get delivery all = " + result);
 
 		DeliveryRestaurant[] delarr = new Gson().fromJson(result, DeliveryRestaurant[].class);
 		for (int i = 0; i < delarr.length; i++) {

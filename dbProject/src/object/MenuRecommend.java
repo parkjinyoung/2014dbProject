@@ -1,7 +1,7 @@
 package object;
 
 import java.util.ArrayList;
-
+//메뉴 추천
 public class MenuRecommend {
 	private String uno;
 	private ArrayList<String> favorites;

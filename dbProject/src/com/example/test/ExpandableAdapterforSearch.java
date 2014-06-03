@@ -36,7 +36,6 @@ public class ExpandableAdapterforSearch extends BaseExpandableListAdapter{
 
 	@Override
 	public SnuMenu getChild(int groupPosition, int childPosition) {
-		// TODO Auto-generated method stub
 		return mSnuResList.get(groupPosition).getMymenu().get(childPosition);
 	}
 
@@ -77,6 +76,7 @@ public class ExpandableAdapterforSearch extends BaseExpandableListAdapter{
 		viewHolder.title.setText(getChild(groupPosition, childPosition).getMenu());
 		viewHolder.price.setText(Integer.toString(getChild(groupPosition, childPosition).getPrice()));
 
+		//별점 등록
 		String tmpeval = smenu.getRating();
 		db.closeDB();
 		if(tmpeval!=null){
@@ -88,11 +88,8 @@ public class ExpandableAdapterforSearch extends BaseExpandableListAdapter{
 				else viewHolder.image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.emptystar25));
 				eval -= 1;
 			}
-			System.out.println("EVAL : " + tmpeval);
 		}
 		else{
-			//				No Comment Image
-			System.out.println("EVAL : null");
 			for(int j=0; j<5; j++){
 				viewHolder.image_eval[j].setImageDrawable(v.getResources().getDrawable(R.drawable.emptystar25));
 			}
@@ -149,13 +146,11 @@ public class ExpandableAdapterforSearch extends BaseExpandableListAdapter{
 
 	@Override
 	public boolean hasStableIds() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 import com.example.test.DatabaseHelper;
 import com.example.test.R;
-
+//배달음식점의 expandablelist adapter
+//mDelGroupList : 피자, 치킨 등의 상위 분류 리스트
 public class ExpandableAdapter_delivery extends BaseExpandableListAdapter {
 
 	Context mContext;
@@ -34,7 +35,7 @@ public class ExpandableAdapter_delivery extends BaseExpandableListAdapter {
 
 	@Override
 	public DeliveryRestaurant getChild(int groupPosition, int childPosition) {
-		// TODO Auto-generated method stub
+		//getMyres() : 해당 분류의 배달음식점 리스트
 		return mDelGroupList.get(groupPosition).getMyres().get(childPosition);
 	}
 
@@ -52,8 +53,6 @@ public class ExpandableAdapter_delivery extends BaseExpandableListAdapter {
 			viewHolder = new ViewHolder();
 			v = inflater.inflate(R.layout.del_res_list_row, parent, false);
 			viewHolder.title = (TextView) v.findViewById(R.id.row_title);
-			// viewHolder.image = (ImageView) v.findViewById(R.id.eval_stars);
-
 			viewHolder.image_eval[0] = (ImageView) v
 					.findViewById(R.id.del_eval_stars1);
 			viewHolder.image_eval[1] = (ImageView) v
@@ -70,6 +69,7 @@ public class ExpandableAdapter_delivery extends BaseExpandableListAdapter {
 			viewHolder = (ViewHolder) v.getTag();
 		}
 
+		//해당 배달음식점 이름을 가져와서 디비에서 찾는다
 		db = new DatabaseHelper(v.getContext());
 		String resname = getChild(groupPosition, childPosition).getCafe();
 
@@ -84,7 +84,7 @@ public class ExpandableAdapter_delivery extends BaseExpandableListAdapter {
 		db.closeDB();
 		if (tmpeval != null) {
 			float eval = Float.parseFloat(tmpeval);
-
+			//배달음식점 각각의 별점 등록
 			for (int j = 0; j < 5; j++) {
 				if (eval >= 1)
 					viewHolder.image_eval[j].setImageDrawable(v.getResources()
@@ -145,7 +145,7 @@ public class ExpandableAdapter_delivery extends BaseExpandableListAdapter {
 		} else {
 			viewTitleHolder = (ViewTitleHolder) v.getTag();
 		}
-
+		//배달음식 그룹 이름 등록, 각 분류에 해당하는 그림 등록
 		viewTitleHolder.title.setText(getGroup(groupPosition).getGroup_name());
 		findGroupImage(getGroup(groupPosition).getGroup_name());
 
@@ -173,7 +173,7 @@ public class ExpandableAdapter_delivery extends BaseExpandableListAdapter {
 		public TextView title;
 		public ImageView group_image;
 	}
-
+//배달음식 각 분류에 해당하는 그림 등록
 	private void findGroupImage(String gName) {
 		if (gName.equals("피자")) {
 			viewTitleHolder.group_image.setImageResource(R.drawable.pizza1);

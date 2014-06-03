@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Delivery_group {
 	String group_name;
+	//분류에 해당하는 배달음식점 리스트
 	ArrayList<DeliveryRestaurant> myres;
 	
 	public Delivery_group(){}

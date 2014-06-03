@@ -28,7 +28,7 @@ import com.example.test.R;
 
 import comserver.SendServer;
 import comserver.SendServerURL;
-
+//배달음식점 코멘트 리스트 어댑터
 public class CommentListAdapter extends ArrayAdapter<Comment> {
 	private ArrayList<Comment> items;
 	private int rsrc;
@@ -83,7 +83,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 			String cafe = db.getDeliveryRes(e.getDno());
 			e.setCafe(cafe);
 			db.closeDB();
-
+			
+			//별점 등록
 			String tmpeval = e.getRating();
 
 			if (tmpeval != null) {
@@ -102,18 +103,19 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 					eval -= 1;
 				}
 			} else {
-				// No Comment Image
 				for (int j = 0; j < 5; j++) {
 					image_eval[j].setImageDrawable(v.getResources()
 							.getDrawable(R.drawable.emptystar25));
 				}
 			}
 
+			//내 정보
 			MyApplication myApp = (MyApplication) v.getContext()
 					.getApplicationContext();
 
 			final String uno = myApp.getUno();
 
+			//내 코멘트에만 수정/삭제 버튼이 보인다.
 			mycommentlayout.setVisibility(View.GONE);
 			modifybtn.setVisibility(View.GONE);
 			deletebtn.setVisibility(View.GONE);
@@ -128,6 +130,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 			rectext.setText(Integer.toString(e.getRecommend()));
 			unrectext.setText(Integer.toString(e.getUnrecommend()));
 
+			//추천
 			ImageButton recommendbtn = (ImageButton) v.findViewById(R.id.comment_up_btn);
 			recommendbtn.setFocusable(true);
 			recommendbtn.setClickable(true);
@@ -142,6 +145,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
 					final String uno = myApp.getUno();
 
+					//추천 성공시 success, 실패시 fail 이 온다.
 					if(!uno.equals("")){
 						RecComment reccom = new RecComment(uno,
 								e.getEno(), "true");
@@ -172,11 +176,13 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 						}
 					}
 					else{
+						//로그인하지 않았을 경우 추천/비추천 할 수 없다.
 						Toast.makeText(getContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
 
+			//비추천. 추천과 동일한 메커니즘
 			ImageButton unrecommendbtn = (ImageButton) v
 					.findViewById(R.id.comment_down_btn);
 			unrecommendbtn.setFocusable(true);
@@ -195,7 +201,6 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
 						RecComment reccom = new RecComment(uno,
 								e.getEno(), "false");
-						// String url = "http://laputan32.cafe24.com/Eval";
 						SendServer send = new SendServer(reccom,
 								SendServerURL.commentURL);
 						String sendresult = send.send();
@@ -229,14 +234,14 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 				}
 			});
 
+			//수정
 			modifybtn.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 
 					Intent i = new Intent(v.getContext(), EvalDelivery.class);
-
+//입력된 정보를 가지고 평가 액티비티로 인탠트한다.
 					i.putExtra("resname", e.getCafe());
 					i.putExtra("comment", e.getComment());
 					i.putExtra("rating", e.getRating());
@@ -246,20 +251,19 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 				}
 			});
 
+			//삭제
 			deletebtn.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					Toast.makeText(getContext(), "삭제", Toast.LENGTH_SHORT)
 					.show();
 
-					// String url = "http://laputan32.cafe24.com/Eval";
 					SendServer send = new SendServer(e,
 							SendServerURL.commentURL, "7");
 					String sendresult = send.send();
-					System.out.println("delete send = " + sendresult);
 
+					//삭제시 서버에서는 갱신된 평점을 보내준다. 이를 받아 디비에 저장
 					String tmpeval = null;
 					if (sendresult != null && !sendresult.equals("")) {
 						JSONObject jo = (JSONObject) JSONValue
@@ -271,26 +275,6 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
 					db = new DatabaseHelper(v.getContext());
 
-					/*	if (search != null && search.equals("true")) {
-						if (db.getSearchSnuMenu(e.getCafe(), e.getMenu()) != null) {
-							db.updateSearchSnuMenu(e.getCafe(), e.getMenu(),
-									tmpeval); // 수정된
-												// eval
-							i.putExtra("menu", e.getMenu());
-							i.putExtra("cafe", e.getCafe());
-							i.putExtra("search", search);
-
-							i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							v.getContext().startActivity(i);
-						} else {
-							i.putExtra("menu", e.getMenu());
-							i.putExtra("cafe", e.getCafe());
-							i.putExtra("rating", tmpeval);
-							i.putExtra("search", search);
-
-						}
-
-					} else {*/
 					if (db.getDelivery(e.getCafe()) != null) {
 						db.updateDeliveryEval(e.getCafe(), tmpeval);
 						i.putExtra("resname", e.getCafe());
@@ -303,7 +287,6 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 						i.putExtra("search", search);
 
 					}
-					/*}*/
 					db.closeDB();
 				}
 			});
